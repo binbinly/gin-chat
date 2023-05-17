@@ -4,6 +4,7 @@ JwtSecret: TQ2MNWIB2zK0z9JCqUC6WcTG9pMTnX12CLuVSop5Xr2owx4M9JTJIzBnMMYeWwRs
 JwtTimeout: 86400
 CtxTimeout: 12
 Debug: false
+Proxy: true
 
 HTTP:
   Addr: :9050

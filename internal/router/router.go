@@ -1,15 +1,14 @@
 package router
 
 import (
+	_ "gin-chat/docs"
+	"gin-chat/pkg/app"
+	"gin-chat/pkg/middleware"
 	"github.com/gin-contrib/pprof"
 	"github.com/gin-gonic/gin"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
-
-	_ "gin-chat/docs"
-	"gin-chat/pkg/app"
-	"gin-chat/pkg/middleware"
 )
 
 // NewRouter Load loads the middlewares, routes, handlers.
@@ -19,7 +18,7 @@ func NewRouter(debug bool) *gin.Engine {
 	g.Use(middleware.NoCache)
 	g.Use(middleware.Cors)
 	g.Use(middleware.Secure)
-	//g.Use(middleware.HandleErrors)
+	g.Use(middleware.HandleErrors)
 
 	g.NoRoute(app.RouteNotFound)
 	g.NoMethod(app.RouteNotFound)

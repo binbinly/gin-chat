@@ -1,13 +1,13 @@
 package server
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/spf13/cobra"
-
+	"gin-chat/internal/router"
 	"gin-chat/internal/server"
 	"gin-chat/internal/service"
 	"gin-chat/pkg/app"
 	"gin-chat/pkg/config"
+	"github.com/gin-gonic/gin"
+	"github.com/spf13/cobra"
 )
 
 var (
@@ -46,21 +46,32 @@ func setup() {
 
 // run 核心业务服务启动
 func run() {
+	// websocket server
 	ws := server.NewWsServer(&app.Conf.Websocket)
+	// http server
+	http := server.NewHTTPServer(&app.Conf.HTTP)
+
+	// init router
+	r := router.NewRouter(app.Conf.Debug)
+
+	// set proxy to http://[host]/ws -> ws://[host]
+	if app.Conf.Proxy {
+		r.Any("/ws", app.ProxyGinHandler("http://127.0.0.1"+app.Conf.Websocket.Addr))
+	}
+	http.Handler = r
+
 	// init service
 	service.Svc = service.New(ws,
 		service.WithJwtTimeout(app.Conf.JwtTimeout),
 		service.WithJwtSecret(app.Conf.JwtSecret))
 
-	// start app
+	// init app
 	apps := app.New(
 		app.WithName(app.Conf.Name),
-		app.WithServer(
-			server.NewHTTPServer(&app.Conf.HTTP),
-			ws,
-		),
+		app.WithServer(http, ws),
 	)
 
+	// run app
 	if err := apps.Run(); err != nil {
 		panic(err)
 	}

@@ -17,6 +17,7 @@ type Config struct {
 	JwtTimeout int64
 	CtxTimeout time.Duration
 	Debug      bool
+	Proxy      bool // 是否开启代理 http://[host]/ws -> ws://[host]
 	HTTP       ServerConfig
 	Websocket  ServerConfig
 }
