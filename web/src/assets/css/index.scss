@@ -1,0 +1,50 @@
+@import './variables.scss';
+@import './mixin.scss';
+@import './free.scss';
+@import './free-icon.css';
+
+html,
+body .app {
+  color: #333333;
+  font-family: Arial, Helvetica, 'STHeiti STXihei', 'Microsoft YaHei', Tohoma, sans-serif;
+  background-color: $background-color;
+}
+
+.app-container {
+  padding-bottom: 50px;
+}
+
+/* 2. 主背景色（原谅绿） */
+.main-bg-color {
+  background-color: #08c060;
+}
+.main-bg-hover-color {
+  background-color: #08d869;
+}
+/* 3. 主文字色（原谅绿） */
+.main-text-color {
+  color: #08c060;
+}
+
+.border-main {
+  border-color: #08c060 !important;
+}
+
+.bg-chat-item {
+  background-color: #6bee68;
+}
+.text-chat-item {
+  color: #6bee68;
+}
+
+.van-nav-bar .van-icon {
+  color: #0e151d;
+}
+
+.van-nav-bar__text {
+  color: #0e151d;
+}
+
+.van-divider {
+  margin: 4px;
+}

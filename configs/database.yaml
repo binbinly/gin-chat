@@ -1,0 +1,9 @@
+default:
+  Name: chat
+  Addr: 127.0.0.1:3306
+  UserName: root
+  Password: root
+  Debug: true
+  MaxIdleConn: 10
+  MaxOpenConn: 60
+  ConnMaxLifeTime: 4h

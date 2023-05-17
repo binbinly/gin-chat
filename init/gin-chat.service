@@ -1,0 +1,15 @@
+[Unit]
+Description=gin-chat
+After=network.target
+[Service]
+Type=simple
+LimitNOFILE=51200
+LimitNPROC=51200
+User=www
+Group=www
+Environment="API_ENV=prod"
+WorkingDirectory=/www/wwwroot/gin-chat
+ExecStart=/www/wwwroot/gin-chat/gin-chat
+Restart=on-failure
+[Install]
+WantedBy=multi-user.target

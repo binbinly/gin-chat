@@ -1,0 +1,60 @@
+// 按需全局引入 vant组件
+import Vue from 'vue'
+import {
+  NoticeBar,
+  Tag,
+  CellGroup,
+  Button,
+  List,
+  Cell,
+  Tabbar,
+  TabbarItem,
+  Form,
+  Field,
+  Toast,
+  NavBar,
+  Icon,
+  Tabs,
+  Tab,
+  Image,
+  Empty,
+  Divider,
+  Lazyload,
+  ImagePreview,
+  PullRefresh,
+  CountDown,
+  ShareSheet,
+  Uploader,
+  Dialog,
+  Picker,
+  Popup,
+  ActionSheet,
+  Swipe,
+  SwipeItem,
+  Search,
+  DropdownMenu,
+  DropdownItem,
+  Sticky,
+  DatetimePicker,
+  Cascader,
+  Badge,
+  Popover,
+  Switch,
+  IndexBar,
+  IndexAnchor,
+  Overlay,
+  Checkbox,
+  Grid,
+  GridItem,
+  SwipeCell
+} from 'vant'
+Vue.use(Button).use(Tag).use(Popover).use(IndexBar).use(IndexAnchor)
+Vue.use(Cell).use(CellGroup).use(Switch).use(Overlay)
+Vue.use(List).use(NoticeBar).use(Checkbox).use(SwipeCell)
+Vue.use(Tabbar).use(TabbarItem).use(Grid).use(GridItem)
+Vue.use(Form).use(Field).use(Badge)
+Vue.use(Toast).use(NavBar).use(Icon).use(Tabs).use(Tab)
+Vue.use(Image).use(Empty).use(Divider).use(Lazyload).use(ImagePreview)
+Vue.use(PullRefresh).use(CountDown).use(ShareSheet).use(Uploader).use(Dialog)
+Vue.use(Picker).use(Popup).use(ActionSheet).use(Swipe).use(SwipeItem).use(Search)
+Vue.use(DropdownItem).use(DropdownMenu).use(Sticky).use(DatetimePicker).use(Cascader)

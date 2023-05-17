@@ -1,0 +1,2043 @@
+basePath: /v1
+definitions:
+  app.Response:
+    properties:
+      code:
+        type: integer
+      data: {}
+      msg:
+        type: string
+    type: object
+  apply.friendParams:
+    properties:
+      friend_id:
+        description: 好友ID
+        example: 1
+        type: integer
+      look_him:
+        description: 看他
+        enum:
+        - 0
+        - 1
+        example: 1
+        type: integer
+      look_me:
+        description: 看我
+        enum:
+        - 0
+        - 1
+        example: 1
+        type: integer
+      nickname:
+        description: 备注昵称
+        example: test
+        maxLength: 30
+        minLength: 1
+        type: string
+    required:
+    - friend_id
+    - look_him
+    - look_me
+    - nickname
+    type: object
+  apply.handleParams:
+    properties:
+      friend_id:
+        description: 好友ID
+        example: 1
+        type: integer
+      look_him:
+        description: 看他
+        enum:
+        - 0
+        - 1
+        example: 1
+        type: integer
+      look_me:
+        description: 看我
+        enum:
+        - 0
+        - 1
+        example: 1
+        type: integer
+      nickname:
+        description: 备注内侧
+        example: test
+        maxLength: 30
+        minLength: 1
+        type: string
+    required:
+    - friend_id
+    - look_him
+    - look_me
+    - nickname
+    type: object
+  chat.detailParams:
+    properties:
+      id:
+        description: 用户/群组ID
+        example: 1
+        type: integer
+      type:
+        description: 聊天类型，1=用户，2=群组
+        enum:
+        - 1
+        - 2
+        example: 1
+        type: integer
+    required:
+    - id
+    - type
+    type: object
+  chat.recallParams:
+    properties:
+      chat_type:
+        description: 聊天类型，1=用户，2=群组
+        enum:
+        - 1
+        - 2
+        example: 1
+        type: integer
+      id:
+        description: 消息id
+        example: "1111"
+        maxLength: 10
+        type: string
+      to_id:
+        description: 用户/群组ID
+        example: 1
+        type: integer
+    required:
+    - chat_type
+    - id
+    - to_id
+    type: object
+  chat.sendParams:
+    properties:
+      chat_type:
+        description: 聊天类型，1=用户，2=群组
+        enum:
+        - 1
+        - 2
+        example: 1
+        type: integer
+      content:
+        description: 内容
+        example: test
+        type: string
+      options:
+        description: 额外选项
+        example: test
+        type: string
+      to_id:
+        description: 用户/群组ID
+        example: 1
+        type: integer
+      type:
+        description: 聊天信息类型
+        enum:
+        - 2
+        - 3
+        - 4
+        - 5
+        - 6
+        - 7
+        example: 1
+        type: integer
+    required:
+    - chat_type
+    - content
+    - to_id
+    - type
+    type: object
+  collect.createParams:
+    properties:
+      content:
+        description: 内容
+        example: test
+        type: string
+      options:
+        description: 额外选项
+        example: test
+        type: string
+      type:
+        description: 聊天信息类型
+        enum:
+        - 2
+        - 3
+        - 4
+        - 5
+        - 6
+        - 7
+        example: 1
+        type: integer
+    required:
+    - content
+    - type
+    type: object
+  collect.destroyParams:
+    properties:
+      id:
+        description: 收藏id
+        example: 1
+        type: integer
+    required:
+    - id
+    type: object
+  friend.authParams:
+    properties:
+      look_him:
+        description: 看他
+        enum:
+        - 0
+        - 1
+        example: 1
+        type: integer
+      look_me:
+        description: 看我
+        enum:
+        - 0
+        - 1
+        example: 1
+        type: integer
+      user_id:
+        description: 用户ID
+        example: 1
+        type: integer
+    required:
+    - user_id
+    type: object
+  friend.blackParams:
+    properties:
+      black:
+        description: 是否拉黑
+        enum:
+        - 0
+        - 1
+        example: 1
+        type: integer
+      user_id:
+        description: 用户ID
+        example: 1
+        type: integer
+    required:
+    - user_id
+    type: object
+  friend.destroyParams:
+    properties:
+      user_id:
+        description: 用户ID
+        example: 1
+        type: integer
+    required:
+    - user_id
+    type: object
+  friend.remarkParams:
+    properties:
+      nickname:
+        description: 备注内侧
+        example: test
+        maxLength: 30
+        minLength: 1
+        type: string
+      tags:
+        description: 标签
+        example:
+        - test
+        - test1
+        items:
+          type: string
+        type: array
+      user_id:
+        description: 用户ID
+        example: 1
+        type: integer
+    required:
+    - nickname
+    - user_id
+    type: object
+  friend.starParams:
+    properties:
+      star:
+        description: 是否星标用户
+        enum:
+        - 0
+        - 1
+        example: 1
+        type: integer
+      user_id:
+        description: 用户ID
+        example: 1
+        type: integer
+    required:
+    - user_id
+    type: object
+  group.actionParams:
+    properties:
+      id:
+        description: 群ID
+        example: 1
+        type: integer
+      user_id:
+        description: 用户ID
+        example: 1
+        type: integer
+    required:
+    - id
+    - user_id
+    type: object
+  group.idsParams:
+    properties:
+      ids:
+        description: 用户id列表
+        example: '[1,2,3]'
+        type: string
+    required:
+    - ids
+    type: object
+  group.nicknameParams:
+    properties:
+      id:
+        description: 群ID
+        example: 1
+        type: integer
+      nickname:
+        description: 群名
+        example: name
+        maxLength: 60
+        type: string
+    required:
+    - id
+    - nickname
+    type: object
+  group.updateParams:
+    properties:
+      id:
+        description: 群ID
+        example: 1
+        type: integer
+      name:
+        description: 群名
+        example: name
+        maxLength: 60
+        type: string
+      remark:
+        description: 群公告
+        example: remark
+        maxLength: 500
+        type: string
+    required:
+    - id
+    type: object
+  model.Comment:
+    properties:
+      content:
+        type: string
+      reply:
+        $ref: '#/definitions/model.User'
+      user:
+        $ref: '#/definitions/model.User'
+    type: object
+  model.Emoticon:
+    properties:
+      category:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      url:
+        type: string
+    type: object
+  model.GroupList:
+    properties:
+      avatar:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  model.Moment:
+    properties:
+      list:
+        items:
+          $ref: '#/definitions/model.MomentList'
+        type: array
+      user:
+        $ref: '#/definitions/model.User'
+    type: object
+  model.MomentList:
+    properties:
+      comments:
+        items:
+          $ref: '#/definitions/model.Comment'
+        type: array
+      content:
+        type: string
+      created_at:
+        type: integer
+      id:
+        type: integer
+      image:
+        type: string
+      likes:
+        items:
+          $ref: '#/definitions/model.User'
+        type: array
+      location:
+        type: string
+      type:
+        type: integer
+      user:
+        $ref: '#/definitions/model.User'
+      video:
+        type: string
+    type: object
+  model.User:
+    properties:
+      avatar:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  model.UserTag:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  moment.commentParams:
+    properties:
+      content:
+        description: 内容
+        example: test
+        maxLength: 500
+        type: string
+      id:
+        description: 动态ID
+        example: 1
+        type: integer
+      reply_id:
+        description: 回复者
+        example: 1
+        type: integer
+    required:
+    - content
+    - id
+    type: object
+  moment.createParams:
+    properties:
+      content:
+        description: 内容
+        example: test
+        maxLength: 500
+        type: string
+      image:
+        description: 图片
+        example: a.jpg
+        maxLength: 500
+        type: string
+      location:
+        description: 地理位置
+        example: 北京
+        maxLength: 100
+        type: string
+      remind:
+        description: 提醒用户列表
+        example:
+        - 1
+        - 2
+        items:
+          type: integer
+        type: array
+      see:
+        description: id列表
+        example:
+        - 1
+        - 2
+        items:
+          type: integer
+        type: array
+      see_type:
+        description: 可见类型 1=全部 2=私密 3=谁可见 4=谁不可见
+        enum:
+        - 1
+        - 2
+        - 3
+        - 4
+        example: 1
+        type: integer
+      type:
+        description: 类型 1=文本 2=图文 3=视频
+        enum:
+        - 1
+        - 2
+        - 3
+        example: 1
+        type: integer
+      video:
+        description: 视频
+        example: a.mp4
+        maxLength: 100
+        type: string
+    required:
+    - see_type
+    - type
+    type: object
+  moment.likeParams:
+    properties:
+      id:
+        description: 动态ID
+        example: 1
+        type: integer
+    required:
+    - id
+    type: object
+  resource.ApplyListResponse:
+    properties:
+      status:
+        type: integer
+      user:
+        $ref: '#/definitions/model.User'
+    type: object
+  resource.CollectListResponse:
+    properties:
+      content:
+        type: string
+      id:
+        type: integer
+      options:
+        type: string
+      type:
+        type: integer
+    type: object
+  resource.Friend:
+    properties:
+      is_black:
+        type: integer
+      is_star:
+        type: integer
+      look_him:
+        type: integer
+      look_me:
+        type: integer
+      nickname:
+        type: string
+      tags:
+        items:
+          type: string
+        type: array
+    type: object
+  resource.FriendResponse:
+    properties:
+      friend:
+        $ref: '#/definitions/resource.Friend'
+      is_friend:
+        type: boolean
+      user:
+        $ref: '#/definitions/resource.UserResponse'
+    type: object
+  resource.Group:
+    properties:
+      avatar:
+        type: string
+      id:
+        type: integer
+      invite_confirm:
+        type: integer
+      name:
+        type: string
+      remark:
+        type: string
+      user_id:
+        type: integer
+    type: object
+  resource.GroupResponse:
+    properties:
+      info:
+        $ref: '#/definitions/resource.Group'
+      nickname:
+        type: string
+      users:
+        items:
+          $ref: '#/definitions/model.User'
+        type: array
+    type: object
+  resource.UserResponse:
+    properties:
+      area:
+        type: string
+      avatar:
+        type: string
+      email:
+        type: string
+      gender:
+        type: integer
+      id:
+        type: integer
+      nickname:
+        type: string
+      phone:
+        type: integer
+      sign:
+        type: string
+      username:
+        type: string
+    type: object
+  user.authResponse:
+    properties:
+      token:
+        type: string
+      user:
+        $ref: '#/definitions/resource.UserResponse'
+    type: object
+  user.phoneLoginParams:
+    properties:
+      phone:
+        description: 手机号
+        example: 13333333333
+        type: integer
+      verify_code:
+        description: 验证码
+        example: "888888"
+        type: string
+    required:
+    - phone
+    - verify_code
+    type: object
+  user.registerParams:
+    properties:
+      confirm_password:
+        description: 确认密码
+        example: "123456"
+        type: string
+      password:
+        description: 密码
+        example: "123456"
+        maxLength: 20
+        minLength: 6
+        type: string
+      phone:
+        description: 手机号
+        example: "13333333333"
+        type: string
+      username:
+        description: 用户名
+        example: test
+        maxLength: 18
+        minLength: 4
+        type: string
+    required:
+    - confirm_password
+    - password
+    - phone
+    - username
+    type: object
+  user.reportParams:
+    properties:
+      category:
+        description: 举报分类
+        example: 分类
+        type: string
+      content:
+        description: 举报内容
+        example: test
+        type: string
+      type:
+        description: 1=用户，2=群组
+        enum:
+        - 1
+        - 2
+        example: 1
+        type: integer
+      user_id:
+        description: 用户ID
+        example: 1
+        type: integer
+    required:
+    - category
+    - content
+    - user_id
+    type: object
+  user.sendCodeParams:
+    properties:
+      phone:
+        description: 手机号
+        example: "13333333333"
+        type: string
+    required:
+    - phone
+    type: object
+  user.updateParams:
+    properties:
+      avatar:
+        description: 头像
+        example: http://example
+        type: string
+      nickname:
+        description: 昵称
+        example: test
+        maxLength: 30
+        type: string
+      sign:
+        description: 签名
+        example: test
+        maxLength: 90
+        type: string
+    type: object
+  websocket.Chat:
+    properties:
+      chat_type:
+        description: 聊天类型
+        type: integer
+      content:
+        description: 消息内容
+        type: string
+      from:
+        allOf:
+        - $ref: '#/definitions/websocket.Sender'
+        description: 发送人
+      id:
+        description: 消息id
+        type: string
+      options:
+        description: 扩展信息
+        type: string
+      t:
+        description: 发送时间
+        type: integer
+      to:
+        allOf:
+        - $ref: '#/definitions/websocket.Sender'
+        description: 接受人/群id
+      type:
+        description: 消息类型
+        type: integer
+    type: object
+  websocket.Sender:
+    properties:
+      avatar:
+        description: 用户/群组头像
+        type: string
+      id:
+        description: 用户/群组ID
+        type: integer
+      name:
+        description: 用户/群组昵称
+        type: string
+    type: object
+externalDocs:
+  description: OpenAPI
+  url: https://swagger.io/resources/open-api/
+host: http://127.0.0.1:9050
+info:
+  contact:
+    email: test@test.com
+    name: test
+    url: http://www.swagger.io/support
+  license:
+    name: MIT
+  title: swagger 接口文档
+  version: "2.0"
+paths:
+  /apply/count:
+    get:
+      description: 待处理申请数量
+      parameters:
+      - description: 用户令牌
+        in: header
+        name: Token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":0,"message":"OK","data":1}'
+          schema:
+            type: string
+      summary: 待处理申请数量
+      tags:
+      - 好友申请
+  /apply/friend:
+    post:
+      consumes:
+      - application/json
+      description: 申请好友
+      parameters:
+      - description: 用户令牌
+        in: header
+        name: Token
+        required: true
+        type: string
+      - description: friend
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/apply.friendParams'
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: 调用成功结构
+          schema:
+            $ref: '#/definitions/app.Response'
+      summary: 申请好友
+      tags:
+      - 好友申请
+  /apply/handle:
+    post:
+      consumes:
+      - application/json
+      description: 处理好友申请
+      parameters:
+      - description: 用户令牌
+        in: header
+        name: Token
+        required: true
+        type: string
+      - description: handle
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/apply.handleParams'
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: 调用成功结构
+          schema:
+            $ref: '#/definitions/app.Response'
+      summary: 处理好友申请
+      tags:
+      - 好友申请
+  /apply/list:
+    get:
+      consumes:
+      - application/json
+      description: 我的申请列表
+      parameters:
+      - description: 用户令牌
+        in: header
+        name: Token
+        required: true
+        type: string
+      - description: 页码
+        in: query
+        name: p
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: 调用成功结构
+          schema:
+            allOf:
+            - $ref: '#/definitions/app.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/resource.ApplyListResponse'
+                  type: array
+              type: object
+      summary: 我的申请列表
+      tags:
+      - 好友申请
+  /chat/detail:
+    post:
+      consumes:
+      - application/json
+      description: 获取聊天信息
+      parameters:
+      - description: 用户令牌
+        in: header
+        name: Token
+        required: true
+        type: string
+      - description: chat detail
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/chat.detailParams'
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: 调用成功结构
+          schema:
+            allOf:
+            - $ref: '#/definitions/app.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/websocket.Sender'
+              type: object
+      summary: 获取聊天信息
+      tags:
+      - 聊天
+  /chat/recall:
+    post:
+      consumes:
+      - application/json
+      description: 消息撤回
+      parameters:
+      - description: 用户令牌
+        in: header
+        name: Token
+        required: true
+        type: string
+      - description: recall
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/chat.recallParams'
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: 调用成功结构
+          schema:
+            $ref: '#/definitions/app.Response'
+      summary: 消息撤回
+      tags:
+      - 聊天
+  /chat/send:
+    post:
+      consumes:
+      - application/json
+      description: 发送消息
+      parameters:
+      - description: 用户令牌
+        in: header
+        name: Token
+        required: true
+        type: string
+      - description: send
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/chat.sendParams'
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: 调用成功结构
+          schema:
+            allOf:
+            - $ref: '#/definitions/app.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/websocket.Chat'
+              type: object
+      summary: 发送消息
+      tags:
+      - 聊天
+  /collect/create:
+    post:
+      consumes:
+      - application/json
+      description: 添加收藏
+      parameters:
+      - description: 用户令牌
+        in: header
+        name: Token
+        required: true
+        type: string
+      - description: create
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/collect.createParams'
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: 调用成功结构
+          schema:
+            $ref: '#/definitions/app.Response'
+      summary: 添加收藏
+      tags:
+      - 用户收藏
+  /collect/destroy:
+    post:
+      consumes:
+      - application/json
+      description: 删除收藏
+      parameters:
+      - description: 用户令牌
+        in: header
+        name: Token
+        required: true
+        type: string
+      - description: destroy
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/collect.destroyParams'
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: 调用成功结构
+          schema:
+            $ref: '#/definitions/app.Response'
+      summary: 删除收藏
+      tags:
+      - 用户收藏
+  /collect/list:
+    get:
+      consumes:
+      - application/json
+      description: 收藏列表
+      parameters:
+      - description: 用户令牌
+        in: header
+        name: Token
+        required: true
+        type: string
+      - description: 页码
+        in: query
+        name: p
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: 调用成功结构
+          schema:
+            allOf:
+            - $ref: '#/definitions/app.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/resource.CollectListResponse'
+                  type: array
+              type: object
+      summary: 收藏列表
+      tags:
+      - 用户收藏
+  /emoticon/cat:
+    get:
+      consumes:
+      - application/json
+      description: 表情包
+      parameters:
+      - description: 用户令牌
+        in: header
+        name: Token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: 调用成功结构
+          schema:
+            allOf:
+            - $ref: '#/definitions/app.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/model.Emoticon'
+                  type: array
+              type: object
+      summary: 表情包
+      tags:
+      - 表情包
+  /emoticon/list:
+    get:
+      consumes:
+      - application/json
+      description: 表情包
+      parameters:
+      - description: 用户令牌
+        in: header
+        name: Token
+        required: true
+        type: string
+      - description: 分类
+        in: query
+        name: cat
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: 调用成功结构
+          schema:
+            allOf:
+            - $ref: '#/definitions/app.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/model.Emoticon'
+                  type: array
+              type: object
+      summary: 表情包
+      tags:
+      - 表情包
+  /friend/auth:
+    post:
+      consumes:
+      - application/json
+      description: 设置朋友圈权限
+      parameters:
+      - description: 用户令牌
+        in: header
+        name: Token
+        required: true
+        type: string
+      - description: auth
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/friend.authParams'
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: 调用成功结构
+          schema:
+            $ref: '#/definitions/app.Response'
+      summary: 设置朋友圈权限
+      tags:
+      - 好友
+  /friend/black:
+    post:
+      consumes:
+      - application/json
+      description: 加入/移除黑名单
+      parameters:
+      - description: 用户令牌
+        in: header
+        name: Token
+        required: true
+        type: string
+      - description: black
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/friend.blackParams'
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: 调用成功结构
+          schema:
+            $ref: '#/definitions/app.Response'
+      summary: 加入/移除黑名单
+      tags:
+      - 好友
+  /friend/destroy:
+    post:
+      consumes:
+      - application/json
+      description: 删除好友
+      parameters:
+      - description: 用户令牌
+        in: header
+        name: Token
+        required: true
+        type: string
+      - description: destroy
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/friend.destroyParams'
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: 调用成功结构
+          schema:
+            $ref: '#/definitions/app.Response'
+      summary: 删除好友
+      tags:
+      - 好友
+  /friend/info:
+    get:
+      consumes:
+      - application/json
+      description: 获取好友信息
+      parameters:
+      - description: 用户令牌
+        in: header
+        name: Token
+        required: true
+        type: string
+      - description: 好友ID
+        in: query
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: 调用成功结构
+          schema:
+            allOf:
+            - $ref: '#/definitions/app.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/resource.FriendResponse'
+              type: object
+      summary: 获取好友信息
+      tags:
+      - 好友
+  /friend/list:
+    get:
+      consumes:
+      - application/json
+      description: 好友列表
+      parameters:
+      - description: 用户令牌
+        in: header
+        name: Token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: 调用成功结构
+          schema:
+            allOf:
+            - $ref: '#/definitions/app.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/model.User'
+                  type: array
+              type: object
+      summary: 好友列表
+      tags:
+      - 好友
+  /friend/remark:
+    post:
+      consumes:
+      - application/json
+      description: 设置备注标签
+      parameters:
+      - description: 用户令牌
+        in: header
+        name: Token
+        required: true
+        type: string
+      - description: remark
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/friend.remarkParams'
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: 调用成功结构
+          schema:
+            $ref: '#/definitions/app.Response'
+      summary: 设置备注标签
+      tags:
+      - 好友
+  /friend/star:
+    post:
+      consumes:
+      - application/json
+      description: 加入/移除星标
+      parameters:
+      - description: 用户令牌
+        in: header
+        name: Token
+        required: true
+        type: string
+      - description: star
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/friend.starParams'
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: 调用成功结构
+          schema:
+            $ref: '#/definitions/app.Response'
+      summary: 加入/移除星标
+      tags:
+      - 好友
+  /friend/tag_list:
+    get:
+      consumes:
+      - application/json
+      description: 标签好友列表
+      parameters:
+      - description: 用户令牌
+        in: header
+        name: Token
+        required: true
+        type: string
+      - description: 标签ID
+        in: query
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: 调用成功结构
+          schema:
+            allOf:
+            - $ref: '#/definitions/app.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/model.User'
+                  type: array
+              type: object
+      summary: 标签好友列表
+      tags:
+      - 好友
+  /group/create:
+    post:
+      consumes:
+      - application/json
+      description: 创建群组
+      parameters:
+      - description: 用户令牌
+        in: header
+        name: Token
+        required: true
+        type: string
+      - description: ids
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/group.idsParams'
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: 调用成功结构
+          schema:
+            $ref: '#/definitions/app.Response'
+      summary: 创建群组
+      tags:
+      - 群组
+  /group/edit:
+    post:
+      consumes:
+      - application/json
+      description: 更新群组信息
+      parameters:
+      - description: 用户令牌
+        in: header
+        name: Token
+        required: true
+        type: string
+      - description: The group info
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/group.updateParams'
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: 调用成功结构
+          schema:
+            $ref: '#/definitions/app.Response'
+      summary: 更新群组信息
+      tags:
+      - 群组
+  /group/info:
+    get:
+      consumes:
+      - application/json
+      description: 获取群信息
+      parameters:
+      - description: 用户令牌
+        in: header
+        name: Token
+        required: true
+        type: string
+      - description: 群ID
+        in: query
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: 调用成功结构
+          schema:
+            allOf:
+            - $ref: '#/definitions/app.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/resource.GroupResponse'
+              type: object
+      summary: 获取群信息
+      tags:
+      - 群组
+  /group/invite:
+    post:
+      consumes:
+      - application/json
+      description: 邀请好友
+      parameters:
+      - description: 用户令牌
+        in: header
+        name: Token
+        required: true
+        type: string
+      - description: The group info
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/group.actionParams'
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: 调用成功结构
+          schema:
+            $ref: '#/definitions/app.Response'
+      summary: 邀请好友
+      tags:
+      - 群组
+  /group/join:
+    get:
+      consumes:
+      - application/json
+      description: 加入群
+      parameters:
+      - description: 用户令牌
+        in: header
+        name: Token
+        required: true
+        type: string
+      - description: 群ID
+        in: query
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: 调用成功结构
+          schema:
+            $ref: '#/definitions/app.Response'
+      summary: 加入群
+      tags:
+      - 群组
+  /group/kickoff:
+    post:
+      consumes:
+      - application/json
+      description: 踢出群成员
+      parameters:
+      - description: 用户令牌
+        in: header
+        name: Token
+        required: true
+        type: string
+      - description: The group info
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/group.actionParams'
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: 调用成功结构
+          schema:
+            $ref: '#/definitions/app.Response'
+      summary: 踢出群成员
+      tags:
+      - 群组
+  /group/list:
+    get:
+      consumes:
+      - application/json
+      description: 群组列表
+      parameters:
+      - description: 用户令牌
+        in: header
+        name: Token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: 调用成功结构
+          schema:
+            allOf:
+            - $ref: '#/definitions/app.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/model.GroupList'
+                  type: array
+              type: object
+      summary: 群组列表
+      tags:
+      - 群组
+  /group/nickname:
+    post:
+      consumes:
+      - application/json
+      description: 更新群昵称
+      parameters:
+      - description: The group info
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/group.nicknameParams'
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: 调用成功结构
+          schema:
+            $ref: '#/definitions/app.Response'
+      summary: 更新群昵称
+      tags:
+      - 群组
+  /group/quit:
+    get:
+      consumes:
+      - application/json
+      description: 删除并退出群
+      parameters:
+      - description: 用户令牌
+        in: header
+        name: Token
+        required: true
+        type: string
+      - description: 群ID
+        in: query
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: 调用成功结构
+          schema:
+            $ref: '#/definitions/app.Response'
+      summary: 删除并退出群
+      tags:
+      - 群组
+  /group/user:
+    get:
+      consumes:
+      - application/json
+      description: 获取群成员
+      parameters:
+      - description: 用户令牌
+        in: header
+        name: Token
+        required: true
+        type: string
+      - description: 群ID
+        in: query
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: 调用成功结构
+          schema:
+            allOf:
+            - $ref: '#/definitions/app.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/model.User'
+                  type: array
+              type: object
+      summary: 获取群成员
+      tags:
+      - 群组
+  /image:
+    post:
+      consumes:
+      - application/json
+      description: 上传图片
+      parameters:
+      - description: 用户令牌
+        in: header
+        name: Token
+        required: true
+        type: string
+      - description: 图片
+        in: formData
+        name: file
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: 调用成功结构
+          schema:
+            allOf:
+            - $ref: '#/definitions/app.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+      summary: 上传图片
+      tags:
+      - 上传
+  /login:
+    post:
+      consumes:
+      - application/json
+      description: 通过用户名密码登录
+      parameters:
+      - description: 用户名
+        in: body
+        name: username
+        required: true
+        schema:
+          type: string
+      - description: 密码
+        in: body
+        name: password
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: 调用成功结构
+          schema:
+            allOf:
+            - $ref: '#/definitions/app.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/user.authResponse'
+              type: object
+      summary: 用户登录接口
+      tags:
+      - 用户
+  /login_phone:
+    post:
+      consumes:
+      - application/json
+      description: 仅限手机登录
+      parameters:
+      - description: phone
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/user.phoneLoginParams'
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: 调用成功结构
+          schema:
+            allOf:
+            - $ref: '#/definitions/app.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/user.authResponse'
+              type: object
+      summary: 用户登录接口
+      tags:
+      - 用户
+  /logout:
+    get:
+      consumes:
+      - application/json
+      description: 用户注销登录
+      parameters:
+      - description: user token
+        in: header
+        name: Token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: 调用成功结构
+          schema:
+            $ref: '#/definitions/app.Response'
+      summary: 用户注销登录
+      tags:
+      - 用户
+  /moment/comment:
+    post:
+      consumes:
+      - application/json
+      description: 评论
+      parameters:
+      - description: 用户令牌
+        in: header
+        name: Token
+        required: true
+        type: string
+      - description: create
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/moment.commentParams'
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: 调用成功结构
+          schema:
+            $ref: '#/definitions/app.Response'
+      summary: 评论
+      tags:
+      - 朋友圈
+  /moment/create:
+    post:
+      consumes:
+      - application/json
+      description: 发布朋友圈
+      parameters:
+      - description: 用户令牌
+        in: header
+        name: Token
+        required: true
+        type: string
+      - description: create
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/moment.createParams'
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: 调用成功结构
+          schema:
+            $ref: '#/definitions/app.Response'
+      summary: 发布朋友圈
+      tags:
+      - 朋友圈
+  /moment/like:
+    post:
+      consumes:
+      - application/json
+      description: 点赞
+      parameters:
+      - description: 用户令牌
+        in: header
+        name: Token
+        required: true
+        type: string
+      - description: like
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/moment.likeParams'
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: 调用成功结构
+          schema:
+            $ref: '#/definitions/app.Response'
+      summary: 点赞
+      tags:
+      - 朋友圈
+  /moment/list:
+    get:
+      consumes:
+      - application/json
+      description: 动态列表
+      parameters:
+      - description: 用户令牌
+        in: header
+        name: Token
+        required: true
+        type: string
+      - description: 用户id
+        in: query
+        name: user_id
+        type: integer
+      - description: 页码
+        in: query
+        name: p
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: 调用成功结构
+          schema:
+            allOf:
+            - $ref: '#/definitions/app.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/model.Moment'
+                  type: array
+              type: object
+      summary: 动态列表
+      tags:
+      - 朋友圈
+  /moment/timeline:
+    get:
+      consumes:
+      - application/json
+      description: 我的朋友圈
+      parameters:
+      - description: 用户令牌
+        in: header
+        name: Token
+        required: true
+        type: string
+      - description: 页码
+        in: query
+        name: p
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: 调用成功结构
+          schema:
+            allOf:
+            - $ref: '#/definitions/app.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/model.Moment'
+                  type: array
+              type: object
+      summary: 我的朋友圈
+      tags:
+      - 朋友圈
+  /reg:
+    post:
+      consumes:
+      - application/json
+      description: 用户注册
+      parameters:
+      - description: register
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/user.registerParams'
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: 调用成功结构
+          schema:
+            $ref: '#/definitions/app.Response'
+      summary: 注册
+      tags:
+      - 用户
+  /report:
+    post:
+      consumes:
+      - application/json
+      description: 好友举报
+      parameters:
+      - description: 用户令牌
+        in: header
+        name: Token
+        required: true
+        type: string
+      - description: report
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/user.reportParams'
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: '{"code":0,"msg":"OK","data":{}}'
+          schema:
+            type: string
+      summary: 好友举报
+      tags:
+      - 好友
+  /send_code:
+    get:
+      consumes:
+      - application/json
+      description: 根据手机号获取校验码
+      parameters:
+      - description: 手机号
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/user.sendCodeParams'
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: 调用成功结构
+          schema:
+            $ref: '#/definitions/app.Response'
+      summary: 根据手机号获取校验码
+      tags:
+      - 用户
+  /user/edit:
+    post:
+      consumes:
+      - application/json
+      description: Update a user by ID
+      parameters:
+      - description: 用户令牌
+        in: header
+        name: Token
+        required: true
+        type: string
+      - description: The user info
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/user.updateParams'
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: '{"code":0,"msg":"OK","data":{}}'
+          schema:
+            type: string
+      summary: Update a user info by the user identifier
+      tags:
+      - 用户
+  /user/profile:
+    get:
+      consumes:
+      - application/json
+      description: 获取个人资料
+      parameters:
+      - description: 用户令牌
+        in: header
+        name: Token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: 调用成功结构
+          schema:
+            allOf:
+            - $ref: '#/definitions/app.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/resource.UserResponse'
+              type: object
+      summary: 获取个人资料
+      tags:
+      - 用户
+  /user/search:
+    get:
+      consumes:
+      - application/json
+      description: 搜索用户
+      parameters:
+      - description: 用户令牌
+        in: header
+        name: Token
+        required: true
+        type: string
+      - description: 搜索关键词
+        in: body
+        name: keyword
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: 调用成功结构
+          schema:
+            allOf:
+            - $ref: '#/definitions/app.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/resource.UserResponse'
+                  type: array
+              type: object
+      summary: 搜索用户
+      tags:
+      - 用户
+  /user/tag:
+    get:
+      consumes:
+      - application/json
+      description: 标签列表
+      parameters:
+      - description: 用户令牌
+        in: header
+        name: Token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: 调用成功结构
+          schema:
+            allOf:
+            - $ref: '#/definitions/app.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/model.UserTag'
+                  type: array
+              type: object
+      summary: 标签列表
+      tags:
+      - 用户
+securityDefinitions:
+  Token:
+    in: header
+    name: Token
+    type: apiKey
+swagger: "2.0"
