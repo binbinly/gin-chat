@@ -1,0 +1,9 @@
+default:
+  Name: railway
+  Addr: containers-us-west-207.railway.app:6037
+  UserName: root
+  Password: TIsrEO9hjwcwSkMjKYRP
+  Debug: false
+  MaxIdleConn: 10
+  MaxOpenConn: 60
+  ConnMaxLifeTime: 4h
