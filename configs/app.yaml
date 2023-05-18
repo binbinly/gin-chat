@@ -1,4 +1,5 @@
 Name: gin-chat
+Url: http://127.0.0.1:9050
 Mode: debug      # debug, release, test
 JwtSecret: TQ2MNWIB2zK0z9JCqUC6WcTG9pMTnX12CLuVSop5Xr2owx4M9JTJIzBnMMYeWwRs
 JwtTimeout: 86400

@@ -12,7 +12,7 @@ import (
 // createParams 发布朋友圈
 type createParams struct {
 	Content  string `json:"content" binding:"omitempty,max=500" example:"test"`    // 内容
-	Image    string `json:"image" binding:"omitempty,max=500" example:"a.jpg"`     // 图片
+	Image    string `json:"image" binding:"omitempty,max=900" example:"a.jpg"`     // 图片
 	Video    string `json:"video" binding:"omitempty,max=100" example:"a.mp4"`     // 视频
 	Type     int8   `json:"type" binding:"required,oneof=1 2 3" example:"1"`       // 类型 1=文本 2=图文 3=视频
 	Location string `json:"location" binding:"omitempty,max=100" example:"北京"`     // 地理位置

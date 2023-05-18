@@ -25,9 +25,9 @@ export function httpGet(url) {
 }
 
 export function uploadFile(file) {
-  return new Promise((result, reject) => {
-    api
-      .post(api.Upload, { file }, true, true)
+  console.log('upload file', file)
+  return api
+      .upload(api.Upload, { file })
       .then(url => {
         return url
       })
@@ -35,5 +35,4 @@ export function uploadFile(file) {
         console.error('get upload url', e)
         reject(e)
       })
-  })
 }

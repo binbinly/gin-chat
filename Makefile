@@ -12,6 +12,7 @@ dev:
 	$(GOBUILD) run main.go server
 
 build:
+	cp -r configs build/configs
 	$(GOBUILD) -o build/gin-chat main.go
 
 test:

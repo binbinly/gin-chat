@@ -26,7 +26,7 @@ func Cors(c *gin.Context) {
 	c.Header("Access-Control-Expose-Headers", "Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Content-Type")
 	//允许客户端传递校验信息比如 cookie (重要)
 	c.Header("Access-Control-Allow-Credentials", "true")
-	c.Header("content-type", "application/json")
+	//c.Header("content-type", "application/json")
 
 	// 放行所有OPTIONS方法，因为有的模板是要请求两次的
 	if c.Request.Method == "OPTIONS" {

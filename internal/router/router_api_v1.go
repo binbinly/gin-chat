@@ -25,7 +25,7 @@ func setApiV1(v1 *gin.RouterGroup) {
 	up := v1.Group("/upload")
 	up.Use(mw.JWT())
 	{
-		up.POST("/image", upload.Image)
+		up.POST("/file", upload.File)
 	}
 	// 用户模块
 	u := v1.Group("/user")

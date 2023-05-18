@@ -14,7 +14,7 @@ const api = {
   //表情
   Emoticon: '/emoticon/list',
   //文件上传
-  Upload: '/upload/image',
+  Upload: '/upload/file',
   Apply: {
     //申请添加好友
     Friend: '/apply/friend',
@@ -119,7 +119,28 @@ const api = {
       hideloading,
       auth: true
     })
-  }
+  },
+  upload(url, data) {
+    return request({
+      url,
+      method: 'post',
+      headers: {'Content-Type': 'multipart/form-data'},
+      onUploadProgress: function (axiosProgressEvent) {
+        /*{
+          loaded: number;
+          total?: number;
+          progress?: number; // in range [0..1]
+          bytes: number; // how many bytes have been transferred since the last trigger (delta)
+          estimated?: number; // estimated time in seconds
+          rate?: number; // upload speed in bytes
+          upload: true; // upload sign
+        }*/
+      },
+      data,
+      auth:true,
+      hideloading:true
+    })
+  },
 }
 
 export default api

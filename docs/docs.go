@@ -26,6 +26,9 @@ const docTemplate = `{
         "/apply/count": {
             "get": {
                 "description": "待处理申请数量",
+                "consumes": [
+                    "application/json"
+                ],
                 "produces": [
                     "application/json"
                 ],
@@ -1355,57 +1358,6 @@ const docTemplate = `{
                 }
             }
         },
-        "/image": {
-            "post": {
-                "description": "上传图片",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "上传"
-                ],
-                "summary": "上传图片",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "用户令牌",
-                        "name": "Token",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "file",
-                        "description": "图片",
-                        "name": "file",
-                        "in": "formData",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "0": {
-                        "description": "调用成功结构",
-                        "schema": {
-                            "allOf": [
-                                {
-                                    "$ref": "#/definitions/app.Response"
-                                },
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "data": {
-                                            "type": "string"
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    }
-                }
-            }
-        },
         "/login": {
             "post": {
                 "description": "通过用户名密码登录",
@@ -1878,6 +1830,57 @@ const docTemplate = `{
                         "description": "调用成功结构",
                         "schema": {
                             "$ref": "#/definitions/app.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/upload/file": {
+            "post": {
+                "description": "上传文件",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "上传"
+                ],
+                "summary": "上传文件",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户令牌",
+                        "name": "Token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "file",
+                        "description": "文件",
+                        "name": "file",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "0": {
+                        "description": "调用成功结构",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/app.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     }
                 }
@@ -3007,6 +3010,7 @@ const docTemplate = `{
                 "avatar": {
                     "description": "头像",
                     "type": "string",
+                    "maxLength": 60,
                     "example": "http://example"
                 },
                 "nickname": {

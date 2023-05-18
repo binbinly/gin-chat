@@ -9,6 +9,7 @@ import (
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
+	"net/http"
 )
 
 // NewRouter Load loads the middlewares, routes, handlers.
@@ -29,7 +30,7 @@ func NewRouter(debug bool) *gin.Engine {
 	// HealthCheck 健康检查路由
 	g.GET("/health", app.HealthCheck)
 	// 静态资源，主要是图片
-	g.Static("/assets", "./assets")
+	g.StaticFS("/assets", http.Dir("assets"))
 
 	// 返回404，仅在debug环境下开启，线上关闭
 	if debug {

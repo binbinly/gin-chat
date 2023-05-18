@@ -1,31 +1,22 @@
-# vue-h5-template
+# gin-chat-frontend
 
-基于 vue-cli4.0 + webpack 4 + vant ui + sass+ rem 适配方案+axios 封装，构建手机端模板脚手架
+使用 vue-h5-template 其基于 vue-cli4.0 + webpack 4 + vant ui + sass+ rem 适配方案+axios 封装，构建手机端模板脚手架
 
 掘金: [vue-cli4 vant rem 移动端框架方案](https://juejin.im/post/5cfefc73f265da1bba58f9f7)
 
 [查看 demo](https://sunniejs.cn/vue-h5-template/#/) 建议手机端查看
-
-<p>
-  <img src="./static/demo.png" width="320" style="display:inline;">
-</p>
 
 ### Node 版本要求
 
 `Vue CLI` 需要 Node.js 8.9 或更高版本 (推荐 8.11.0+)。你可以使用 [nvm](https://github.com/nvm-sh/nvm) 或
 [nvm-windows](https://github.com/coreybutler/nvm-windows) 在同一台电脑中管理多个 Node 版本。
 
-本示例 Node.js 12.14.1
+本示例 Node.js 18.15.0
 
 ### 启动项目
 
 ```bash
-
-git clone https://github.com/sunniejs/vue-h5-template.git
-
-cd vue-h5-template
-
-npm install
+npm install or yarn install
 
 npm run serve
 ```
@@ -1129,20 +1120,4 @@ Vscode setting.json 设置
 [vue-cli4-config](https://github.com/staven630/vue-cli4-config)  
 [vue-element-admin](https://github.com/PanJiaChen/vue-element-admin)
 
-# 关于我
 
-获取更多技术相关文章，关注公众号”前端女塾“。
-
-回复加群，即可加入”前端仙女群“
-
- <p>
-  <img src="./static/gognzhonghao.jpg" width="256" style="display:inline;">
-</p>
-
-扫描添加下方的微信并备注 Sol 加交流群，交流学习，及时获取代码最新动态。
-
-<p>
-  <img src="./static/me.png" width="256" style="display:inline;">
-</p>
- 
-如果对你有帮助送我一颗小星星（づ￣3￣）づ╭❤～

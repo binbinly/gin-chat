@@ -12,6 +12,7 @@ var (
 
 type Config struct {
 	Name       string
+	Url        string
 	Mode       string
 	JwtSecret  string
 	JwtTimeout int64

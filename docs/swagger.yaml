@@ -677,6 +677,7 @@ definitions:
       avatar:
         description: 头像
         example: http://example
+        maxLength: 60
         type: string
       nickname:
         description: 昵称
@@ -746,6 +747,8 @@ info:
 paths:
   /apply/count:
     get:
+      consumes:
+      - application/json
       description: 待处理申请数量
       parameters:
       - description: 用户令牌
@@ -1588,37 +1591,6 @@ paths:
       summary: 获取群成员
       tags:
       - 群组
-  /image:
-    post:
-      consumes:
-      - application/json
-      description: 上传图片
-      parameters:
-      - description: 用户令牌
-        in: header
-        name: Token
-        required: true
-        type: string
-      - description: 图片
-        in: formData
-        name: file
-        required: true
-        type: file
-      produces:
-      - application/json
-      responses:
-        "0":
-          description: 调用成功结构
-          schema:
-            allOf:
-            - $ref: '#/definitions/app.Response'
-            - properties:
-                data:
-                  type: string
-              type: object
-      summary: 上传图片
-      tags:
-      - 上传
   /login:
     post:
       consumes:
@@ -1920,6 +1892,37 @@ paths:
       summary: 根据手机号获取校验码
       tags:
       - 用户
+  /upload/file:
+    post:
+      consumes:
+      - application/json
+      description: 上传文件
+      parameters:
+      - description: 用户令牌
+        in: header
+        name: Token
+        required: true
+        type: string
+      - description: 文件
+        in: formData
+        name: file
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "0":
+          description: 调用成功结构
+          schema:
+            allOf:
+            - $ref: '#/definitions/app.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+      summary: 上传文件
+      tags:
+      - 上传
   /user/edit:
     post:
       consumes:

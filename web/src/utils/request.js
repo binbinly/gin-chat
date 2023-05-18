@@ -10,19 +10,7 @@ import { getStorage } from '@/utils/index.js'
 const request = axios.create({
   baseURL: baseApi, // url = base api url + request url
   timeout: 5000, // request timeout
-  withCredentials: true,
-  headers: { 'Content-Type': 'application/json;charset=UTF-8' },
-  onUploadProgress: function (axiosProgressEvent) {
-    /*{
-      loaded: number;
-      total?: number;
-      progress?: number; // in range [0..1]
-      bytes: number; // how many bytes have been transferred since the last trigger (delta)
-      estimated?: number; // estimated time in seconds
-      rate?: number; // upload speed in bytes
-      upload: true; // upload sign
-    }*/
-  },
+  headers: { 'Content-Type': 'application/json; charset=UTF-8' },
 })
 
 // request拦截器 request interceptor

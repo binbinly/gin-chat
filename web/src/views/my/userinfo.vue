@@ -62,7 +62,6 @@ import { userEdit } from '@/api/user.js'
 import { mapState } from 'vuex'
 import { Toast } from 'vant'
 import { uploadFile } from '@/api/common.js'
-import { dataURLtoBlob } from '@/utils/index.js'
 export default {
   mixins: [auth],
   data() {

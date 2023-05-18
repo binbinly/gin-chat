@@ -1,0 +1,13 @@
+<html>
+    <body>
+        asdfsdf
+<script>
+var xhr = new XMLHttpRequest();
+xhr.open('POST', 'https://gin-chat-production.up.railway.app/v1/reg');
+xhr.send(null);
+xhr.onload = function(e) {
+    var xhr = e.target;
+    console.log(xhr.responseText);
+}
+</script>
+</body></html>

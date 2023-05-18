@@ -11,9 +11,9 @@ import (
 
 // updateParams 修改用户信息
 type updateParams struct {
-	Avatar   string `json:"avatar" binding:"omitempty,url" example:"http://example"` // 头像
-	Nickname string `json:"nickname" binding:"omitempty,max=30" example:"test"`      // 昵称
-	Sign     string `json:"sign" binding:"omitempty,max=90" example:"test"`          // 签名
+	Avatar   string `json:"avatar" binding:"omitempty,max=90" example:"http://example"` // 头像
+	Nickname string `json:"nickname" binding:"omitempty,max=30" example:"test"`         // 昵称
+	Sign     string `json:"sign" binding:"omitempty,max=90" example:"test"`             // 签名
 }
 
 // Update 更新用户信息
