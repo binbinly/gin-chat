@@ -11,7 +11,7 @@ type ApplyListResponse struct {
 // ApplyListResource 申请列表转化
 func ApplyListResource(applys []*model.ApplyModel, users []*model.UserModel) []*ApplyListResponse {
 	um := usersToMap(users)
-	list := make([]*ApplyListResponse, len(applys))
+	list := make([]*ApplyListResponse, 0, len(applys))
 	for _, apply := range applys {
 		if user, ok := um[apply.UserID]; ok {
 			list = append(list, &ApplyListResponse{

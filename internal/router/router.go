@@ -19,7 +19,7 @@ func NewRouter(debug bool) *gin.Engine {
 	g.Use(middleware.NoCache)
 	g.Use(middleware.Cors)
 	g.Use(middleware.Secure)
-	g.Use(middleware.HandleErrors)
+	//g.Use(middleware.HandleErrors)
 
 	g.NoRoute(app.RouteNotFound)
 	g.NoMethod(app.RouteNotFound)

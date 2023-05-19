@@ -2,15 +2,15 @@
   <div>
     <!-- 时间显示 -->
     <div v-if="showTime" class="flex align-center justify-center pb-1 pt-1">
-      <span class="text-light-muted">{{showTime}}</span>
+      <span class="text-light-muted font-small">{{showTime}}</span>
     </div>
     <!-- 撤回消息 -->
     <div v-if="item.isremove" ref="isremove" class="flex align-center justify-center pb-1 pt-1">
-      <span class="text-light-muted">{{ isself ? '你' : '对方' }}撤回了一条信息</span>
+      <span class="text-light-muted font-small">{{ isself ? '你' : '对方' }}撤回了一条信息</span>
     </div>
     <!-- 系统消息 -->
     <div v-if="isSystem" ref="isremove" class="flex align-center justify-center pb-1 pt-1">
-      <span class="text-light-muted">{{item.content}}</span>
+      <span class="text-light-muted font-small">{{item.content}}</span>
     </div>
     <!-- 气泡 -->
     <div v-if="!isSystem && !item.isremove" class="flex align-start position-relative mb-2" :class="!isself ? 'justify-start' : 'justify-end'"

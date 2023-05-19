@@ -4,7 +4,7 @@
 
 ## 项目介绍
 
-`chat` 是一套仿微信ui的即时通讯全栈学习项目，项目UI出自 [uni-app实战仿微信app开发](https://study.163.com/course/introduction/1209487898.htm)
+`gin-chat` 是一套仿微信ui的即时通讯全栈学习项目，项目UI出自 [uni-app实战仿微信app开发](https://study.163.com/course/introduction/1209487898.htm)
 
 - 主要功能点已实现
   ![功能点](/assets/img/app.png)

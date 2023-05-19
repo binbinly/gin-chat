@@ -24,7 +24,7 @@ func FriendResource(f *model.FriendModel, u *model.UserModel, tags []string) *Fr
 	info := &FriendResponse{
 		User: UserResource(u),
 	}
-	if f.ID == 0 {
+	if f == nil || f.ID == 0 {
 		info.Friend = nil
 	} else {
 		info.IsFriend = true

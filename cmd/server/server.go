@@ -6,6 +6,7 @@ import (
 	"gin-chat/internal/service"
 	"gin-chat/pkg/app"
 	"gin-chat/pkg/config"
+	"github.com/binbinly/pkg/logger"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/cobra"
 )
@@ -57,6 +58,10 @@ func run() {
 	// set proxy to http://[host]/ws -> ws://[host]
 	if app.Conf.Proxy {
 		r.Any("/ws", app.ProxyGinHandler("http://127.0.0.1"+app.Conf.Websocket.Addr))
+	}
+	// init logger level
+	if !app.Conf.Debug {
+		logger.InitLogger(logger.WithLevel(logger.InfoLevel))
 	}
 	http.Handler = r
 

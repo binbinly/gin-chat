@@ -1,14 +1,15 @@
 package friend
 
 import (
-	"github.com/binbinly/pkg/errno"
-	"github.com/gin-gonic/gin"
-	"github.com/spf13/cast"
-
 	"gin-chat/internal/api"
+	"gin-chat/internal/model"
 	"gin-chat/internal/resource"
 	"gin-chat/internal/service"
 	"gin-chat/pkg/app"
+	"github.com/binbinly/pkg/errno"
+	"github.com/gin-gonic/gin"
+	"github.com/pkg/errors"
+	"github.com/spf13/cast"
 )
 
 // Info 获取好友信息
@@ -28,7 +29,10 @@ func Info(c *gin.Context) {
 		return
 	}
 	f, u, err := service.Svc.FriendInfo(c.Request.Context(), api.GetUserID(c), fid)
-	if e := api.Error(err); e != nil {
+	// 还不是好友关系
+	if errors.Is(err, service.ErrFriendNotRecord) {
+		f = &model.FriendModel{}
+	} else if e := api.Error(err); e != nil {
 		app.Error(c, e)
 		return
 	}
