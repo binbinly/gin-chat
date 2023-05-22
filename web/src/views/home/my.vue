@@ -13,8 +13,8 @@
       </template>
       <template #title>
         <div class="flex flex-column">
-          <span class="text-dark font-lg font-weight-bold">{{nickname}}</span>
-          <span class="text-light-muted">仿微信号：{{user.username}}</span>
+          <span class="text-dark font-weight-bold">{{nickname}}</span>
+          <span class="text-light-muted font">仿微信号：{{user.username}}</span>
         </div>
       </template>
       <template #default>

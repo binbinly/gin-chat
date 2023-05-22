@@ -3,7 +3,7 @@ package model
 // FriendModel 好友模型
 type FriendModel struct {
 	PriID
-	UID
+	UserID   int    `gorm:"column:user_id;not null;type:int(11) unsigned;uniqueIndex:idx_uid_fid;comment:用户id" json:"user_id"`
 	FriendID int    `gorm:"column:friend_id;type:int(11) unsigned;not null;uniqueIndex:idx_uid_fid;comment:好友id" json:"friend_id"`
 	Nickname string `gorm:"column:nickname;type:varchar(60);not null;comment:备注昵称" json:"nickname"`
 	LookMe   int8   `gorm:"column:look_me;not null;default:1;comment:看我" json:"look_me"`

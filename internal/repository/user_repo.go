@@ -63,7 +63,6 @@ func (r *Repo) UserUpdatePwd(ctx context.Context, user *model.UserModel) error {
 
 // GetUserByID 获取用户信息
 func (r *Repo) GetUserByID(ctx context.Context, id int) (user *model.UserModel, err error) {
-
 	if err = r.queryCache(ctx, userCacheKey(id), &user, func(data any) error {
 		// 从数据库中获取
 		if err = r.db.WithContext(ctx).First(data, id).Error; err != nil {

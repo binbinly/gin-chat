@@ -82,7 +82,7 @@ func TestRepo_LikeCreate(t *testing.T) {
 			args: args{
 				ctx: context.Background(),
 				model: &model.MomentLikeModel{
-					UID:      model.UID{UserID: 1},
+					UserID:   1,
 					MomentID: 2,
 				},
 			},

@@ -9,7 +9,7 @@
         <div class="flex align-center">
           <!-- 返回按钮 -->
           <div class="flex align-center justify-center" hover-class="bg-hover-light" @click="back" style="height: 40px;width: 40px;">
-            <van-icon name="arrow-left" class="font-lg" :color="buttonColor" />
+            <van-icon name="arrow-left" size="22" :color="buttonColor" />
           </div>
           <!-- 标题 -->
           <span v-if="title" class="font">{{title}}</span>
@@ -17,7 +17,7 @@
         <!-- 右边 -->
         <div class="flex align-center">
           <div class="flex align-center justify-center" hover-class="bg-hover-light" style="height: 40px;width: 40px;" @click="$emit('clickRight')">
-            <van-icon name="photograph" class="font-lg" :color="buttonColor" />
+            <van-icon name="photograph" size="22" :color="buttonColor" />
           </div>
         </div>
       </div>

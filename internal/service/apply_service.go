@@ -85,7 +85,7 @@ func (s *Service) ApplyHandle(ctx context.Context, uid, fid int, nickname string
 	tx := mysql.DB.Begin()
 	// 我对好友的模型
 	u := &model.FriendModel{
-		UID:      model.UID{UserID: uid},
+		UserID:   uid,
 		FriendID: fid,
 		Nickname: nickname,
 		LookMe:   lookMe,
@@ -93,7 +93,7 @@ func (s *Service) ApplyHandle(ctx context.Context, uid, fid int, nickname string
 	}
 	// 好友对我的模型
 	f := &model.FriendModel{
-		UID:      model.UID{UserID: info.UserID},
+		UserID:   info.UserID,
 		FriendID: uid,
 		Nickname: info.Nickname,
 		LookMe:   info.LookMe,

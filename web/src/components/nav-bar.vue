@@ -3,7 +3,7 @@
     <!-- 导航 -->
     <van-nav-bar fixed placeholder>
       <template #left v-if="title">
-        <span class="font">{{getTitle}}</span>
+        <span class="font-weight-bolder">{{getTitle}}</span>
       </template>
       <template #right>
         <van-icon class="mr-1" name="search" @click="search" size="24" />

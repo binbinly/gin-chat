@@ -27,7 +27,7 @@ func TestRepo_FriendCreate(t *testing.T) {
 				ctx: context.Background(),
 				tx:  mysql.DB,
 				friend: &model.FriendModel{
-					UID:      model.UID{UserID: 1},
+					UserID:   1,
 					FriendID: 2,
 					Nickname: "test",
 					LookMe:   0,

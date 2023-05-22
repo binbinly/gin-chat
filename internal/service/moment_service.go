@@ -202,7 +202,7 @@ func (s *Service) MomentLike(ctx context.Context, uid, id int) error {
 	}
 	// 创建点赞记录
 	mLike := &model.MomentLikeModel{
-		UID:      model.UID{UserID: uid},
+		UserID:   uid,
 		MomentID: id,
 	}
 

@@ -3,7 +3,7 @@
     <free-avater :src="item.user.avatar" :uid="item.user.id" />
     <div class="pl-1 flex-1 flex flex-column">
       <!-- 昵称 -->
-      <span class="text-hover-primary" style="margin-bottom:5px;">{{item.user.name}}</span>
+      <span class="text-hover-primary font" style="margin-bottom:5px;">{{item.user.name}}</span>
       <!-- 内容 -->
       <span v-if="item.content" class="text-dark font-sm">{{item.content}}</span>
       <!-- 图片 -->
@@ -29,7 +29,7 @@
       </div>
       <!-- 时间|操作 -->
       <div class="flex align-center justify-between">
-        <span class="text-light-muted">{{item.created_at|formatTime}}</span>
+        <span class="text-light-muted font-sm">{{item.created_at|formatTime}}</span>
         <div class="p-1">
           <van-popover v-model="showPopover" theme="dark" trigger="click" placement="left" :actions="actions" @select="onSelect">
             <template #reference>
@@ -54,11 +54,11 @@
             <div class="flex" v-for="(c,ci) in item.comments" :key="ci">
               <span v-if="!c.reply" class="text-hover-primary">{{c.user.name}}：</span>
               <div v-else class="flex align-center">
-                <span class="text-hover-primary">{{c.user.name}} </span>
-                <span class="text-muted" style="margin:0 2px;">回复</span>
-                <span class="text-hover-primary">{{c.reply.name}}：</span>
+                <span class="text-hover-primary font-sm">{{c.user.name}} </span>
+                <span class="text-muted font-sm" style="margin:0 2px;">回复</span>
+                <span class="text-hover-primary font-sm">{{c.reply.name}}：</span>
               </div>
-              <span class="text-dark flex-1" @click.stop="$emit('reply',{
+              <span class="text-dark flex-1 font-sm" @click.stop="$emit('reply',{
 								item,
 								index,
 								reply:c.user
