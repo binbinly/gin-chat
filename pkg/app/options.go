@@ -3,7 +3,7 @@ package app
 import (
 	"net/url"
 
-	"gin-chat/pkg/transport"
+	"github.com/binbinly/pkg/transport"
 )
 
 type Option func(o *options)

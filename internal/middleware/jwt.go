@@ -3,12 +3,12 @@ package middleware
 import (
 	"errors"
 
+	"github.com/binbinly/pkg/auth"
 	"github.com/binbinly/pkg/errno"
 	"github.com/binbinly/pkg/logger"
 	"github.com/gin-gonic/gin"
 
 	"gin-chat/pkg/app"
-	"gin-chat/pkg/auth"
 )
 
 // JWT 认证中间件

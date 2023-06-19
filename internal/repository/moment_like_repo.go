@@ -25,28 +25,28 @@ type MomentLike interface {
 
 // LikeCreate 创建-点赞
 func (r *Repo) LikeCreate(ctx context.Context, model *model.MomentLikeModel) (id int, err error) {
-	if err = r.db.WithContext(ctx).Create(model).Error; err != nil {
+	if err = r.DB.WithContext(ctx).Create(model).Error; err != nil {
 		return 0, errors.Wrapf(err, "[repo.moment_like] create")
 	}
-	r.delCache(ctx, likeCacheKey(model.MomentID))
+	r.DelCache(ctx, likeCacheKey(model.MomentID))
 	return model.ID, nil
 }
 
 // LikeDelete 删除-取消点赞
 func (r *Repo) LikeDelete(ctx context.Context, userID, momentID int) error {
-	if err := r.db.WithContext(ctx).Where("user_id=? and moment_id=?", userID, momentID).
+	if err := r.DB.WithContext(ctx).Where("user_id=? and moment_id=?", userID, momentID).
 		Delete(&model.MomentLikeModel{}).Error; err != nil {
 		return errors.Wrapf(err, "[repo.moment_like] delete")
 	}
-	r.delCache(ctx, likeCacheKey(momentID))
+	r.DelCache(ctx, likeCacheKey(momentID))
 	return nil
 }
 
 // GetLikeUserIdsByMomentID 获取动态的所有点赞用户id列表
 func (r *Repo) GetLikeUserIdsByMomentID(ctx context.Context, momentID int) (userIds []int, err error) {
-	if err = r.queryCache(ctx, likeCacheKey(momentID), &userIds, func(data any) error {
+	if err = r.QueryCache(ctx, likeCacheKey(momentID), &userIds, 0, func(data any) error {
 		// 从数据库中获取
-		if err = r.db.WithContext(ctx).Model(&model.MomentLikeModel{}).Select("user_id").
+		if err = r.DB.WithContext(ctx).Model(&model.MomentLikeModel{}).Select("user_id").
 			Where("moment_id=?", momentID).Order("id asc").Pluck("user_id", data).Error; err != nil {
 			return err
 		}
@@ -70,7 +70,7 @@ func (r *Repo) GetLikesByMomentIds(ctx context.Context, mIds []int) (likes map[i
 	}
 	// 从cache批量获取
 	cacheMap := make(map[string]*[]int)
-	if err = r.cache.MultiGet(ctx, keys, cacheMap, func() any {
+	if err = r.Cache.MultiGet(ctx, keys, cacheMap, func() any {
 		return &[]int{}
 	}); err != nil {
 		return nil, errors.Wrapf(err, "[repo.moment_like] multi get cache data")

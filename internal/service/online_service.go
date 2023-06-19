@@ -5,10 +5,10 @@ import (
 	"encoding/json"
 	"time"
 
+	"github.com/binbinly/pkg/auth"
 	"github.com/binbinly/pkg/logger"
 	"github.com/pkg/errors"
 
-	"gin-chat/pkg/auth"
 	"gin-chat/pkg/redis"
 )
 

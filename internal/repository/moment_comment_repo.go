@@ -23,18 +23,18 @@ type MomentComment interface {
 
 // CommentCreate 创建
 func (r *Repo) CommentCreate(ctx context.Context, model *model.MomentCommentModel) (id int, err error) {
-	if err = r.db.WithContext(ctx).Create(model).Error; err != nil {
+	if err = r.DB.WithContext(ctx).Create(model).Error; err != nil {
 		return 0, errors.Wrapf(err, "[repo.moment_comment] create")
 	}
-	r.delCache(ctx, commentCacheKey(model.MomentID))
+	r.DelCache(ctx, commentCacheKey(model.MomentID))
 	return model.ID, nil
 }
 
 // GetCommentsByMomentID 获取动态下所有评论
 func (r *Repo) GetCommentsByMomentID(ctx context.Context, momentID int) (list []*model.MomentCommentModel, err error) {
-	if err = r.queryCache(ctx, commentCacheKey(momentID), &list, func(data any) error {
+	if err = r.QueryCache(ctx, commentCacheKey(momentID), &list, 0, func(data any) error {
 		// 从数据库中获取
-		if err = r.db.WithContext(ctx).Where("moment_id=?", momentID).
+		if err = r.DB.WithContext(ctx).Where("moment_id=?", momentID).
 			Order("id asc").Find(data).Error; err != nil {
 			return err
 		}
@@ -58,7 +58,7 @@ func (r *Repo) GetCommentsByMomentIds(ctx context.Context, mIds []int) (mComment
 	}
 	// 从cache批量获取
 	cacheMap := make(map[string]*[]*model.MomentCommentModel)
-	if err = r.cache.MultiGet(ctx, keys, cacheMap, func() any {
+	if err = r.Cache.MultiGet(ctx, keys, cacheMap, func() any {
 		return &[]*model.MomentCommentModel{}
 	}); err != nil {
 		return nil, errors.Wrapf(err, "[repo.moment_comment] multi get cache data err")

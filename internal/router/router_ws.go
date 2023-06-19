@@ -2,9 +2,9 @@ package router
 
 import (
 	"github.com/binbinly/pkg/logger"
+	"github.com/binbinly/pkg/transport/ws"
 
 	"gin-chat/internal/websocket"
-	"gin-chat/pkg/transport/ws"
 )
 
 // NewWsRouter 实例化websocket路由

@@ -28,7 +28,7 @@ func (r *Repo) TimelineBatchCreate(ctx context.Context, tx *gorm.DB, models []*m
 // TimelineExist 记录是否存在
 func (r *Repo) TimelineExist(ctx context.Context, userID, momentID int) (is bool, err error) {
 	var c int64
-	if err = r.db.WithContext(ctx).Model(&model.MomentTimelineModel{}).
+	if err = r.DB.WithContext(ctx).Model(&model.MomentTimelineModel{}).
 		Where("user_id=? and moment_id=?", userID, momentID).Count(&c).Error; err != nil {
 		return false, errors.Wrap(err, "[repo.moment_timeline] query db")
 	}

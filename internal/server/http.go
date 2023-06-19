@@ -2,7 +2,8 @@ package server
 
 import (
 	"gin-chat/pkg/app"
-	"gin-chat/pkg/transport/http"
+
+	"github.com/binbinly/pkg/transport/http"
 )
 
 // NewHTTPServer http server

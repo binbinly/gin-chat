@@ -29,17 +29,17 @@ func (r *Repo) GroupCreate(ctx context.Context, tx *gorm.DB, group *model.GroupM
 	if err = tx.WithContext(ctx).Create(&group).Error; err != nil {
 		return 0, errors.Wrapf(err, "[repo.group] create")
 	}
-	r.delCache(ctx, groupAllCacheKey(group.UserID))
+	r.DelCache(ctx, groupAllCacheKey(group.UserID))
 	return group.ID, nil
 }
 
 // GroupSave 保存群组信息
 func (r *Repo) GroupSave(ctx context.Context, group *model.GroupModel) (err error) {
-	if err = r.db.WithContext(ctx).Save(group).Error; err != nil {
+	if err = r.DB.WithContext(ctx).Save(group).Error; err != nil {
 		return errors.Wrapf(err, "[repo.group] save")
 	}
-	r.delCache(ctx, groupAllCacheKey(group.UserID))
-	r.delCache(ctx, groupCacheKey(group.ID))
+	r.DelCache(ctx, groupAllCacheKey(group.UserID))
+	r.DelCache(ctx, groupCacheKey(group.ID))
 	return nil
 }
 
@@ -48,16 +48,16 @@ func (r *Repo) GroupDelete(ctx context.Context, tx *gorm.DB, group *model.GroupM
 	if err = tx.WithContext(ctx).Delete(group).Error; err != nil {
 		return errors.Wrapf(err, "[repo.group] delete")
 	}
-	r.delCache(ctx, groupAllCacheKey(group.UserID))
-	r.delCache(ctx, groupCacheKey(group.ID))
+	r.DelCache(ctx, groupAllCacheKey(group.UserID))
+	r.DelCache(ctx, groupCacheKey(group.ID))
 	return err
 }
 
 // GetGroupByID 获取群组信息
 func (r *Repo) GetGroupByID(ctx context.Context, id int) (group *model.GroupModel, err error) {
-	if err = r.queryCache(ctx, groupCacheKey(id), &group, func(data any) error {
+	if err = r.QueryCache(ctx, groupCacheKey(id), &group, 0, func(data any) error {
 		// 从数据库中获取
-		if err = r.db.WithContext(ctx).First(data, id).Error; err != nil {
+		if err = r.DB.WithContext(ctx).First(data, id).Error; err != nil {
 			return err
 		}
 		return nil
@@ -69,9 +69,9 @@ func (r *Repo) GetGroupByID(ctx context.Context, id int) (group *model.GroupMode
 
 // GetGroupsByUserID 群组列表
 func (r *Repo) GetGroupsByUserID(ctx context.Context, userID int) (list []*model.GroupList, err error) {
-	if err = r.queryCache(ctx, groupAllCacheKey(userID), &list, func(data any) error {
+	if err = r.QueryCache(ctx, groupAllCacheKey(userID), &list, 0, func(data any) error {
 		// 从数据库中获取
-		if err = r.db.WithContext(ctx).Model(&model.GroupUserModel{}).Distinct().Select("`group`.id, `group`.name, `group`.avatar").
+		if err = r.DB.WithContext(ctx).Model(&model.GroupUserModel{}).Distinct().Select("`group`.id, `group`.name, `group`.avatar").
 			Joins("left join `group` on `group`.id = group_user.group_id").
 			Where("group_user.user_id=?", userID).Scan(&data).Error; err != nil {
 			return err

@@ -3,16 +3,16 @@ package service
 import (
 	"context"
 	"fmt"
+	"github.com/binbinly/pkg/cache"
 
 	"github.com/redis/go-redis/v9"
 
 	"gin-chat/internal/model"
 	"gin-chat/internal/repository"
 	"gin-chat/internal/websocket"
-	"gin-chat/pkg/cache"
 	"gin-chat/pkg/mysql"
 	redis2 "gin-chat/pkg/redis"
-	"gin-chat/pkg/transport/ws"
+	"github.com/binbinly/pkg/transport/ws"
 )
 
 const (
@@ -66,7 +66,7 @@ func New(ws ws.Server, opts ...Option) (s *Service) {
 	rdb := redis2.New()
 	s = &Service{
 		opts: newOptions(opts...),
-		repo: repository.New(mysql.NewDB(), cache.NewCache(rdb)),
+		repo: repository.New(mysql.NewDB(), cache.NewRedisCache(rdb)),
 		rdb:  rdb,
 		ws:   websocket.New(ws),
 	}

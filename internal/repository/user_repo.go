@@ -35,27 +35,27 @@ type User interface {
 
 // UserCreate 创建用户
 func (r *Repo) UserCreate(ctx context.Context, user *model.UserModel) (id int, err error) {
-	if err = r.db.WithContext(ctx).Create(user).Error; err != nil {
+	if err = r.DB.WithContext(ctx).Create(user).Error; err != nil {
 		return 0, errors.Wrap(err, "[repo.user] Create")
 	}
-	r.delCache(ctx, userCacheKey(user.ID))
+	r.DelCache(ctx, userCacheKey(user.ID))
 
 	return user.ID, nil
 }
 
 // UserUpdate 更新用户信息
 func (r *Repo) UserUpdate(ctx context.Context, id int, um map[string]any) error {
-	if err := r.db.WithContext(ctx).Model(&model.UserModel{}).Where("id=?", id).Updates(um).Error; err != nil {
+	if err := r.DB.WithContext(ctx).Model(&model.UserModel{}).Where("id=?", id).Updates(um).Error; err != nil {
 		return errors.Wrapf(err, "[repo.user] update")
 	}
-	r.delCache(ctx, userCacheKey(id))
+	r.DelCache(ctx, userCacheKey(id))
 
 	return nil
 }
 
 // UserUpdatePwd 修改用户密码
 func (r *Repo) UserUpdatePwd(ctx context.Context, user *model.UserModel) error {
-	if err := r.db.WithContext(ctx).Save(user).Error; err != nil {
+	if err := r.DB.WithContext(ctx).Save(user).Error; err != nil {
 		return errors.Wrapf(err, "[repo.user] update pwd")
 	}
 	return nil
@@ -63,9 +63,9 @@ func (r *Repo) UserUpdatePwd(ctx context.Context, user *model.UserModel) error {
 
 // GetUserByID 获取用户信息
 func (r *Repo) GetUserByID(ctx context.Context, id int) (user *model.UserModel, err error) {
-	if err = r.queryCache(ctx, userCacheKey(id), &user, func(data any) error {
+	if err = r.QueryCache(ctx, userCacheKey(id), &user, 0, func(data any) error {
 		// 从数据库中获取
-		if err = r.db.WithContext(ctx).First(data, id).Error; err != nil {
+		if err = r.DB.WithContext(ctx).First(data, id).Error; err != nil {
 			return err
 		}
 
@@ -85,7 +85,7 @@ func (r *Repo) GetUsersByIds(ctx context.Context, ids []int) (users []*model.Use
 	}
 	// 从cache批量获取
 	cacheMap := make(map[string]*model.UserModel)
-	if err = r.cache.MultiGet(ctx, keys, cacheMap, func() any {
+	if err = r.Cache.MultiGet(ctx, keys, cacheMap, func() any {
 		return &model.UserModel{}
 	}); err != nil {
 		return nil, errors.Wrapf(err, "[repo.user] multi get cache data")
@@ -112,7 +112,7 @@ func (r *Repo) GetUsersByIds(ctx context.Context, ids []int) (users []*model.Use
 // GetUserByUsername 根据用户名获取用户信息
 func (r *Repo) GetUserByUsername(ctx context.Context, username string) (user *model.UserModel, err error) {
 	user = new(model.UserModel)
-	if err = r.db.WithContext(ctx).Where("username = ?", username).First(&user).Error; err != nil && err != gorm.ErrRecordNotFound {
+	if err = r.DB.WithContext(ctx).Where("username = ?", username).First(&user).Error; err != nil && err != gorm.ErrRecordNotFound {
 		return nil, errors.Wrap(err, "[repo.user] find by username")
 	}
 	return user, nil
@@ -121,7 +121,7 @@ func (r *Repo) GetUserByUsername(ctx context.Context, username string) (user *mo
 // GetUsersByKeyword 关键字搜索用户
 func (r *Repo) GetUsersByKeyword(ctx context.Context, keyword string) (users []*model.UserModel, err error) {
 	//最多查询10个用户
-	if err = r.db.WithContext(ctx).Where("username like ?", keyword+"%").Limit(10).Find(&users).Error; err != nil {
+	if err = r.DB.WithContext(ctx).Where("username like ?", keyword+"%").Limit(10).Find(&users).Error; err != nil {
 		return nil, errors.Wrapf(err, "[repo.user] find by keyword:%v", keyword)
 	}
 	return users, nil
@@ -130,7 +130,7 @@ func (r *Repo) GetUsersByKeyword(ctx context.Context, keyword string) (users []*
 // GetUserByPhone 根据手机号获取用户信息
 func (r *Repo) GetUserByPhone(ctx context.Context, phone int64) (user *model.UserModel, err error) {
 	user = new(model.UserModel)
-	if err = r.db.WithContext(ctx).Where("phone = ?", phone).First(&user).Error; err != nil && err != gorm.ErrRecordNotFound {
+	if err = r.DB.WithContext(ctx).Where("phone = ?", phone).First(&user).Error; err != nil && err != gorm.ErrRecordNotFound {
 		return nil, errors.Wrap(err, "[repo.user] find by phone")
 	}
 	return user, nil
@@ -139,7 +139,7 @@ func (r *Repo) GetUserByPhone(ctx context.Context, phone int64) (user *model.Use
 // UserExist 用户是否已存在
 func (r *Repo) UserExist(ctx context.Context, username string, phone int64) (bool, error) {
 	var c int64
-	if err := r.db.WithContext(ctx).Model(&model.UserModel{}).
+	if err := r.DB.WithContext(ctx).Model(&model.UserModel{}).
 		Where("phone = ? or username=?", phone, username).Count(&c).Error; err != nil {
 		return false, errors.Wrapf(err, "[repo.user] username %v or phone %v does not exist", username, phone)
 	}

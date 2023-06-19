@@ -5,11 +5,11 @@ import (
 	"strings"
 	"time"
 
-	"gin-chat/internal/model"
+	"github.com/binbinly/pkg/auth"
 	"github.com/binbinly/pkg/util"
 	"github.com/pkg/errors"
 
-	"gin-chat/pkg/auth"
+	"gin-chat/internal/model"
 )
 
 // User 用户服务接口

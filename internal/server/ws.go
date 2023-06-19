@@ -5,12 +5,12 @@ import (
 	"net/http"
 
 	"github.com/binbinly/pkg/logger"
+	"github.com/binbinly/pkg/transport/ws"
 	"github.com/rs/xid"
 
 	"gin-chat/internal/router"
 	"gin-chat/internal/service"
 	"gin-chat/pkg/app"
-	"gin-chat/pkg/transport/ws"
 )
 
 // online test url: http://www.websocket-test.com

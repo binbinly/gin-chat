@@ -20,7 +20,7 @@ type Collect interface {
 
 // CollectCreate 创建收藏
 func (r *Repo) CollectCreate(ctx context.Context, collect *model.CollectModel) (id int, err error) {
-	if err = r.db.WithContext(ctx).Create(collect).Error; err != nil {
+	if err = r.DB.WithContext(ctx).Create(collect).Error; err != nil {
 		return 0, errors.Wrap(err, "[repo.collect] create collect")
 	}
 
@@ -30,7 +30,7 @@ func (r *Repo) CollectCreate(ctx context.Context, collect *model.CollectModel) (
 // GetCollectsByUserID 获取用户收藏列表
 func (r *Repo) GetCollectsByUserID(ctx context.Context, userID int, offset, limit int) (list []*model.CollectModel, err error) {
 	// 从数据库中获取
-	if err = r.db.WithContext(ctx).Scopes(model.OffsetPage(offset, limit)).Where("user_id = ? ", userID).
+	if err = r.DB.WithContext(ctx).Scopes(model.OffsetPage(offset, limit)).Where("user_id = ? ", userID).
 		Order(model.DefaultOrder).Find(&list).Error; err != nil {
 		return nil, errors.Wrap(err, "[repo.collect] query db")
 	}
@@ -39,7 +39,7 @@ func (r *Repo) GetCollectsByUserID(ctx context.Context, userID int, offset, limi
 
 // CollectDelete 删除收藏
 func (r *Repo) CollectDelete(ctx context.Context, userID, id int) (err error) {
-	if err = r.db.WithContext(ctx).Where("user_id=?", userID).Delete(&model.CollectModel{}, id).Error; err != nil {
+	if err = r.DB.WithContext(ctx).Where("user_id=?", userID).Delete(&model.CollectModel{}, id).Error; err != nil {
 		return errors.Wrapf(err, "[repo.collect] destroy err")
 	}
 

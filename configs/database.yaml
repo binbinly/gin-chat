@@ -1,8 +1,8 @@
 default:
-  Name: chat
   Addr: 127.0.0.1:3306
-  UserName: root
+  User: root
   Password: root
+  Database: chat
   Debug: true
   MaxIdleConn: 10
   MaxOpenConn: 60

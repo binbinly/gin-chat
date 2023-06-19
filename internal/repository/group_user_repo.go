@@ -30,10 +30,10 @@ type GroupUser interface {
 
 // GroupUserCreate 创建群成员
 func (r *Repo) GroupUserCreate(ctx context.Context, user *model.GroupUserModel) (err error) {
-	if err = r.db.WithContext(ctx).Create(user).Error; err != nil {
+	if err = r.DB.WithContext(ctx).Create(user).Error; err != nil {
 		return errors.Wrapf(err, "[repo.group_user] create")
 	}
-	r.delCache(ctx, groupUserAllCacheKey(user.GroupID))
+	r.DelCache(ctx, groupUserAllCacheKey(user.GroupID))
 	return nil
 }
 
@@ -47,22 +47,22 @@ func (r *Repo) GroupUserBatchCreate(ctx context.Context, tx *gorm.DB, users []*m
 
 // GroupUserUpdateNickname 修改群昵称
 func (r *Repo) GroupUserUpdateNickname(ctx context.Context, userID, groupID int, nickname string) error {
-	if err := r.db.WithContext(ctx).Model(&model.GroupUserModel{}).
+	if err := r.DB.WithContext(ctx).Model(&model.GroupUserModel{}).
 		Where("user_id=? && group_id=?", userID, groupID).
 		Update("nickname", nickname).Error; err != nil {
 		return errors.Wrapf(err, "[repo.group_user] update nickname")
 	}
-	r.delCache(ctx, groupUserAllCacheKey(groupID))
-	r.delCache(ctx, groupUserCacheKey(userID, groupID))
+	r.DelCache(ctx, groupUserAllCacheKey(groupID))
+	r.DelCache(ctx, groupUserCacheKey(userID, groupID))
 	return nil
 }
 
 // GroupUserDelete 删除群成员
 func (r *Repo) GroupUserDelete(ctx context.Context, user *model.GroupUserModel) error {
-	if err := r.db.WithContext(ctx).Delete(user).Error; err != nil {
+	if err := r.DB.WithContext(ctx).Delete(user).Error; err != nil {
 		return errors.Wrapf(err, "[repo.group_user] quit group")
 	}
-	r.delCache(ctx, groupUserAllCacheKey(user.GroupID))
+	r.DelCache(ctx, groupUserAllCacheKey(user.GroupID))
 	return nil
 }
 
@@ -71,15 +71,15 @@ func (r *Repo) GroupUserDeleteByGroupID(ctx context.Context, tx *gorm.DB, groupI
 	if err = tx.WithContext(ctx).Where("group_id=?", groupID).Delete(&model.GroupUserModel{}).Error; err != nil {
 		return errors.Wrapf(err, "[repo.group_user] delete users")
 	}
-	r.delCache(ctx, groupUserAllCacheKey(groupID))
+	r.DelCache(ctx, groupUserAllCacheKey(groupID))
 	return nil
 }
 
 // GetGroupUserByID 获取群成员信息
 func (r *Repo) GetGroupUserByID(ctx context.Context, userID, groupID int) (info *model.GroupUserModel, err error) {
-	if err = r.queryCache(ctx, groupUserCacheKey(userID, groupID), &info, func(data any) error {
+	if err = r.QueryCache(ctx, groupUserCacheKey(userID, groupID), &info, 0, func(data any) error {
 		// 从数据库中获取
-		if err = r.db.WithContext(ctx).Where("user_id=? and group_id=?", userID, groupID).
+		if err = r.DB.WithContext(ctx).Where("user_id=? and group_id=?", userID, groupID).
 			First(data).Error; err != nil {
 			return err
 		}
@@ -92,9 +92,9 @@ func (r *Repo) GetGroupUserByID(ctx context.Context, userID, groupID int) (info 
 
 // GroupUserAll 获取群所有成员
 func (r *Repo) GroupUserAll(ctx context.Context, groupID int) (list []*model.GroupUserModel, err error) {
-	if err = r.queryCache(ctx, groupUserAllCacheKey(groupID), &list, func(data any) error {
+	if err = r.QueryCache(ctx, groupUserAllCacheKey(groupID), &list, 0, func(data any) error {
 		// 从数据库中获取
-		if err = r.db.WithContext(ctx).Model(&model.GroupUserModel{}).
+		if err = r.DB.WithContext(ctx).Model(&model.GroupUserModel{}).
 			Where("group_id=?", groupID).Find(data).Error; err != nil {
 			return err
 		}

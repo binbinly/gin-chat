@@ -1,9 +1,8 @@
 package model
 
 import (
+	"github.com/binbinly/pkg/auth"
 	"gorm.io/gorm"
-
-	"gin-chat/pkg/auth"
 )
 
 const (

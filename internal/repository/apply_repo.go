@@ -25,7 +25,7 @@ type Apply interface {
 
 // ApplyCreate 创建申请记录
 func (r *Repo) ApplyCreate(ctx context.Context, apply model.ApplyModel) (id int, err error) {
-	if err = r.db.WithContext(ctx).Create(&apply).Error; err != nil {
+	if err = r.DB.WithContext(ctx).Create(&apply).Error; err != nil {
 		return 0, errors.Wrap(err, "[repo.apply] create err")
 	}
 	return apply.ID, nil
@@ -42,7 +42,7 @@ func (r *Repo) ApplyUpdateStatus(ctx context.Context, tx *gorm.DB, id, friendID 
 
 // GetApplysByUserID 获取申请好友列表
 func (r *Repo) GetApplysByUserID(ctx context.Context, userID int, offset, limit int) (list []*model.ApplyModel, err error) {
-	if err = r.db.WithContext(ctx).Scopes(model.OffsetPage(offset, limit)).Where("friend_id = ? ", userID).
+	if err = r.DB.WithContext(ctx).Scopes(model.OffsetPage(offset, limit)).Where("friend_id = ? ", userID).
 		Order(model.DefaultOrder).Find(&list).Error; err != nil {
 		return nil, errors.Wrap(err, "[repo.apply] query db")
 	}
@@ -51,7 +51,7 @@ func (r *Repo) GetApplysByUserID(ctx context.Context, userID int, offset, limit 
 
 // ApplyPendingCount 待处理数量
 func (r *Repo) ApplyPendingCount(ctx context.Context, userID int) (c int64, err error) {
-	if err = r.db.WithContext(ctx).Model(&model.ApplyModel{}).
+	if err = r.DB.WithContext(ctx).Model(&model.ApplyModel{}).
 		Where("friend_id=? && status=?", userID, model.ApplyStatusPending).Count(&c).Error; err != nil {
 		return 0, errors.Wrapf(err, "[repo.apply] pending count db err, uid: %d", userID)
 	}
@@ -61,7 +61,7 @@ func (r *Repo) ApplyPendingCount(ctx context.Context, userID int) (c int64, err 
 // GetApplyByFriendID 获取申请详情
 func (r *Repo) GetApplyByFriendID(ctx context.Context, userID, friendID int) (apply *model.ApplyModel, err error) {
 	apply = new(model.ApplyModel)
-	if err = r.db.WithContext(ctx).Where("user_id=? && friend_id=?", userID, friendID).
+	if err = r.DB.WithContext(ctx).Where("user_id=? && friend_id=?", userID, friendID).
 		Order(model.DefaultOrder).First(apply).Error; err != nil && err != gorm.ErrRecordNotFound {
 		return nil, errors.Wrapf(err, "[repo.apply] query db err")
 	}

@@ -37,7 +37,7 @@ func (r *Repo) MomentCreate(ctx context.Context, tx *gorm.DB, moment *model.Mome
 // GetMyMoments 我的朋友圈列表
 func (r *Repo) GetMyMoments(ctx context.Context, userID, offset, limit int) (list []*model.MomentModel, err error) {
 	var ids []int
-	err = r.db.WithContext(ctx).Model(&model.MomentLike{}).
+	err = r.DB.WithContext(ctx).Model(&model.MomentLike{}).
 		Raw("select moment_id from moment_timeline where user_id = ? order by id desc limit ? offset ?", userID, limit, offset).
 		Pluck("moment_id", &ids).Error
 	if err != nil {
@@ -49,9 +49,9 @@ func (r *Repo) GetMyMoments(ctx context.Context, userID, offset, limit int) (lis
 // GetMomentsByUserID 指定用户的朋友圈
 func (r *Repo) GetMomentsByUserID(ctx context.Context, myID, userID, offset, limit int) (list []*model.MomentModel, err error) {
 	if myID == userID { // 查看自己
-		err = r.db.WithContext(ctx).Raw("select * from moment where user_id=? order by id desc limit ? offset ?", myID, limit, offset).Find(&list).Error
+		err = r.DB.WithContext(ctx).Raw("select * from moment where user_id=? order by id desc limit ? offset ?", myID, limit, offset).Find(&list).Error
 	} else {
-		err = r.db.WithContext(ctx).Raw("select * from moment where user_id=? and (see_type=1 or (see_type = 3 and FIND_IN_SET(?,see)) or (see_type = 4 and !FIND_IN_SET(?,see)) ) order by id desc limit ? offset ?", userID, myID, myID, limit, offset).Find(&list).Error
+		err = r.DB.WithContext(ctx).Raw("select * from moment where user_id=? and (see_type=1 or (see_type = 3 and FIND_IN_SET(?,see)) or (see_type = 4 and !FIND_IN_SET(?,see)) ) order by id desc limit ? offset ?", userID, myID, myID, limit, offset).Find(&list).Error
 	}
 	if err != nil {
 		return nil, errors.Wrapf(err, "[repo.moment] list")
@@ -61,9 +61,9 @@ func (r *Repo) GetMomentsByUserID(ctx context.Context, myID, userID, offset, lim
 
 // GetMomentByID 获取动态信息
 func (r *Repo) GetMomentByID(ctx context.Context, id int) (moment *model.MomentModel, err error) {
-	if err = r.queryCache(ctx, momentCacheKey(id), &moment, func(data any) error {
+	if err = r.QueryCache(ctx, momentCacheKey(id), &moment, 0, func(data any) error {
 		// 从数据库中获取
-		if err = r.db.WithContext(ctx).First(data, id).Error; err != nil {
+		if err = r.DB.WithContext(ctx).First(data, id).Error; err != nil {
 			return err
 		}
 		return nil
@@ -81,7 +81,7 @@ func (r *Repo) GetMomentsByIds(ctx context.Context, ids []int) (moments []*model
 	}
 	// 从cache批量获取
 	cacheMap := make(map[string]*model.MomentModel)
-	if err = r.cache.MultiGet(ctx, keys, cacheMap, func() any {
+	if err = r.Cache.MultiGet(ctx, keys, cacheMap, func() any {
 		return &model.MomentModel{}
 	}); err != nil {
 		return nil, errors.Wrapf(err, "[repo.moment] multi get cache data")

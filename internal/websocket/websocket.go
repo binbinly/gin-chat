@@ -5,9 +5,8 @@ import (
 	"encoding/json"
 
 	"github.com/binbinly/pkg/logger"
+	"github.com/binbinly/pkg/transport/ws"
 	"github.com/pkg/errors"
-
-	"gin-chat/pkg/transport/ws"
 )
 
 // Server websocket server
