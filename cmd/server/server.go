@@ -9,6 +9,7 @@ import (
 	"github.com/binbinly/pkg/logger"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 var (
@@ -35,14 +36,13 @@ func init() {
 
 func setup() {
 	// init config
-	c := config.New(cfgDir, config.WithEnv(env))
-	var cfg app.Config
-	if err := c.Load("app", &cfg); err != nil {
+	c := config.New(config.WithConfigDir(cfgDir), config.WithEnv(env), config.WithEnvPrefix("chat"))
+	if err := c.Load("app", app.Conf, func(v *viper.Viper) {
+		app.SetDefaultConf(v)
+	}); err != nil {
 		panic(err)
 	}
-	app.Conf = &cfg
-
-	gin.SetMode(cfg.Mode)
+	gin.SetMode(app.Conf.Mode)
 }
 
 // run 核心业务服务启动

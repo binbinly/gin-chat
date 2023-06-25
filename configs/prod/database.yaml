@@ -4,6 +4,3 @@ default:
   Password: jbg1IQdhxDNKPcaWrj89
   Database: railway
   Debug: false
-  MaxIdleConn: 10
-  MaxOpenConn: 60
-  ConnMaxLifeTime: 4h

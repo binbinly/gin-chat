@@ -1,0 +1,7 @@
+#name: web
+#app_version: v1.0
+#mysql:
+#  host: localhost
+#  port: 3306
+#  user: root
+#  password: 123456

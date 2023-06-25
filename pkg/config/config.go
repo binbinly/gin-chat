@@ -1,9 +1,12 @@
 package config
 
 import (
+	"fmt"
+	"github.com/fsnotify/fsnotify"
 	"log"
 	"os"
 	"path/filepath"
+	"strings"
 	"sync"
 
 	"github.com/spf13/viper"
@@ -14,6 +17,7 @@ var conf *Config
 // Config conf struct.
 type Config struct {
 	env       string
+	envPrefix string
 	configDir string
 	fileType  string //yaml, json, toml, default is yaml
 	val       map[string]*viper.Viper
@@ -21,13 +25,9 @@ type Config struct {
 }
 
 // New create a config instance.
-func New(cfgDir string, opts ...Option) *Config {
-	// must set config dir
-	if cfgDir == "" {
-		panic("config dir is not set")
-	}
+func New(opts ...Option) *Config {
 	c := Config{
-		configDir: cfgDir,
+		envPrefix: "app",
 		fileType:  fileTypeYaml,
 		val:       make(map[string]*viper.Viper),
 	}
@@ -41,11 +41,13 @@ func New(cfgDir string, opts ...Option) *Config {
 }
 
 // Load alias for config func.
-func Load(filename string, val any) error { return conf.Load(filename, val) }
+func Load(filename string, val any, hook func(v *viper.Viper)) error {
+	return conf.Load(filename, val, hook)
+}
 
 // Load scan data to struct.
-func (c *Config) Load(filename string, val any) error {
-	v, err := c.LoadWithType(filename)
+func (c *Config) Load(filename string, val any, hook func(v *viper.Viper)) error {
+	v, err := c.LoadWithType(filename, hook)
 	if err != nil {
 		return err
 	}
@@ -53,16 +55,29 @@ func (c *Config) Load(filename string, val any) error {
 	if err = v.Unmarshal(&val); err != nil {
 		return err
 	}
+
+	// 注册每次配置文件发生变更后都会调用的回调函数
+	v.OnConfigChange(func(e fsnotify.Event) {
+		log.Printf("Config file changed: %s", e.Name)
+		// 每次配置文件发生变化，需要重新将其反序列化到结构体中
+		if err := v.Unmarshal(&val); err != nil {
+			panic(fmt.Errorf("unmarshal config error: %s \n", err.Error()))
+		}
+	})
+
+	// 监控配置文件变化
+	v.WatchConfig()
+
 	return nil
 }
 
 // LoadWithType load conf by file type.
-func LoadWithType(filename string) (*viper.Viper, error) {
-	return conf.LoadWithType(filename)
+func LoadWithType(filename string, hook func(v *viper.Viper)) (*viper.Viper, error) {
+	return conf.LoadWithType(filename, hook)
 }
 
 // LoadWithType load conf by file type.
-func (c *Config) LoadWithType(filename string) (v *viper.Viper, err error) {
+func (c *Config) LoadWithType(filename string, hook func(v *viper.Viper)) (v *viper.Viper, err error) {
 	c.mu.Lock()
 	defer c.mu.Unlock()
 	v, ok := c.val[filename]
@@ -70,7 +85,7 @@ func (c *Config) LoadWithType(filename string) (v *viper.Viper, err error) {
 		return v, nil
 	}
 
-	v, err = c.load(filename)
+	v, err = c.load(filename, hook)
 	if err != nil {
 		return nil, err
 	}
@@ -79,7 +94,7 @@ func (c *Config) LoadWithType(filename string) (v *viper.Viper, err error) {
 }
 
 // Load file.
-func (c *Config) load(filename string) (*viper.Viper, error) {
+func (c *Config) load(filename string, hook func(v *viper.Viper)) (*viper.Viper, error) {
 	env := GetEnv("APP_ENV", "")
 	if c.env != "" {
 		env = c.env
@@ -90,11 +105,17 @@ func (c *Config) load(filename string) (*viper.Viper, error) {
 	v.AddConfigPath(path)
 	v.SetConfigName(filename)
 	v.SetConfigType(c.fileType)
-
+	v.AutomaticEnv()
+	v.SetEnvPrefix(c.envPrefix)
+	v.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
+	if hook != nil {
+		hook(v)
+	}
 	if err := v.ReadInConfig(); err != nil {
 		return nil, err
 	}
 	log.Println("Using config file:", v.ConfigFileUsed())
+	log.Println("config settings:", v.AllSettings())
 
 	return v, nil
 }

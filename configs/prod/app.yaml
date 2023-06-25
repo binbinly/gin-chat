@@ -1,18 +1,4 @@
-Name: gin-chat
 Url: https://gin-chat-production.up.railway.app
-Mode: release      # debug, release, test
-JwtSecret: TQ2MNWIB2zK0z9JCqUC6WcTG9pMTnX12CLuVSop5Xr2owx4M9JTJIzBnMMYeWwRs
-JwtTimeout: 86400
-CtxTimeout: 12
+Mode: release
 Debug: false
 Proxy: true
-
-HTTP:
-  Addr: :9050
-  ReadTimeout: 5s
-  WriteTimeout: 5s
-
-Websocket:
-  Addr: :9060
-  ReadTimeout: 5s
-  WriteTimeout: 5s

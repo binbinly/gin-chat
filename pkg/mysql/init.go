@@ -1,7 +1,9 @@
 package mysql
 
 import (
+	"github.com/spf13/viper"
 	"log"
+	"time"
 
 	"github.com/binbinly/pkg/storage/orm"
 	"gorm.io/gorm"
@@ -12,14 +14,19 @@ import (
 // DB 数据库全局变量
 var DB *gorm.DB
 
+var cfg = &Config{}
+
+type Config struct {
+	Default orm.Config
+}
+
 // NewDB new mysql db
 func NewDB() *gorm.DB {
-	cfg, err := loadConf("")
-	if err != nil {
+	if err := loadConf(); err != nil {
 		log.Fatalf("load orm conf err: %v", err)
 	}
 
-	DB = orm.NewMySQL(cfg)
+	DB = orm.NewMySQL(&cfg.Default)
 	return DB
 }
 
@@ -30,19 +37,25 @@ func NewBasicDB(host, user, pwd, name string) *gorm.DB {
 }
 
 // loadConf load db config
-func loadConf(name string) (*orm.Config, error) {
-	if name == "" {
-		name = "default"
-	}
-	v, err := config.LoadWithType("database")
-	if err != nil {
-		return nil, err
+func loadConf() error {
+	if err := config.Load("database", cfg, func(v *viper.Viper) {
+		v.SetDefault("default", map[string]any{
+			"Addr":            "127.0.0.1:3306",
+			"User":            "root",
+			"Password":        "root",
+			"Database":        "chat",
+			"Debug":           true,
+			"MaxIdleConn":     10,
+			"MaxOpenConn":     60,
+			"ConnMaxLifeTime": 4 * time.Hour,
+		})
+		v.BindEnv("default.addr", "CHAT_MYSQL_ADDR")
+		v.BindEnv("default.user", "CHAT_MYSQL_USER")
+		v.BindEnv("default.password", "CHAT_MYSQL_PASSWORD")
+		v.BindEnv("default.database", "CHAT_MYSQL_DATABASE")
+	}); err != nil {
+		return err
 	}
 
-	var cfg orm.Config
-	if err = v.UnmarshalKey(name, &cfg); err != nil {
-		return nil, err
-	}
-
-	return &cfg, nil
+	return nil
 }
