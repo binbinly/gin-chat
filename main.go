@@ -8,9 +8,9 @@ import (
 // @version 2.0
 // @description
 
-// @contact.name test
-// @contact.url http://www.swagger.io/support
-// @contact.email test@test.com
+// @contact.name binbinly
+// @contact.url https://github.com/binbinly
+// @contact.email binbinly@hotmail.com
 
 // @license.name MIT
 // @license.url

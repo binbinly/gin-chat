@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"gin-chat/pkg/app"
 	"strings"
 	"time"
 
@@ -139,7 +140,7 @@ func (s *Service) UserInfoByID(ctx context.Context, id int) (*model.UserModel, e
 
 // UserLogout 用户登出
 func (s *Service) UserLogout(ctx context.Context, id int) error {
-	return s.rdb.Del(ctx, BuildUserTokenKey(id)).Err()
+	return s.rdb.Del(ctx, app.BuildUserTokenKey(id)).Err()
 }
 
 // UserSearch 搜索用户
@@ -186,7 +187,7 @@ func (s *Service) generateToken(ctx context.Context, uid int) (string, error) {
 		return "", errors.Wrapf(err, "[service.user] kickout user")
 	}
 	// 设置新令牌，用户单点登录
-	if err = s.rdb.Set(ctx, BuildUserTokenKey(uid), token, time.Duration(s.opts.jwtTimeout)*time.Second).Err(); err != nil {
+	if err = s.rdb.Set(ctx, app.BuildUserTokenKey(uid), token, time.Duration(s.opts.jwtTimeout)*time.Second).Err(); err != nil {
 		return "", errors.Wrapf(err, "[service.user] set token to redis")
 	}
 	return token, nil

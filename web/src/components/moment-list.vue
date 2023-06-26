@@ -8,8 +8,9 @@
       <span v-if="item.content" class="text-dark font-sm">{{item.content}}</span>
       <!-- 图片 -->
       <div v-if="item.image" class="pt-1 flex flex-wrap">
-        <template v-for="(image,imageIndex) in imgs">
+        <template v-for="image in imgs">
           <!-- 单图 -->
+          
           <van-image v-if="imgs.length === 1" :src="image" fit="cover" style="max-width:180px;max-height:240px;" imageClass="rounded bg-secondary"
                      @click="prediv(image)">
           </van-image>
@@ -106,6 +107,7 @@ export default {
     }
   },
   mounted() {
+    console.log('item', this.item)
     if (this.item.video) {
       let video = document.querySelector('video');
       //canplay 事件，视频达到可以播放时触发；

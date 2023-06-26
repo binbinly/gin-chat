@@ -34,9 +34,8 @@ func (s *Service) ChatUserRecall(ctx context.Context, mid, id int, msgID string)
 	if err != nil {
 		return err
 	}
-	c := s.GetUserConn(ctx, id)
 	// 发送消息
-	if err = s.ws.Send(ctx, c.ConnID, websocket.EventRecall, &websocket.Recall{
+	if err = s.ws.Send(ctx, s.GetUserConn(ctx, id), websocket.EventRecall, &websocket.Recall{
 		ID:       msgID,
 		FromID:   mid,
 		ToID:     id,
@@ -63,12 +62,12 @@ func (s *Service) ChatGroupRecall(ctx context.Context, mid, id int, msgID string
 	if len(ids) == len(users) { //群中没有自己
 		return ErrGroupUserNotJoin
 	}
-	cids, err := s.batchConnIds(ctx, ids)
+	cs, err := s.BatchUserConn(ctx, ids)
 	if err != nil {
 		return err
 	}
 	// 发送消息
-	if err = s.ws.BatchSendConn(ctx, cids, websocket.EventRecall, &websocket.Recall{
+	if err = s.ws.BatchSendConn(ctx, cs, websocket.EventRecall, &websocket.Recall{
 		ID:       msgID,
 		FromID:   mid,
 		ToID:     id,
@@ -160,8 +159,7 @@ func (s *Service) ChatSendUser(ctx context.Context, mid, id int, t int, content 
 		T:        time.Now().Unix(),
 	}
 	// 发送消息
-	c := s.GetUserConn(ctx, id)
-	if err = s.ws.Send(ctx, c.ConnID, websocket.EventChat, m); err != nil {
+	if err = s.ws.Send(ctx, s.GetUserConn(ctx, id), websocket.EventChat, m); err != nil {
 		return nil, errors.Wrapf(err, "[service.chat] ws send to user")
 	}
 	return m, nil
@@ -210,28 +208,15 @@ func (s *Service) ChatSendGroup(ctx context.Context, mid, id int, t int, content
 		userIds = append(userIds, user.UserID)
 	}
 	// 获取连接
-	cids, err := s.batchConnIds(ctx, userIds)
-	if err != nil {
-		return nil, err
-	}
-	// 推送消息
-	if err = s.ws.BatchSendConn(ctx, cids, websocket.EventChat, m); err != nil {
-		return nil, errors.Wrapf(err, "[service.chat] ws send to group")
-	}
-	return m, nil
-}
-
-// batchConnIds 批量获取 conn id
-func (s *Service) batchConnIds(ctx context.Context, userIds []int) ([]uint64, error) {
 	cs, err := s.BatchUserConn(ctx, userIds)
 	if err != nil {
 		return nil, err
 	}
-	ids := make([]uint64, 0, len(cs))
-	for _, c := range cs {
-		ids = append(ids, c.ConnID)
+	// 推送消息
+	if err = s.ws.BatchSendConn(ctx, cs, websocket.EventChat, m); err != nil {
+		return nil, errors.Wrapf(err, "[service.chat] ws send to group")
 	}
-	return ids, nil
+	return m, nil
 }
 
 // checkOnline 检查用户是否在线

@@ -5,5 +5,5 @@
 #  Database: chat
 #  Debug: true
 #  MaxIdleConn: 10
-#  MaxOpenConn: 60
-#  ConnMaxLifeTime: 4h
+#  MaxOpenConn: 100
+#  ConnMaxLifeTime: 1h

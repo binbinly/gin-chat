@@ -215,11 +215,11 @@ func (s *Service) MomentLike(ctx context.Context, uid, id int) error {
 	for _, i := range likeIds {
 		userIds = append(userIds, i)
 	}
-	cIds, err := s.batchConnIds(ctx, userIds)
+	cs, err := s.BatchUserConn(ctx, userIds)
 	if err != nil {
 		return err
 	}
-	if err = s.ws.BatchSendConn(ctx, cIds, websocket.EventMoment, &websocket.Moment{
+	if err = s.ws.BatchSendConn(ctx, cs, websocket.EventMoment, &websocket.Moment{
 		UserID: uid,
 		Avatar: u.Avatar,
 		Type:   "like",
@@ -256,11 +256,11 @@ func (s *Service) MomentComment(ctx context.Context, uid, rid, id int, content s
 	for _, commentModel := range comments {
 		userIds = append(userIds, commentModel.UserID)
 	}
-	cIds, err := s.batchConnIds(ctx, userIds)
+	cs, err := s.BatchUserConn(ctx, userIds)
 	if err != nil {
 		return err
 	}
-	if err = s.ws.BatchSendConn(ctx, cIds, websocket.EventMoment, &websocket.Moment{
+	if err = s.ws.BatchSendConn(ctx, cs, websocket.EventMoment, &websocket.Moment{
 		UserID: uid,
 		Avatar: u.Avatar,
 		Type:   "comment",
@@ -309,11 +309,11 @@ func (s *Service) pushMessage(ctx context.Context, uid int, lines []*model.Momen
 			userIds[i] = line.UserID
 		}
 	}
-	cIds, err := s.batchConnIds(ctx, userIds)
+	cs, err := s.BatchUserConn(ctx, userIds)
 	if err != nil {
 		return err
 	}
-	if err = s.ws.BatchSendConn(ctx, cIds, websocket.EventMoment, &websocket.Moment{
+	if err = s.ws.BatchSendConn(ctx, cs, websocket.EventMoment, &websocket.Moment{
 		UserID: uid,
 		Avatar: u.Avatar,
 		Type:   "new",
@@ -321,11 +321,11 @@ func (s *Service) pushMessage(ctx context.Context, uid int, lines []*model.Momen
 		return errors.Wrapf(err, "[service.moment] ws send to new")
 	}
 	if len(remind) > 0 { // 是否需要提醒好友
-		cIds, err = s.batchConnIds(ctx, remind)
+		cs, err = s.BatchUserConn(ctx, remind)
 		if err != nil {
 			return err
 		}
-		if err = s.ws.BatchSendConn(ctx, cIds, websocket.EventMoment, &websocket.Moment{
+		if err = s.ws.BatchSendConn(ctx, cs, websocket.EventMoment, &websocket.Moment{
 			UserID: uid,
 			Avatar: u.Avatar,
 			Type:   "remind",

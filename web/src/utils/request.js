@@ -46,7 +46,7 @@ request.interceptors.response.use(
       const result = response.data
       if (result.code === 0) {
         return Promise.resolve(result.data)
-      } else if (result.code == 10108) {
+      } else if (result.code == 20111 || result.code == 20120) {
         Toast('令牌已过期，请重新登录')
         store.dispatch('logout')
         return Promise.reject(result.msg)

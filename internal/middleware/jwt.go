@@ -1,39 +1,27 @@
 package middleware
 
 import (
-	"errors"
+	"gin-chat/internal/api"
+	"gin-chat/internal/service"
+	"gin-chat/pkg/app"
 
-	"github.com/binbinly/pkg/auth"
-	"github.com/binbinly/pkg/errno"
 	"github.com/binbinly/pkg/logger"
 	"github.com/gin-gonic/gin"
-
-	"gin-chat/pkg/app"
 )
 
 // JWT 认证中间件
 func JWT() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		// Parse the json web token.
-		payload, err := parse(c, app.Conf.JwtSecret)
+		uid, err := service.Svc.UserTokenCheck(c, c.Request.Header.Get("Token"))
 		if err != nil {
-			app.Error(c, errno.ErrInvalidToken)
+			app.Error(c, api.Error(err))
 			return
 		}
-		logger.Debugf("context is: %+v", payload)
+		logger.Debugf("context uid is: %v", uid)
 
 		// set uid to context
-		c.Set("uid", payload.UserID)
+		c.Set("uid", uid)
 
 		c.Next()
 	}
-}
-
-func parse(c *gin.Context, secret string) (*auth.Payload, error) {
-	token := c.Request.Header.Get("Token")
-
-	if len(token) == 0 {
-		return nil, errors.New("the length of the `Authorization` header is zero")
-	}
-	return auth.Parse(token, secret)
 }

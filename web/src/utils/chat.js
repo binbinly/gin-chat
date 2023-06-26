@@ -78,6 +78,8 @@ class chat {
     this.isOpenReconnect = true
     //心跳
     this.heartStart()
+    //获取历史消息
+    this.socket.send(`{"event":"history"}`)
   }
   clearUser() {
     // 用户下线

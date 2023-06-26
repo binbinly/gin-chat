@@ -17,7 +17,7 @@ const (
 func (r *Repo) GetEmoticonCatAll(ctx context.Context) (list []*model.Emoticon, err error) {
 	if err = r.QueryCache(ctx, _emoticonCatAllCacheKey, &list, 0, func(data any) error {
 		// 从数据库中获取
-		if err = r.DB.WithContext(ctx).Model(&model.EmoticonModel{}).Select("ANY_VALUE(id),ANY_VALUE(name),ANY_VALUE(url),category").
+		if err = r.DB.WithContext(ctx).Model(&model.EmoticonModel{}).Select("ANY_VALUE(id) as id,ANY_VALUE(name) as name,ANY_VALUE(url) as url,category").
 			Group("category").Scan(data).Error; err != nil {
 			return err
 		}

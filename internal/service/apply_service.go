@@ -43,8 +43,7 @@ func (s *Service) ApplyFriend(ctx context.Context, uid, fid int, nickname string
 		return errors.Wrapf(err, "[service.apply] create")
 	}
 	// 获取连接信息，发送消息
-	c := s.GetUserConn(ctx, fid)
-	if err = s.ws.Send(ctx, c.ConnID, websocket.EventNotify, &websocket.Notify{Type: "apply"}); err != nil {
+	if err = s.ws.Send(ctx, s.GetUserConn(ctx, fid), websocket.EventNotify, &websocket.Notify{Type: "apply"}); err != nil {
 		return errors.Wrapf(err, "[service.apply] ws send to client")
 	}
 	return nil
@@ -124,8 +123,7 @@ func (s *Service) ApplyHandle(ctx context.Context, uid, fid int, nickname string
 		return errors.Wrap(err, "[service.apply] tx commit")
 	}
 	//推送消息 -> 好友
-	cf := s.GetUserConn(ctx, fid)
-	if err = s.ws.Send(ctx, cf.ConnID, websocket.EventChat, websocket.Chat{
+	if err = s.ws.Send(ctx, s.GetUserConn(ctx, fid), websocket.EventChat, websocket.Chat{
 		From: &websocket.Sender{
 			ID:     uid,
 			Name:   info.Nickname,
@@ -139,8 +137,7 @@ func (s *Service) ApplyHandle(ctx context.Context, uid, fid int, nickname string
 		return errors.Wrapf(err, "[service.apply] ws send friend: %v", fid)
 	}
 	//推送消息 -> 自己
-	cu := s.GetUserConn(ctx, uid)
-	if err = s.ws.Send(ctx, cu.ConnID, websocket.EventChat, websocket.Chat{
+	if err = s.ws.Send(ctx, s.GetUserConn(ctx, uid), websocket.EventChat, websocket.Chat{
 		From: &websocket.Sender{
 			ID:     fid,
 			Name:   nickname,

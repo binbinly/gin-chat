@@ -15,7 +15,7 @@
                     ref="uploadImage" />
     </div>
     <!-- 视频 -->
-    <video v-if="type === 'video' && video && video" :src="video" controls style="max-width:360px;"></video>
+    <div class="px-1"><video v-if="type === 'video' && video && video" :src="video" controls style="max-width:360px;"></video></div>
     <van-uploader v-if="type === 'video'" name="video" capture="camera" :prediv-image="false" :after-read="afterRead" accept=".mp4">
       <div v-if="video" class="my-1 flex align-center justify-center bg-light" hover-class="bg-hover-light" style="height: 50px;width:360px;">
         <span class="font-sm text-muted">点击切换视频</span>

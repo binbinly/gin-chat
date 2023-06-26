@@ -2,7 +2,6 @@ package service
 
 import (
 	"context"
-	"fmt"
 	"github.com/binbinly/pkg/cache"
 
 	"github.com/redis/go-redis/v9"
@@ -18,15 +17,6 @@ import (
 const (
 	msgFriendCreate = "你们已经是好友了，可以开始聊天啦"
 	msgKickOut      = "账号已在其他地方登录了!"
-)
-
-const (
-	// _onlinePrefix 在线key前缀
-	_onlinePrefix = "user:online:"
-	// _userPrefix 用户令牌标识 用于单点登录
-	_userPrefix = "user:token:"
-	// _historyPrefix 离线消息前缀
-	_historyPrefix = "history:message:%d"
 )
 
 // 用于触发编译期的接口的合理性检查机制
@@ -68,7 +58,7 @@ func New(ws ws.Server, opts ...Option) (s *Service) {
 		opts: newOptions(opts...),
 		repo: repository.New(mysql.NewDB(), cache.NewRedisCache(rdb)),
 		rdb:  rdb,
-		ws:   websocket.New(ws),
+		ws:   websocket.New(ws, rdb),
 	}
 	Svc = s
 	return s
@@ -77,19 +67,4 @@ func New(ws ws.Server, opts ...Option) (s *Service) {
 // Close service
 func (s *Service) Close() error {
 	return s.rdb.Close()
-}
-
-// BuildHistoryKey 历史消息键
-func BuildHistoryKey(uid int) string {
-	return fmt.Sprintf(_historyPrefix, uid)
-}
-
-// BuildOnlineKey 用户在线键
-func BuildOnlineKey(uid int) string {
-	return fmt.Sprintf("%s%d", _onlinePrefix, uid)
-}
-
-// BuildUserTokenKey 用户令牌键
-func BuildUserTokenKey(uid int) string {
-	return fmt.Sprintf("%s%d", _userPrefix, uid)
 }

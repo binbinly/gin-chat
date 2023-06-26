@@ -16,7 +16,7 @@ import (
 	"gin-chat/pkg/app"
 )
 
-const FileMaxSize = 4 << 20 //最大上传4MB
+const FileMaxSize = 10 << 20 //最大上传10MB
 
 // File 上传文件
 // @Summary 上传文件

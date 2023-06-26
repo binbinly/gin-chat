@@ -100,6 +100,8 @@ func Error(err error) *errno.Error {
 		return ecode.ErrVerifyCode
 	case errors.Is(err, service.ErrUserOffline):
 		return ecode.ErrUserOffline
+	case errors.Is(err, service.ErrUserTokenEmpty):
+		return ecode.ErrUserTokenEmpty
 	case err != nil:
 		logger.Warnf("[api] err:%v", err)
 		return errno.ErrDatabase

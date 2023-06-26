@@ -120,12 +120,12 @@ func (s *Service) GroupCreate(ctx context.Context, mid int, ids []int) error {
 
 	// 获取创建者，所有好友的连接
 	fids = append(fids, mid)
-	cids, err := s.batchConnIds(ctx, fids)
+	cs, err := s.BatchUserConn(ctx, fids)
 	if err != nil {
 		return err
 	}
 	// 发送消息
-	if err = s.ws.BatchSendConn(ctx, cids, websocket.EventChat, &websocket.Chat{
+	if err = s.ws.BatchSendConn(ctx, cs, websocket.EventChat, &websocket.Chat{
 		From: &websocket.Sender{
 			ID:     u.ID,
 			Name:   uname,
@@ -383,8 +383,8 @@ func (s *Service) sendMessage(ctx context.Context, params *sendParams) (err erro
 		if gUser.UserID == params.targetID {
 			ct = fmt.Sprintf("%s %s", s.myGroupName(m, params.gUsers), params.tContent)
 		}
-		c := s.GetUserConn(ctx, gUser.UserID)
-		if err = s.ws.Send(ctx, c.ConnID, websocket.EventChat, &websocket.Chat{
+
+		if err = s.ws.Send(ctx, s.GetUserConn(ctx, gUser.UserID), websocket.EventChat, &websocket.Chat{
 			From:     f,
 			To:       t,
 			ChatType: model.MessageChatTypeGroup,

@@ -36,9 +36,11 @@ var (
 	//ErrUserFrozen 账号已冻结
 	ErrUserFrozen = errors.New("user:frozen")
 	//ErrUserTokenExpired 用户令牌过期
-	ErrUserTokenExpired = errors.New("user: token expired")
+	ErrUserTokenExpired = errors.New("user:token expired")
 	//ErrUserTokenError 用户令牌错误
-	ErrUserTokenError = errors.New("user: token error")
+	ErrUserTokenError = errors.New("user:token error")
+	//ErrUserTokenEmpty 用户令牌为空
+	ErrUserTokenEmpty = errors.New("user:token empty")
 	//ErrVerifyCodeRuleMinute 分钟限制
 	ErrVerifyCodeRuleMinute = errors.New("sms:minute limit")
 	//ErrVerifyCodeRuleHour 小时限制

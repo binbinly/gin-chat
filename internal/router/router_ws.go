@@ -1,6 +1,7 @@
 package router
 
 import (
+	"gin-chat/internal/service"
 	"github.com/binbinly/pkg/logger"
 	"github.com/binbinly/pkg/transport/ws"
 
@@ -11,10 +12,12 @@ import (
 func NewWsRouter() *ws.Engine {
 	r := ws.NewEngine()
 	r.Use(func(c *ws.Context) {
-		logger.Infof("[ws] event: %v", c.Req.Event())
+		logger.Debugf("[ws] event: %v", c.Req.Event())
 		c.Next()
 	})
 	r.AddRoute("ping", Ping)
+	r.AddRoute("history", History)
+
 	return r
 }
 
@@ -22,5 +25,12 @@ func NewWsRouter() *ws.Engine {
 func Ping(c *ws.Context) {
 	if err := c.Req.Conn().Send(c, 0, websocket.Pack("pong", "")); err != nil {
 		logger.Info("[ws.ping] err: %v", err)
+	}
+}
+
+// History 用户历史
+func History(c *ws.Context) {
+	if err := service.Svc.PushHistory(c, c.Req.Conn().GetUID()); err != nil {
+		logger.Info("[ws.history] err: %v", err)
 	}
 }

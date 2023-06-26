@@ -18,8 +18,7 @@ import (
 // NewWsServer websocket server
 func NewWsServer(conf *app.ServerConfig) ws.Server {
 	s := ws.NewServer()
-	s.Init(
-		ws.WithID(xid.New().String()),
+	s.Init(ws.WithID(xid.New().String()),
 		ws.WithAddr(conf.Addr),
 		ws.WithWriteWait(conf.WriteTimeout),
 		ws.WithRouter(router.NewWsRouter()),
@@ -38,17 +37,17 @@ func onConnectionAuth() ws.AuthHandler {
 
 		uid, err := service.Svc.UserOnline(r.Context(), token, sid, cid)
 		if err != nil {
-			logger.Infof("[ws.conn] user online err: %v token: %v", err, token)
+			logger.Debugf("[ws.conn] user online err: %v token: %v", err, token)
 			return 0, false
 		}
-		logger.Infof("[ws.conn] user online success to %v", uid)
+		logger.Debugf("[ws.conn] user online success to %v", uid)
 		return uid, true
 	}
 }
 
 // onConnectionLost 与客户端断开连接时执行
 func onConnectionLost(conn ws.Connection) {
-	logger.Info("Do Connection lost is Called ...")
+	logger.Debug("Do Connection lost is Called ...")
 	// 不可以用 conn.Context() 连接可能已经取消 会报：context canceled
 	if err := service.Svc.UserOffline(context.Background(), conn.GetUID()); err != nil {
 		logger.Warnf("[ws.conn] lost offline err:%v", err)

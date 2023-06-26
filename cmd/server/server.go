@@ -43,6 +43,11 @@ func setup() {
 		panic(err)
 	}
 	gin.SetMode(app.Conf.Mode)
+
+	// init logger
+	if !app.Conf.Debug {
+		logger.InitLogger(logger.WithLevel("info"))
+	}
 }
 
 // run 核心业务服务启动

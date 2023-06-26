@@ -35,9 +35,9 @@
         <!-- 扩展菜单 -->
         <icon-button :icon="'\ue603'" @click="openActionOrEmoticon('action')"></icon-button>
       </template>
-      <div v-else class="flex-shrink" style="width:60px;">
+      <div v-else class="flex" style="width:60px;">
         <!-- 发送按钮 -->
-        <van-button type="primary" size="small" @click="send('text')">发送</van-button>
+        <van-button type="primary" class="justify-center align-center" size="small" @click="send('text')">发送</van-button>
       </div>
     </div>
 

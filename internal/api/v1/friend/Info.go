@@ -28,7 +28,8 @@ func Info(c *gin.Context) {
 		app.Error(c, errno.ErrInvalidParam)
 		return
 	}
-	f, u, err := service.Svc.FriendInfo(c.Request.Context(), api.GetUserID(c), fid)
+	uid := api.GetUserID(c)
+	f, u, err := service.Svc.FriendInfo(c.Request.Context(), uid, fid)
 	// 还不是好友关系
 	if errors.Is(err, service.ErrFriendNotRecord) {
 		f = &model.FriendModel{}
@@ -36,7 +37,7 @@ func Info(c *gin.Context) {
 		app.Error(c, e)
 		return
 	}
-	tags, err := service.Svc.UserTagNames(c.Request.Context(), fid, f.Tags)
+	tags, err := service.Svc.UserTagNames(c.Request.Context(), uid, f.Tags)
 	if e := api.Error(err); e != nil {
 		app.Error(c, e)
 		return

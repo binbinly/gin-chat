@@ -34,7 +34,7 @@
 
         <div class="rounded" :class="labelClass" style="max-width:200px;" :style="labelStyle">
           <!-- 文字 -->
-          <div v-if="isText" class="font">{{item.content}}</div>
+          <div v-if="isText" class="font p-1">{{item.content}}</div>
           <!-- 表情包 | 图片-->
           <div class="flex flex-wrap" v-else-if="isEmoticon || isImage">
             <van-image style="max-width: 200px;max-height:240px;" fit="cover" imageClass="rounded bg-secondary" @click="prediv(item.content)"
@@ -220,7 +220,7 @@ export default {
     //   return canvas.toDataURL('image/jpeg', 0.35)
     // },
     openUser() {
-      const id = this.item.chat_type === $const.CHAT_TYPE_USER ? this.item.from.id : this.item.to_id
+      const id = this.item.from.id
       this.$router.push({ path: '/user_base', query: { id } })
     },
     openMy() {

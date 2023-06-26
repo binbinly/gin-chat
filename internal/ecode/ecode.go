@@ -21,9 +21,10 @@ var (
 	ErrUserNoSelf            = errno.NewError(20115, "不可以操作自己哦")
 	ErrPhoneValid            = errno.NewError(20116, "手机号不合法")
 	ErrUserKeyExisted        = errno.NewError(20117, "用户名或手机号已存在哦")
-	ErrUploadImageLimit      = errno.NewError(20118, "图片太大了")
-	ErrUploadNotImage        = errno.NewError(20119, "请上传图片")
+	ErrUploadImageLimit      = errno.NewError(20118, "文件太大了")
+	ErrUploadNotImage        = errno.NewError(20119, "请上传文件")
 	ErrUserTokenInvalid      = errno.NewError(20120, "用户凭证无效")
+	ErrUserTokenEmpty        = errno.NewError(20121, "用户凭证为空")
 
 	ErrApplyRepeatFailed   = errno.NewError(20202, "已经申请过了哦")
 	ErrApplyNotFoundFailed = errno.NewError(20204, "申请未找到哦")
