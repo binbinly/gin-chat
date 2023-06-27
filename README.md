@@ -9,6 +9,8 @@
 
 - 主要功能点如下
   ![功能点](/assets/img/app.png)
+- 项目截图
+  ![image](/assets/img/view.jpg)
 
 ## 📗 目录结构
 - [project-layout](https://github.com/golang-standards/project-layout)

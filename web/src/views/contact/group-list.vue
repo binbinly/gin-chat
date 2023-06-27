@@ -5,7 +5,7 @@
 
     <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
       <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-        <van-cell v-for="(item,index) in list" :title="item.name" center is-link @click="handle(item)">
+        <van-cell v-for="(item,index) in list" :key="index" :title="item.name" center is-link @click="handle(item)">
           <template #icon>
             <van-image class="pr-1" round width="35" height="35" :src="item.avatar|formatAvatar" />
           </template>

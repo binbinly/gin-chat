@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 导航栏 -->
-    <van-nav-bar :title="detail.name" left-arrow @click-left="onClickLeft" @click-right="onChatSet">
+    <van-nav-bar ref="navTop" :title="detail.name" left-arrow @click-left="onClickLeft" @click-right="onChatSet">
       <template #right>
         <van-icon name="ellipsis" size="24" color="#0E151D" />
       </template>
@@ -17,7 +17,7 @@
     </div>
 
     <!-- 底部输入框 -->
-    <div class="position-fixed left-0 right-0 border-top flex align-center" style="background-color: #F7F7F6;height: 45px;"
+    <div ref="chatInput" class="position-fixed left-0 right-0 border-top flex align-center" style="background-color: #F7F7F6;height: 45px;"
          :style="'bottom:'+KeyboardHeight+'px;'">
       <icon-button v-if="mode === 'audio'" :icon="'\ue607'" @click="changeVoiceOrText"></icon-button>
       <icon-button v-else :icon="'\ue606'" @click="changeVoiceOrText"></icon-button>
@@ -42,13 +42,13 @@
     </div>
 
     <!-- 扩展菜单 -->
-    <van-popup v-model="show" position="bottom" :overlay="false" transition-appea>
-      <div style="height: 203px;" class="border-top border-light-secondary bg-light flex flex-wrap">
+    <van-popup ref="extendMenu" v-model="show" @opened="menuOpened" @closed="menuClosed" position="bottom" :overlay="false" transition-appea>
+      <div class="border-top border-light-secondary bg-light flex flex-wrap" style="height:230px;">
         <template v-if="mode=='action'">
           <van-swipe :loop=" false">
             <van-swipe-item v-for="(item,index) in emoticonOrActionList" :key="index">
               <van-grid :column-num="3">
-                <van-grid-item v-for="(item2,index2) in item" @click="actionEvent(item2)" :text="item2.name">
+                <van-grid-item v-for="(item2,index2) in item" :key="index2" @click="actionEvent(item2)" :text="item2.name">
                   <template #icon>
                     <van-image :src="item2.icon" fit="center" width="50" height="50" />
                   </template>
@@ -61,12 +61,12 @@
           <van-tabs class="w-100" @change="beforeChange" animated swipeable sticky>
             <van-tab title="经典">
               <template v-for="(item,index) in emoticonList">
-                <span style="font-size:24px;margin:5px;" @click="addFace(item)">{{item}}</span>
+                <span style="font-size:20px;margin:5px;" :key="index" @click="addFace(item)">{{item}}</span>
               </template>
             </van-tab>
-            <van-tab v-for="(item,index) in emoCat" :title="item.name|substr" style="height:160px;overflow: auto;">
+            <van-tab v-for="(item,index) in emoCat" :key="index" :title="item.name|substr" style="height:100%;">
               <template v-for="(item2,index2) in item['list']">
-                <van-image class="ml-1 mt-1" :src="item2" fit="center" width="80" height="80" @click="sendEmoticon(item2)" />
+                <van-image :key="index2" class="ml-1 mt-1" :src="item2" fit="center" width="23%" @click="sendEmoticon(item2)" />
               </template>
             </van-tab>
             <van-tab title="更多" style="text-align:center;margin-top:60px;">
@@ -85,7 +85,7 @@
     <!-- 扩展菜单  -->
     <free-popup ref="extend" :bodyWidth="240" :bodyHeight="450" :tabbarHeight="105">
       <div class="flex flex-column text-white p-1" style="width:90px;" :style="getMenusStyle">
-        <div class="flex-1 flex align-center justify-center" style="padding:5px;" v-for="(item,index) in menusList" @click="clickEvent(item.event)">
+        <div class="flex-1 flex align-center justify-center" style="padding:5px;" v-for="(item,index) in menusList" :key="index" @click="clickEvent(item.event)">
           <span class="font-sm">{{item.name}}</span>
         </div>
       </div>
@@ -168,7 +168,7 @@ export default {
       // 键盘高度
       KeyboardHeight: 0,
       menusList: [],
-      navBarHeight: 46,
+      extendMenuHeight: 0,
       list: [],
       // 当前操作的气泡索引
       propIndex: -1,
@@ -260,6 +260,7 @@ export default {
     if (type) {
       this.detail.chat_type = parseInt(type)
     }
+    this.initChatHeight()
     // 初始化
     this.initData()
     // 创建聊天对象
@@ -312,6 +313,14 @@ export default {
       }
       return true
     },
+    menuOpened(){
+      this.KeyboardHeight = this.$refs.extendMenu.$el.offsetHeight || 0;
+      this.chatHeight = this.chatHeight - this.KeyboardHeight; 
+      this.pageToBottom()
+    },
+    menuClosed(){
+      this.initChatHeight()
+    },
     textFocus() {
       this.mode = 'text'
       this.hidePopup()
@@ -319,7 +328,11 @@ export default {
     hidePopup() {
       this.show = false
       this.KeyboardHeight = 0
-      this.chatHeight = 575
+    },
+    initChatHeight(){
+      const navHeight = this.$refs.navTop.$el.offsetHeight;
+      const inputHeight = this.$refs.chatInput.offsetHeight;
+      this.chatHeight = window.innerHeight - navHeight - inputHeight;
     },
     onEmoticon(cat) {
       this.emoCat.push({ name: cat, list: [] })
@@ -376,9 +389,6 @@ export default {
     openActionOrEmoticon(mode = 'action') {
       this.mode = mode
       this.show = true
-      this.KeyboardHeight = 203
-      this.chatHeight = 370
-      this.pageToBottom()
     },
     // 发送
     send(type, content = '', options = {}) {
@@ -388,6 +398,7 @@ export default {
           content = content || this.text
           break;
       }
+      
       let message = this.chat.formatSendData({
         chat_type: this.detail.chat_type,
         type,

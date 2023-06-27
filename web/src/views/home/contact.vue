@@ -5,7 +5,7 @@
 
     <!-- 通讯录列表 -->
     <div>
-      <van-cell v-for="(item,index) in topList" is-link center :title="item.title" :to="item.path">
+      <van-cell v-for="(item,index) in topList" :key="index" is-link center :title="item.title" :to="item.path">
         <template #icon>
           <van-image fit="cover" :src="item.icon" class="pr-1" style="width: 35px;height: 35px;" />
         </template>
@@ -17,8 +17,8 @@
     <!-- 侧边导航条 -->
     <van-index-bar>
       <template v-for="(item,index) in list">
-        <van-index-anchor :index="item.title" />
-        <van-cell v-for="(item2,index2) in item.list" :title="item2.name" center @click="openUser(item2.id)">
+        <van-index-anchor :index="item.title" :key="index"/>
+        <van-cell v-for="(item2,index2) in item.list" :key="index2" :title="item2.name" center @click="openUser(item2.id)">
           <template #icon>
             <van-image class="pr-1" round width="35" height="35" :src="item2.avatar|formatAvatar" />
           </template>
@@ -72,7 +72,7 @@ export default {
   computed: {
     ...mapState({
       applyCount: state => state.user.apply.count,
-      list: state => state.user.mailList
+      list: state => state.user.friends
     }),
   },
   methods: {

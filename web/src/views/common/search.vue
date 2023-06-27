@@ -5,7 +5,7 @@
       <van-search v-model="keyword" show-action fixed placeholder="搜索用户" @search="onSearch" @cancel="onCancel" />
     </form>
 
-    <van-cell v-for="(item,index) in list" center @click="openUserBase(item.id)" :value="item.nickname" is-link>
+    <van-cell v-for="(item,index) in list" :key="index" center @click="openUserBase(item.id)" :value="item.nickname" is-link>
       <template #icon>
         <van-image class="pr-1" round width="35" height="35" :src="item.avatar|formatAvatar" />
       </template>

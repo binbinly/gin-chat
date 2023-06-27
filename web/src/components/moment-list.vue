@@ -8,15 +8,14 @@
       <span v-if="item.content" class="text-dark font-sm">{{item.content}}</span>
       <!-- 图片 -->
       <div v-if="item.image" class="pt-1 flex flex-wrap">
-        <template v-for="image in imgs">
+        <template v-for="(image,imgIndex) in imgs">
           <!-- 单图 -->
-          
-          <van-image v-if="imgs.length === 1" :src="image" fit="cover" style="max-width:180px;max-height:240px;" imageClass="rounded bg-secondary"
+          <van-image  :key="imgIndex" v-if="imgs.length === 1" :src="image" fit="cover" style="max-width:180px;max-height:240px;" imageClass="rounded bg-secondary"
                      @click="prediv(image)">
           </van-image>
           <!-- 多图 -->
-          <van-image v-else :src="image" fit="cover" width="90" height="90" class="bg-secondary rounded" style="margin:0 5px 5px 0;"
-                     @click="prediv(image)"></van-image>
+          <van-image  :key="imgIndex" v-else :src="image" fit="cover" width="90" height="90" class="bg-secondary rounded" style="margin:0 5px 5px 0;"
+                     @click="prediv(imgIndex)"></van-image>
         </template>
       </div>
       <!-- 视频 -->
@@ -31,7 +30,7 @@
       <!-- 时间|操作 -->
       <div class="flex align-center justify-between">
         <span class="text-light-muted font-sm">{{item.created_at|formatTime}}</span>
-        <div class="p-1">
+        <div class="px-1">
           <van-popover v-model="showPopover" theme="dark" trigger="click" placement="left" :actions="actions" @select="onSelect">
             <template #reference>
               <van-icon name="ellipsis" size="20" />
@@ -121,10 +120,7 @@ export default {
       this.$emit('action', { event, item: this.item, index: this.index })
     },
     // 查看大图
-    prediv(src) {
-      let index = this.imgs.findIndex(item => {
-        return item.url === src
-      })
+    prediv(index) {
       if (index <= 0) {
         index = 0
       }

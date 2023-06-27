@@ -5,7 +5,7 @@
 
     <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
       <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad" :immediate-check="false">
-        <van-cell v-for="(item,key) in list" :title="item.user.name" center>
+        <van-cell v-for="(item,key) in list" :key="key" :title="item.user.name" center>
           <template #icon>
             <van-image class="pr-1" round width="35" height="35" :src="item.user.avatar|formatAvatar" />
           </template>

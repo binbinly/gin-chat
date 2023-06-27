@@ -26,9 +26,9 @@ export default {
         message: '确定退出吗？',
       })
         .then(() => {
+          this.$store.dispatch('logout')
           userLogout().then(res => {
             Toast.success('退出登录成功')
-            this.$store.dispatch('logout')
           })
         })
     }

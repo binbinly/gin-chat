@@ -3,7 +3,7 @@
     <!-- 导航栏 -->
     <van-nav-bar title="表情包" fixed placeholder left-arrow @click-left="onClickLeft" />
 
-    <van-cell v-for="(item,index) in list" :title="item.category" center is-link @click="handle(item)">
+    <van-cell v-for="(item,index) in list" :key="index" :title="item.category" center is-link @click="handle(item)">
       <template #icon>
         <van-image class="pr-1" lazy-load width="60" height="60" fit="cover" :src="item.url" />
       </template>

@@ -5,7 +5,7 @@
 
     <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
       <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-        <div class="pt-1 px-1" v-for="(item,index) in list" @click="send(item)">
+        <div class="pt-1 px-1" v-for="(item,index) in list" :key="index" @click="send(item)">
           <van-swipe-cell>
             <div class="bg-white rounded p-1">
               <span v-if="isText(item.type)">{{item.content}}</span>

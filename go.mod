@@ -3,7 +3,7 @@ module gin-chat
 go 1.20
 
 require (
-	github.com/binbinly/pkg v0.0.0-20230619064409-1b7a398c30c0
+	github.com/binbinly/pkg v0.0.0-00010101000000-000000000000
 	github.com/disintegration/imaging v1.6.2
 	github.com/fsnotify/fsnotify v1.6.0
 	github.com/gin-contrib/pprof v1.4.0
@@ -101,3 +101,5 @@ require (
 	gorm.io/driver/mysql v1.5.1 // indirect
 	gorm.io/plugin/opentelemetry v0.1.3 // indirect
 )
+
+replace github.com/binbinly/pkg => ../pkg

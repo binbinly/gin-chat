@@ -47,9 +47,9 @@ func onConnectionAuth() ws.AuthHandler {
 
 // onConnectionLost 与客户端断开连接时执行
 func onConnectionLost(conn ws.Connection) {
-	logger.Debug("Do Connection lost is Called ...")
 	// 不可以用 conn.Context() 连接可能已经取消 会报：context canceled
 	if err := service.Svc.UserOffline(context.Background(), conn.GetUID()); err != nil {
 		logger.Warnf("[ws.conn] lost offline err:%v", err)
 	}
+	logger.Debugf("Do Connection lost is Called %v", conn.GetUID())
 }

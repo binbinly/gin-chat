@@ -34,15 +34,18 @@ func GroupResource(group *model.GroupModel, users []*model.UserModel, gUsers []*
 			Remark:        group.Remark,
 		},
 		Nickname: my.Nickname,
-		Users:    GroupUsersResource(users[:4], gUsers), // 只需要返回4个用户就可以了
+		Users:    GroupUsersResource(users, gUsers, 4),
 	}
 }
 
 // GroupUsersResource 群成员列表转换
-func GroupUsersResource(users []*model.UserModel, gUsers []*model.GroupUserModel) []*model.User {
+func GroupUsersResource(users []*model.UserModel, gUsers []*model.GroupUserModel, max int) []*model.User {
 	us := make([]*model.User, 0)
 	uMap := gUserToMap(gUsers)
-	for _, user := range users {
+	for i, user := range users {
+		if max > 0 && i >= max { // 最多返回用户数
+			break
+		}
 		name := user.Username
 		if user.Nickname != "" { // 设置了昵称
 			name = user.Nickname

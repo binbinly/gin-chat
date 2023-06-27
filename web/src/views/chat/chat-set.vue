@@ -9,7 +9,7 @@
         <span class="text-muted" style="margin-top:5px;">{{detail.name}}</span>
       </div>
 
-      <div v-else class="flex flex-column align-center justify-center mb-1 ml-1" v-for="(item,index) in list">
+      <div v-else class="flex flex-column align-center justify-center mb-1 ml-1" v-for="(item,index) in list" :key="index">
         <van-image :src="item.avatar|formatAvatar" round width="50" height="50"></van-image>
         <span class="text-muted" style="margin-top:5px;">{{item.name}}</span>
       </div>
@@ -199,7 +199,6 @@ export default {
     initData() {
       // 获取当前会话详细资料
       const detail = this.chat.getChatListItem(this.id, this.chat_type)
-      console.log('detail', detail)
       if (!detail) {
         return this.backToast()
       }
@@ -213,6 +212,8 @@ export default {
           this.detail = res.info
           this.nickname = res.nickname
         })
+      } else {
+        this.detail = {id:detail.id,name:detail.name,avatar:detail.avatar}
       }
     },
     updateChatItem(value, key) {

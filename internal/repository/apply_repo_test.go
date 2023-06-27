@@ -2,10 +2,12 @@ package repository
 
 import (
 	"context"
+	"gin-chat/pkg/app"
+	"github.com/binbinly/pkg/cache"
+	"github.com/spf13/viper"
 	"testing"
 
 	"gin-chat/internal/model"
-	"gin-chat/pkg/cache"
 	"gin-chat/pkg/config"
 	"gin-chat/pkg/mysql"
 	"gin-chat/pkg/redis"
@@ -16,8 +18,13 @@ import (
 var r IRepo
 
 func TestMain(m *testing.M) {
-	config.New("../../configs")
-	r = New(mysql.NewDB(), cache.NewCache(redis.New()))
+	c := config.New(config.WithConfigDir("../../configs"))
+	if err := c.Load("app", app.Conf, func(v *viper.Viper) {
+		app.SetDefaultConf(v)
+	}); err != nil {
+		panic(err)
+	}
+	r = New(mysql.NewDB(), cache.NewRedisCache(redis.New()))
 	if code := m.Run(); code != 0 {
 		panic(code)
 	}

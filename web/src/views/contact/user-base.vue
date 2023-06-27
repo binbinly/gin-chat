@@ -23,7 +23,7 @@
         <div class="flex align-center">
           <span class="text-dark mr-1">标签</span>
           <div style="width:260px;" class="text-inline" v-if="friend.tags.length > 0">
-            <span class="text-light-muted mr-1" v-for="(item,index) in friend.tags">{{item}}</span>
+            <span class="text-light-muted mr-1" v-for="(item,index) in friend.tags" :key="index">{{item}}</span>
           </div>
           <span class="text-light-muted" v-else>未设置</span>
         </div>
@@ -33,7 +33,7 @@
     <van-cell title="朋友圈" center is-link @click="openMoments">
       <template #default v-if="friend.moments">
         <span v-if="friend.moments[0].content && !friend.moments[0].image.length" class="text-secondary">{{friend.moments[0].content}}</span>
-        <van-image v-for="(item,index) in friend.moments[0].image" :src="item" width="40" height="40" style="margin:5px;" />
+        <van-image v-for="(item,index) in friend.moments[0].image" :key="index" :src="item" width="40" height="40" style="margin:5px;" />
       </template>
     </van-cell>
     <van-cell title="更多信息" is-link />
@@ -44,7 +44,7 @@
 
     <!-- 操作菜单 -->
     <van-popup v-model="show" position="bottom" round style="height:40%">
-      <van-cell is-link v-for="(item,index) in actions" :title="item.title" @click="popupEvent(item)">
+      <van-cell is-link v-for="(item,index) in actions" :key="index" :title="item.title" @click="popupEvent(item)">
         <!-- 使用 title 插槽来自定义标题 -->
         <template #icon>
           <span slot="icon" class="iconfont font-lg pr-1">{{item.icon}}</span>

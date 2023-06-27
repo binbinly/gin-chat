@@ -17,7 +17,7 @@ export default {
     },
 
     //我的好友
-    mailList: [],
+    friends: [],
 
     //我的表情
     emoCat:[],
@@ -149,9 +149,9 @@ export default {
       friendList().then(res => {
         if (res.length > 0) {
           const list = new SortWord(res, 'name')
-          state.mailList = list.newList
+          state.friends = list.newList
         }
-        console.log('mailList', state.mailList)
+        console.log('friends', state.friends)
       })
     },
     // 获取会话列表

@@ -6,4 +6,4 @@
 #  Debug: true
 #  MaxIdleConn: 10
 #  MaxOpenConn: 100
-#  ConnMaxLifeTime: 1h
+#  ConnMaxLifeTime: 100s

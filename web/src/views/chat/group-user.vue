@@ -10,7 +10,7 @@
       <span class="text-muted">{{keyword ? '搜索结果' :'用户'}}</span>
     </div>
 
-    <van-cell v-for="(item,index) in allList" :title="item.name" center @click="selectItem(item)">
+    <van-cell v-for="(item,index) in allList" :key="index" :title="item.name" center @click="selectItem(item)">
       <template #icon>
         <van-image class="pr-1" round width="35" height="35" :src="item.avatar|formatAvatar" />
       </template>

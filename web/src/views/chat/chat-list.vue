@@ -10,7 +10,7 @@
     <van-search v-model="keyword" placeholder="搜索" input-align="center" />
 
     <!-- 好友列表 -->
-    <van-cell :title="item.name" v-for="(item,index) in allList" center @click="selectItem(item)">
+    <van-cell :title="item.name" v-for="(item,index) in allList" :key="index" center @click="selectItem(item)">
       <template #icon>
         <van-image class="pr-1" round width="35" height="35" :src="item.avatar|formatAvatar" />
       </template>
@@ -25,7 +25,7 @@
     <!-- 弹出层 - 名片 -->
     <van-dialog v-model="show" title="发送给：" show-cancel-button @confirm="onConfirm">
       <div v-if="selectCount > 0">
-        <div class="ml-1 flex flex-column" v-for="(item,index) in selectList">
+        <div class="ml-1 flex flex-column" v-for="(item,index) in selectList" :key="index">
           <van-image :src="item.avatar|formatAvatar" round width="35" height="35" />
           <span class="text-muted">{{item.name}}</span>
         </div>

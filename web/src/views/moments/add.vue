@@ -29,7 +29,7 @@
     <van-cell title="提醒谁看" is-link center to="/contact_list?type=remind">
       <template #default>
         <div class="ml-1">
-          <van-image style="margin-left:5px;" v-for="(item,index) in remindList" round width="25" height="25" :src="item.avatar|formatAvatar" />
+          <van-image style="margin-left:5px;" v-for="(item,index) in remindList" :key="index" round width="25" height="25" :src="item.avatar|formatAvatar" />
         </div>
       </template>
     </van-cell>

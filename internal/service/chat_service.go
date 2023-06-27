@@ -98,7 +98,7 @@ func (s *Service) ChatUserDetail(ctx context.Context, mid, id int) (*websocket.S
 		return nil, err
 	}
 	// 好友用户详情
-	u, err := s.userinfo(ctx, mid)
+	u, err := s.userinfo(ctx, id)
 	if err != nil {
 		return nil, err
 	}

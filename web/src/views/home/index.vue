@@ -10,12 +10,12 @@
 
     <!-- 置顶列表 -->
     <template v-for="(item,index) in list">
-      <msg-item v-if="item.is_top" :item="item" :index="index" @long="long" />
+      <msg-item v-if="item.is_top" :item="item" :index="index" :key="index" @long="long" />
     </template>
 
     <!-- 非置顶列表 -->
     <template v-for="(item,index) in list">
-      <msg-item v-if="!item.is_top" :item="item" :index="index" @long="long" />
+      <msg-item v-if="!item.is_top" :item="item" :index="index" :key="index" @long="long" />
     </template>
 
     <!-- 弹出层 -->

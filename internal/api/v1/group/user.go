@@ -32,5 +32,5 @@ func User(c *gin.Context) {
 		app.Error(c, e)
 		return
 	}
-	app.Success(c, resource.GroupUsersResource(users, gUsers))
+	app.Success(c, resource.GroupUsersResource(users, gUsers, 0))
 }

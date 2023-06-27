@@ -1,12 +1,11 @@
 package mysql
 
 import (
+	"github.com/binbinly/pkg/storage/orm"
 	"github.com/spf13/viper"
+	"gorm.io/gorm"
 	"log"
 	"time"
-
-	"github.com/binbinly/pkg/storage/orm"
-	"gorm.io/gorm"
 
 	"gin-chat/pkg/config"
 )
@@ -47,7 +46,7 @@ func loadConf() error {
 			"Debug":           true,
 			"MaxIdleConn":     10,
 			"MaxOpenConn":     100,
-			"ConnMaxLifeTime": time.Hour,
+			"ConnMaxLifeTime": 100 * time.Second,
 		})
 		v.BindEnv("default.addr", "CHAT_MYSQL_ADDR")
 		v.BindEnv("default.user", "CHAT_MYSQL_USER")

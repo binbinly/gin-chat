@@ -9,7 +9,7 @@
 
     <!-- 通讯录列表 -->
     <template v-if="type === 'see'">
-      <van-cell v-for="(item,index) in typeList" :title="item.name" center @click="typeIndex = index">
+      <van-cell v-for="(item,index) in typeList" :key="index" :title="item.name" center @click="typeIndex = index">
         <template #right-icon>
           <van-checkbox :value="typeIndex === index ? true : false" checked-color="#08c060" />
         </template>
@@ -19,8 +19,8 @@
       <!-- 侧边导航条 -->
       <van-index-bar :sticky-offset-top="45">
         <template v-for="(item,index) in list">
-          <van-index-anchor :index="item.title" />
-          <van-cell v-for="(item2,index2) in item.list" :title="item2.name" center @click="selectItem(item2)">
+          <van-index-anchor :index="item.title" :key="index"/>
+          <van-cell v-for="(item2,index2) in item.list" :key="index2" :title="item2.name" center @click="selectItem(item2)">
             <template #icon>
               <van-image class="pr-1" round width="35" height="35" :src="item2.avatar|formatAvatar" />
             </template>
@@ -84,7 +84,7 @@ export default {
   computed: {
     ...mapState({
       list: state => {
-        return state.user.mailList.map(item => {
+        return state.user.friends.map(item => {
           item.list = item.list.map(res => {
             return { ...res, checked: false }
           })

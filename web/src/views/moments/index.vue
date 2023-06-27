@@ -30,7 +30,7 @@
         <van-button type="primary" size="small" :disabled="content.length === 0" @click="send">发送</van-button>
       </div>
       <div v-if="faceModal" class="flex flex-wrap" style="height: 200px;overflow: auto;">
-        <div style="width: 45px;height: 45px;" class="flex align-center justify-center" hover-class="bg-white" v-for="(item,index) in faceList"
+        <div style="width: 45px;height: 45px;" class="flex align-center justify-center" hover-class="bg-white" v-for="(item,index) in faceList" :key="index"
              @click="addFace(item)">
           <span style="font-size:24px;">{{item}}</span>
         </div>

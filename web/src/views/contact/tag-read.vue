@@ -4,7 +4,7 @@
     <van-nav-bar left-text="标签用户" fixed placeholder left-arrow @click-left="onClickLeft">
     </van-nav-bar>
 
-    <van-cell v-for="(item,index) in list" :title="item.name" is-link center @click="openUser(item.id)">
+    <van-cell v-for="(item,index) in list" :key="index" :title="item.name" is-link center @click="openUser(item.id)">
       <template #icon>
         <van-image class="pr-1" round width="35" height="35" :src="item.avatar|formatAvatar" />
       </template>

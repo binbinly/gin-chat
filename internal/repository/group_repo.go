@@ -73,7 +73,7 @@ func (r *Repo) GetGroupsByUserID(ctx context.Context, userID int) (list []*model
 		// 从数据库中获取
 		if err = r.DB.WithContext(ctx).Model(&model.GroupUserModel{}).Distinct().Select("`group`.id, `group`.name, `group`.avatar").
 			Joins("left join `group` on `group`.id = group_user.group_id").
-			Where("group_user.user_id=?", userID).Scan(&data).Error; err != nil {
+			Where("group_user.user_id=?", userID).Scan(data).Error; err != nil {
 			return err
 		}
 		if len(list) == 0 {
