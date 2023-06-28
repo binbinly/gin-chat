@@ -108,6 +108,7 @@ docker run --rm -it -p 9050:9050 -p 9060:9060 chat:latest server
 - [openai](https://platform.openai.com)
 - [codeium](https://codeium.com/)
 - [opencommit](https://github.com/di-sukharev/opencommit)
+- [chatgpt-next](https://chat-gpt-next-web-weld-nine-63.vercel.app)
 
 ## 其他
 
