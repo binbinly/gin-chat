@@ -104,6 +104,11 @@ docker run --rm -it -p 9050:9050 -p 9060:9060 chat:latest server
 > TIPS: 只有本地环境开启了文档
 - [chat接口文档](http://127.0.0.1:9050/swagger/index.html)
 
+## AI辅助
+- [openai](https://platform.openai.com)
+- [codeium](https://codeium.com/)
+- [opencommit](https://github.com/di-sukharev/opencommit)
+
 ## 其他
 
 - 编码规范: [Uber Go 语言编码规范](https://github.com/xxjwxc/uber_go_guide_cn)
