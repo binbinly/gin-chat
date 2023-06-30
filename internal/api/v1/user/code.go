@@ -2,6 +2,7 @@ package user
 
 import (
 	"github.com/binbinly/pkg/errno"
+	"github.com/binbinly/pkg/util/validator"
 	"github.com/gin-gonic/gin"
 
 	"gin-chat/internal/api"
@@ -30,7 +31,7 @@ func SendCode(c *gin.Context) {
 		app.Error(c, errno.ErrInvalidParam)
 		return
 	}
-	if is := api.ValidateMobile(req.Phone); !is {
+	if is := validator.RegexMatch(req.Phone, validator.ChineseMobileMatcher); !is {
 		app.Error(c, ecode.ErrPhoneValid)
 		return
 	}

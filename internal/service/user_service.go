@@ -2,15 +2,15 @@ package service
 
 import (
 	"context"
-	"gin-chat/pkg/app"
 	"strings"
 	"time"
+
+	"gin-chat/internal/model"
+	"gin-chat/pkg/app"
 
 	"github.com/binbinly/pkg/auth"
 	"github.com/binbinly/pkg/util"
 	"github.com/pkg/errors"
-
-	"gin-chat/internal/model"
 )
 
 // User 用户服务接口

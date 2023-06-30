@@ -2,6 +2,7 @@ package user
 
 import (
 	"github.com/binbinly/pkg/errno"
+	"github.com/binbinly/pkg/util/validator"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/cast"
 
@@ -34,7 +35,7 @@ func Register(c *gin.Context) {
 		app.Error(c, errno.ErrInvalidParam)
 		return
 	}
-	is := api.ValidateMobile(req.Phone)
+	is := validator.RegexMatch(req.Phone, validator.ChineseMobileMatcher)
 	phone := cast.ToInt64(req.Phone)
 	if !is || phone == 0 {
 		app.Error(c, ecode.ErrPhoneValid)

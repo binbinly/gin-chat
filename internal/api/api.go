@@ -2,15 +2,14 @@ package api
 
 import (
 	"errors"
-	"regexp"
+
+	"gin-chat/internal/ecode"
+	"gin-chat/internal/service"
 
 	"github.com/binbinly/pkg/errno"
 	"github.com/binbinly/pkg/logger"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/cast"
-
-	"gin-chat/internal/ecode"
-	"gin-chat/internal/service"
 )
 
 const (
@@ -21,7 +20,7 @@ const (
 // BindJSON 绑定请求参数
 func BindJSON(c *gin.Context, form interface{}) bool {
 	if err := c.ShouldBindJSON(form); err != nil {
-		logger.Infof("[bind.json] param err: %v", err)
+		logger.Debugf("[bind.json] param err: %v", err)
 		return false
 	}
 	return true
@@ -44,15 +43,6 @@ func GetPage(c *gin.Context) (int, int) {
 		offset = (page - 1) * _defaultLimit
 	}
 	return offset, _defaultLimit
-}
-
-// ValidateMobile 验证手机号
-func ValidateMobile(phone string) bool {
-	// 170、171、165、162、167 排除
-	regular := "^(((13[0-9]{1})|(15[0-9]{1})|(16[1346890]{1})|(17[2-8]{1})|(18[0-9]{1})|(19[0-9]{1})|(14[5-7]{1}))+\\d{8})$"
-
-	reg := regexp.MustCompile(regular)
-	return reg.MatchString(phone)
 }
 
 // Error response err

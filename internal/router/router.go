@@ -1,15 +1,17 @@
 package router
 
 import (
+	"net/http"
+
 	_ "gin-chat/docs"
 	"gin-chat/pkg/app"
 	"gin-chat/pkg/middleware"
+
 	"github.com/gin-contrib/pprof"
 	"github.com/gin-gonic/gin"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
-	"net/http"
 )
 
 // NewRouter Load loads the middlewares, routes, handlers.

@@ -1,4 +1,5 @@
 Url: https://gin-chat-production.up.railway.app
 Mode: release
+LogLevel: info
 Debug: false
 Proxy: true

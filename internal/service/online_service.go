@@ -3,15 +3,15 @@ package service
 import (
 	"context"
 	"encoding/json"
+	"time"
+
 	"gin-chat/internal/websocket"
 	"gin-chat/pkg/app"
-	"time"
+	"gin-chat/pkg/redis"
 
 	"github.com/binbinly/pkg/auth"
 	"github.com/binbinly/pkg/logger"
 	"github.com/pkg/errors"
-
-	"gin-chat/pkg/redis"
 )
 
 // Online 用户在线服务接口

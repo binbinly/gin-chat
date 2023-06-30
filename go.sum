@@ -55,6 +55,8 @@ github.com/binbinly/pkg v0.0.0-20230619064409-1b7a398c30c0 h1:xOOEr8JoXGppzMFq5E
 github.com/binbinly/pkg v0.0.0-20230619064409-1b7a398c30c0/go.mod h1:g1gKSXOVMfJNdO4e+wkN2UCa6mNJLhwaDEH+iUZYYqQ=
 github.com/binbinly/pkg v0.0.0-20230627084328-7307bcc9a544 h1:HkNiNu/+xoru07tXQ4Yk2a0q0KH748PZnFIdfIm9dfw=
 github.com/binbinly/pkg v0.0.0-20230627084328-7307bcc9a544/go.mod h1:g1gKSXOVMfJNdO4e+wkN2UCa6mNJLhwaDEH+iUZYYqQ=
+github.com/binbinly/pkg v0.0.5 h1:IsFa0u5N9cbtZzaQEIL7RK8kIG4vpMPYAKfeyxC+Q78=
+github.com/binbinly/pkg v0.0.5/go.mod h1:g1gKSXOVMfJNdO4e+wkN2UCa6mNJLhwaDEH+iUZYYqQ=
 github.com/bsm/ginkgo/v2 v2.7.0 h1:ItPMPH90RbmZJt5GtkcNvIRuGEdwlBItdNVoyzaNQao=
 github.com/bsm/ginkgo/v2 v2.7.0/go.mod h1:AiKlXPm7ItEHNc/2+OkrNG4E0ITzojb9/xWzvQ9XZ9w=
 github.com/bsm/gomega v1.26.0 h1:LhQm+AFcgV2M0WyKroMASzAzCAJVpAxQXv4SaI9a69Y=

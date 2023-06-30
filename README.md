@@ -83,14 +83,14 @@ docker run --rm -it -p 9050:9050 -p 9060:9060 chat:latest server
 
 ### 3. Railway部署 (✅推荐)
 > Railway每月提供5美元和最多500小时的免费额度。
-1. 进入 [Railway](https://railway.app?referralCode=Aha8g3)。
-2. 点击 `Deploy Now` 按钮。
-3. 设置环境变量来重载程序运行的参数，set env `PORT => 9050`
-4. Set Deploy Start Command: /app/gin-chat server
+1. [![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/VTEHKI?referralCode=Aha8g3)
+2. 设置环境变量来重载程序运行的参数，set env `PORT => 9050`
+> 前端打包后的代码部署在 github-page
 
 ## 常用命令
 
 - make help 查看帮助
+- make init 初始化数据结构，并填充数据库表情包数据
 - make build 编译项目
 - make run 运行项目
 - make test 运行测试用例

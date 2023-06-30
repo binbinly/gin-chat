@@ -2,16 +2,16 @@ package service
 
 import (
 	"context"
-	"github.com/binbinly/pkg/cache"
-
-	"github.com/redis/go-redis/v9"
 
 	"gin-chat/internal/model"
 	"gin-chat/internal/repository"
 	"gin-chat/internal/websocket"
 	"gin-chat/pkg/mysql"
 	redis2 "gin-chat/pkg/redis"
+
+	"github.com/binbinly/pkg/cache"
 	"github.com/binbinly/pkg/transport/ws"
+	"github.com/redis/go-redis/v9"
 )
 
 const (

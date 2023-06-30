@@ -15,8 +15,8 @@ func TestLoad(t *testing.T) {
 	}
 	var dbConf config
 
-	c := New("../test/config/")
-	if err := c.Load("database", &dbConf); err != nil {
+	c := New(WithConfigDir("../test/config/"))
+	if err := c.Load("database", &dbConf, nil); err != nil {
 		t.Fatal(err)
 	}
 	assert.Equal(t, dbConf.Name, "mysql")

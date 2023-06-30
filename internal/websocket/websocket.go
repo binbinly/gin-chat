@@ -3,12 +3,13 @@ package websocket
 import (
 	"context"
 	"encoding/json"
+
 	"gin-chat/pkg/app"
-	"github.com/redis/go-redis/v9"
 
 	"github.com/binbinly/pkg/logger"
 	"github.com/binbinly/pkg/transport/ws"
 	"github.com/pkg/errors"
+	"github.com/redis/go-redis/v9"
 )
 
 // UserConnInfo 用户连接信息

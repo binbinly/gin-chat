@@ -6,6 +6,7 @@ import (
 	"gin-chat/internal/service"
 	"gin-chat/pkg/app"
 	"gin-chat/pkg/config"
+
 	"github.com/binbinly/pkg/logger"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/cobra"
@@ -45,9 +46,7 @@ func setup() {
 	gin.SetMode(app.Conf.Mode)
 
 	// init logger
-	if !app.Conf.Debug {
-		logger.InitLogger(logger.WithLevel("info"))
-	}
+	logger.InitLogger(logger.WithLevel(app.Conf.LogLevel), logger.WithLogDir("./logs/"))
 }
 
 // run 核心业务服务启动

@@ -2,6 +2,7 @@
 GOCMD=GO111MODULE=on go
 GOBUILD=$(GOCMD) build
 GOTEST=$(GOCMD) test
+GORUN=$(GOCMD) run
 
 PROJECT_NAME := "gin-chat"
 PKG := "$(PROJECT_NAME)"
@@ -9,7 +10,7 @@ PKG_LIST := $(shell go list ${PKG}/... | grep -v /examples)
 
 all: test build
 dev:
-	$(GOBUILD) run main.go server
+	$(GORUN) main.go server
 
 build:
 	cp -r configs build/configs
@@ -25,6 +26,11 @@ clean:
 # 运行服务
 run:
 	nohup build/gin-chat server -c configs &
+
+# 初始化数据结构，并填充数据库表情包数据
+init:
+	$(GORUN) main.go migrate -a 127.0.0.1 -u root -p root -d chat
+	$(GORUN) main.go seed -a 127.0.0.1 -u root -p root -d chat
 
 # 停止服务
 stop:

@@ -1,13 +1,14 @@
 package mysql
 
 import (
-	"github.com/binbinly/pkg/storage/orm"
-	"github.com/spf13/viper"
-	"gorm.io/gorm"
 	"log"
 	"time"
 
 	"gin-chat/pkg/config"
+
+	"github.com/binbinly/pkg/storage/orm"
+	"github.com/spf13/viper"
+	"gorm.io/gorm"
 )
 
 // DB 数据库全局变量

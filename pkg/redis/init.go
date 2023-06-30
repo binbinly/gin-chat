@@ -1,12 +1,14 @@
 package redis
 
 import (
+	"log"
+	"time"
+
 	"gin-chat/pkg/config"
+
 	redis2 "github.com/binbinly/pkg/storage/redis"
 	"github.com/redis/go-redis/v9"
 	"github.com/spf13/viper"
-	"log"
-	"time"
 )
 
 const (

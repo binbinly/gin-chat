@@ -31,7 +31,7 @@ func init() {
 	StartCmd.PersistentFlags().StringVarP(&host, "host", "a", "127.0.0.1", "mysql host")
 	StartCmd.PersistentFlags().StringVarP(&user, "user", "u", "root", "mysql user")
 	StartCmd.PersistentFlags().StringVarP(&password, "password", "p", "root", "mysql password")
-	StartCmd.PersistentFlags().StringVarP(&name, "name", "n", "chat", "mysql db name")
+	StartCmd.PersistentFlags().StringVarP(&name, "name", "d", "chat", "mysql db name")
 }
 
 func setup() {
