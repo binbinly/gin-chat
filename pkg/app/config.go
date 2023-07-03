@@ -62,5 +62,8 @@ type ServerConfig struct {
 }
 
 func BuildResUrl(path string) string {
+	if len(path) == 0 {
+		return ""
+	}
 	return Conf.DfsUrl + path
 }

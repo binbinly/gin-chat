@@ -85,7 +85,8 @@ docker run --rm -it -p 9050:9050 -p 9060:9060 chat:latest server
 > Railway每月提供5美元和最多500小时的免费额度。
 1. [![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/VTEHKI?referralCode=Aha8g3)
 2. 设置环境变量来重载程序运行的参数，set env `PORT => 9050`
-> 前端打包后的代码部署在 github-page
+3. Set Deploy Start Command: /app/gin-chat server
+> 前端打包后的代码部署在 [github-pages](https://github.com/binbinly/chat-frontend)
 
 ## 常用命令
 
