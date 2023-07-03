@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"gin-chat/pkg/app"
 	"time"
 
 	"github.com/pkg/errors"
@@ -127,7 +128,7 @@ func (s *Service) ApplyHandle(ctx context.Context, uid, fid int, nickname string
 		From: &websocket.Sender{
 			ID:     uid,
 			Name:   info.Nickname,
-			Avatar: auth.Avatar,
+			Avatar: app.BuildResUrl(auth.Avatar),
 		},
 		ChatType: model.MessageChatTypeUser,
 		Type:     model.MessageTypeSystem,
@@ -141,7 +142,7 @@ func (s *Service) ApplyHandle(ctx context.Context, uid, fid int, nickname string
 		From: &websocket.Sender{
 			ID:     fid,
 			Name:   nickname,
-			Avatar: fAuth.Avatar,
+			Avatar: app.BuildResUrl(fAuth.Avatar),
 		},
 		ChatType: model.MessageChatTypeUser,
 		Type:     model.MessageTypeSystem,

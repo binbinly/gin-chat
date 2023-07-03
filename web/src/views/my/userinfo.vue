@@ -108,16 +108,16 @@ export default {
       //上传文件
       file.status = 'uploading';
       file.message = '上传中...';
-      uploadFile(file.file).then(url => {
+      uploadFile(file.file).then(res => {
         file.status = 'done'
         userEdit({
-          avatar: url
+          avatar: res.path
         }).then(() => {
-          this.user.avatar = url
+          this.user.avatar = res.url
           Toast.success('修改头像成功')
           this.$store.commit('updateUser', {
             k: 'avatar',
-            v: url
+            v: res.url
           })
         })
       }).catch(() => {

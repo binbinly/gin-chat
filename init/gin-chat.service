@@ -7,7 +7,7 @@ LimitNOFILE=51200
 LimitNPROC=51200
 User=www
 Group=www
-Environment="API_ENV=prod"
+Environment="APP_ENV=prod"
 WorkingDirectory=/www/wwwroot/gin-chat
 ExecStart=/www/wwwroot/gin-chat/gin-chat
 Restart=on-failure

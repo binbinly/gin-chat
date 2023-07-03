@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"encoding/json"
+	"gin-chat/pkg/app"
 	"time"
 
 	"github.com/pkg/errors"
@@ -105,7 +106,7 @@ func (s *Service) ChatUserDetail(ctx context.Context, mid, id int) (*websocket.S
 	return &websocket.Sender{
 		ID:     u.ID,
 		Name:   m.Nickname,
-		Avatar: u.Avatar,
+		Avatar: app.BuildResUrl(u.Avatar),
 	}, nil
 }
 
@@ -150,7 +151,7 @@ func (s *Service) ChatSendUser(ctx context.Context, mid, id int, t int, content 
 		From: &websocket.Sender{
 			ID:     u.ID,
 			Name:   f.Nickname,
-			Avatar: u.Avatar,
+			Avatar: app.BuildResUrl(u.Avatar),
 		},
 		ChatType: model.MessageChatTypeUser,
 		Type:     t,
@@ -184,7 +185,7 @@ func (s *Service) ChatSendGroup(ctx context.Context, mid, id int, t int, content
 		From: &websocket.Sender{
 			ID:     u.ID,
 			Name:   getNickname(u),
-			Avatar: u.Avatar,
+			Avatar: app.BuildResUrl(u.Avatar),
 		},
 		To: &websocket.Sender{
 			ID:     group.ID,

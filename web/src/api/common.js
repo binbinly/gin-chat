@@ -28,9 +28,7 @@ export function uploadFile(file) {
   console.log('upload file', file)
   return api
       .upload(api.Upload, { file })
-      .then(url => {
-        return url
-      })
+      .then(res => {return res})
       .catch(e => {
         console.error('get upload url', e)
         reject(e)

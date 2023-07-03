@@ -8,7 +8,7 @@ import (
 	"sync"
 
 	"github.com/binbinly/pkg/storage/orm"
-	"github.com/spf13/cast"
+	"github.com/binbinly/pkg/util"
 	"gorm.io/gorm"
 )
 
@@ -65,5 +65,5 @@ func (e *Migration) Migrate() {
 
 func GetFilename(s string) int {
 	s = filepath.Base(s)
-	return cast.ToInt(s[:13])
+	return util.MustInt(s[:13])
 }

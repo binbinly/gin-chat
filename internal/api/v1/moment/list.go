@@ -1,13 +1,13 @@
 package moment
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/spf13/cast"
-
 	"gin-chat/internal/api"
 	"gin-chat/internal/resource"
 	"gin-chat/internal/service"
 	"gin-chat/pkg/app"
+
+	"github.com/binbinly/pkg/util"
+	"github.com/gin-gonic/gin"
 )
 
 // List 动态列表
@@ -23,7 +23,7 @@ import (
 // @Router /moment/list [get]
 func List(c *gin.Context) {
 	mid := api.GetUserID(c)
-	uid := cast.ToInt(c.Query("user_id"))
+	uid := util.MustInt(c.Query("user_id"))
 	if uid == 0 { // 默认查看自己的动态
 		uid = mid
 	}

@@ -8,6 +8,7 @@ import (
 	"strings"
 	"sync"
 
+	"github.com/binbinly/pkg/logger"
 	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/viper"
 )
@@ -114,8 +115,7 @@ func (c *Config) load(filename string, hook func(v *viper.Viper)) (*viper.Viper,
 	if err := v.ReadInConfig(); err != nil {
 		return nil, err
 	}
-	log.Println("Using config file:", v.ConfigFileUsed())
-	log.Println("config settings:", v.AllSettings())
+	logger.Debug("Using config file: ", v.ConfigFileUsed(), " settings: ", v.AllSettings())
 
 	return v, nil
 }

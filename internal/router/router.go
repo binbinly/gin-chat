@@ -32,7 +32,7 @@ func NewRouter(debug bool) *gin.Engine {
 	// HealthCheck 健康检查路由
 	g.GET("/health", app.HealthCheck)
 	// 静态资源，主要是图片
-	g.StaticFS("/assets", http.Dir("assets"))
+	g.StaticFS("/group1", http.Dir("data"))
 
 	// 返回404，仅在debug环境下开启，线上关闭
 	if debug {

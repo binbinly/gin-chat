@@ -8,8 +8,8 @@ import (
 
 	"github.com/binbinly/pkg/errno"
 	"github.com/binbinly/pkg/logger"
+	"github.com/binbinly/pkg/util"
 	"github.com/gin-gonic/gin"
-	"github.com/spf13/cast"
 )
 
 const (
@@ -18,7 +18,7 @@ const (
 )
 
 // BindJSON 绑定请求参数
-func BindJSON(c *gin.Context, form interface{}) bool {
+func BindJSON(c *gin.Context, form any) bool {
 	if err := c.ShouldBindJSON(form); err != nil {
 		logger.Debugf("[bind.json] param err: %v", err)
 		return false
@@ -38,7 +38,7 @@ func GetUserID(c *gin.Context) int {
 // GetPage 获取分页起始偏移量
 func GetPage(c *gin.Context) (int, int) {
 	offset := 0
-	page := cast.ToInt(c.Query("p"))
+	page := util.MustInt(c.Query("p"))
 	if page > 0 {
 		offset = (page - 1) * _defaultLimit
 	}

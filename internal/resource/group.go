@@ -2,6 +2,7 @@ package resource
 
 import (
 	"gin-chat/internal/model"
+	"gin-chat/pkg/app"
 )
 
 // GroupResponse 群组响应结构
@@ -56,7 +57,7 @@ func GroupUsersResource(users []*model.UserModel, gUsers []*model.GroupUserModel
 		us = append(us, &model.User{
 			ID:     user.ID,
 			Name:   name,
-			Avatar: user.Avatar,
+			Avatar: app.BuildResUrl(user.Avatar),
 		})
 	}
 	return us

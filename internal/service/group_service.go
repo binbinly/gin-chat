@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"fmt"
+	"gin-chat/pkg/app"
 	"strings"
 	"time"
 
@@ -129,7 +130,7 @@ func (s *Service) GroupCreate(ctx context.Context, mid int, ids []int) error {
 		From: &websocket.Sender{
 			ID:     u.ID,
 			Name:   uname,
-			Avatar: u.Avatar,
+			Avatar: app.BuildResUrl(u.Avatar),
 		},
 		To: &websocket.Sender{
 			ID:     group.ID,
@@ -366,7 +367,7 @@ func (s *Service) sendMessage(ctx context.Context, params *sendParams) (err erro
 	f := &websocket.Sender{
 		ID:     m.ID,
 		Name:   s.myGroupName(m, params.gUsers),
-		Avatar: m.Avatar,
+		Avatar: app.BuildResUrl(m.Avatar),
 	}
 	t := &websocket.Sender{
 		ID:     params.group.ID,

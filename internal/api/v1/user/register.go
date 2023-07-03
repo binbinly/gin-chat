@@ -1,15 +1,15 @@
 package user
 
 import (
-	"github.com/binbinly/pkg/errno"
-	"github.com/binbinly/pkg/util/validator"
-	"github.com/gin-gonic/gin"
-	"github.com/spf13/cast"
-
 	"gin-chat/internal/api"
 	"gin-chat/internal/ecode"
 	"gin-chat/internal/service"
 	"gin-chat/pkg/app"
+
+	"github.com/binbinly/pkg/errno"
+	"github.com/binbinly/pkg/util"
+	"github.com/binbinly/pkg/util/validator"
+	"github.com/gin-gonic/gin"
 )
 
 // registerParams 注册
@@ -36,12 +36,12 @@ func Register(c *gin.Context) {
 		return
 	}
 	is := validator.RegexMatch(req.Phone, validator.ChineseMobileMatcher)
-	phone := cast.ToInt64(req.Phone)
+	phone := util.MustInt(req.Phone)
 	if !is || phone == 0 {
 		app.Error(c, ecode.ErrPhoneValid)
 		return
 	}
-	_, err := service.Svc.UserRegister(c.Request.Context(), req.Username, req.Password, phone)
+	_, err := service.Svc.UserRegister(c.Request.Context(), req.Username, req.Password, int64(phone))
 	if e := api.Error(err); e != nil {
 		app.Error(c, e)
 		return

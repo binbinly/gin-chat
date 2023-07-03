@@ -1,7 +1,8 @@
 #Name: gin-chat
-#Url: http://127.0.0.1:9050
+#DfsUrl: http://127.0.0.1:9050/group1/
 #Mode: debug      # debug, release, test
 #LogLevel: debug  # debug, info, warn, error, fatal
+#LogDir: ./logs/
 #JwtSecret: TQ2MNWIB2zK0z9JCqUC6WcTG9pMTnX12CLuVSop5Xr2owx4M9JTJIzBnMMYeWwRs
 #JwtTimeout: 86400
 #Debug: true

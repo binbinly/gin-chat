@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"gin-chat/pkg/app"
 	"strconv"
 	"strings"
 
@@ -156,7 +157,7 @@ func (s *Service) friendUserList(ctx context.Context, friends []*model.FriendMod
 		list = append(list, &model.User{
 			ID:     u.ID,
 			Name:   getNickname(u),
-			Avatar: u.Avatar,
+			Avatar: app.BuildResUrl(u.Avatar),
 		})
 	}
 	return list, nil

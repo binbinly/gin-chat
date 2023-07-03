@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"gin-chat/pkg/app"
 
 	"github.com/binbinly/pkg/util"
 	"github.com/pkg/errors"
@@ -221,7 +222,7 @@ func (s *Service) MomentLike(ctx context.Context, uid, id int) error {
 	}
 	if err = s.ws.BatchSendConn(ctx, cs, websocket.EventMoment, &websocket.Moment{
 		UserID: uid,
-		Avatar: u.Avatar,
+		Avatar: app.BuildResUrl(u.Avatar),
 		Type:   "like",
 	}); err != nil {
 		return errors.Wrapf(err, "[service.moment] ws send to new")
@@ -262,7 +263,7 @@ func (s *Service) MomentComment(ctx context.Context, uid, rid, id int, content s
 	}
 	if err = s.ws.BatchSendConn(ctx, cs, websocket.EventMoment, &websocket.Moment{
 		UserID: uid,
-		Avatar: u.Avatar,
+		Avatar: app.BuildResUrl(u.Avatar),
 		Type:   "comment",
 	}); err != nil {
 		return errors.Wrapf(err, "[service.moment] ws send to new")
@@ -315,7 +316,7 @@ func (s *Service) pushMessage(ctx context.Context, uid int, lines []*model.Momen
 	}
 	if err = s.ws.BatchSendConn(ctx, cs, websocket.EventMoment, &websocket.Moment{
 		UserID: uid,
-		Avatar: u.Avatar,
+		Avatar: app.BuildResUrl(u.Avatar),
 		Type:   "new",
 	}); err != nil {
 		return errors.Wrapf(err, "[service.moment] ws send to new")
@@ -327,7 +328,7 @@ func (s *Service) pushMessage(ctx context.Context, uid int, lines []*model.Momen
 		}
 		if err = s.ws.BatchSendConn(ctx, cs, websocket.EventMoment, &websocket.Moment{
 			UserID: uid,
-			Avatar: u.Avatar,
+			Avatar: app.BuildResUrl(u.Avatar),
 			Type:   "remind",
 		}); err != nil {
 			return errors.Wrapf(err, "[service.moment] ws send to remind")

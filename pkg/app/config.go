@@ -14,10 +14,12 @@ var (
 
 func SetDefaultConf(v *viper.Viper) {
 	v.SetDefault("Name", "gin-chat")
-	v.SetDefault("Url", "http://127.0.0.1:9050")
+	v.SetDefault("DfsUrl", "http://127.0.0.1:9050/group1/")
 	v.SetDefault("Mode", "debug")
 	v.SetDefault("JwtSecret", "TQ2MNWIB2zK0z9JCqUC6WcTG9pMTnX12CLuVSop5Xr2owx4M9JTJIzBnMMYeWwRs")
 	v.SetDefault("JwtTimeout", 86400)
+	v.SetDefault("LogLevel", "debug")
+	v.SetDefault("LogDir", "./logs/")
 	v.SetDefault("Debug", true)
 	v.SetDefault("Proxy", false)
 	v.SetDefault("HTTP", ServerConfig{
@@ -40,9 +42,10 @@ func SetDefaultConf(v *viper.Viper) {
 
 type Config struct {
 	Name       string
-	Url        string
+	DfsUrl     string
 	Mode       string
 	LogLevel   string
+	LogDir     string
 	JwtSecret  string
 	JwtTimeout int64
 	Debug      bool
@@ -56,4 +59,8 @@ type ServerConfig struct {
 	Addr         string
 	ReadTimeout  time.Duration
 	WriteTimeout time.Duration
+}
+
+func BuildResUrl(path string) string {
+	return Conf.DfsUrl + path
 }

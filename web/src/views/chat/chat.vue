@@ -644,9 +644,9 @@ export default {
     upload(file, name) {
       file.status = 'uploading';
       file.message = '上传中...';
-      uploadFile(file.file).then(url => {
+      uploadFile(file.file).then(res => {
         file.status = 'done'
-        this.send(name, url)
+        this.send(name, res.url)
       }).catch(rej => {
         Toast.fail('上传失败')
       })

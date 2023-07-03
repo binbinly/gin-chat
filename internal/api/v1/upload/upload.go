@@ -18,6 +18,11 @@ import (
 
 const FileMaxSize = 10 << 20 //最大上传10MB
 
+type FileResource struct {
+	Url  string `json:"url"`
+	Path string `json:"path"`
+}
+
 // File 上传文件
 // @Summary 上传文件
 // @Description 上传文件
@@ -55,10 +60,12 @@ func File(c *gin.Context) {
 	if _, err = xfile.ImageType(f); err == nil {
 		isImage = true
 	}
-	dir := fmt.Sprintf("./assets/files/%d%d/%d/", time.Now().Year(), time.Now().Month(), time.Now().Day())
+	dir := fmt.Sprintf("./data/files/%d%d/%d/", time.Now().Year(), time.Now().Month(), time.Now().Day())
 	dst := dir + filename + "." + xfile.Ext(file.Filename)
 	if xfile.Exist(dst) {
-		app.Success(c, app.Conf.Url+dst[1:])
+		app.Success(c, &FileResource{
+			Url:  app.BuildResUrl(dst[7:]),
+			Path: dst[7:]})
 		return
 	}
 	thumbDst := dir + filename + "_small." + xfile.Ext(file.Filename)
@@ -77,7 +84,9 @@ func File(c *gin.Context) {
 		}
 	}
 
-	app.Success(c, app.Conf.Url+dst[1:])
+	app.Success(c, &FileResource{
+		Url:  app.BuildResUrl(dst[7:]),
+		Path: dst[7:]})
 }
 
 // thumb 生成缩略图

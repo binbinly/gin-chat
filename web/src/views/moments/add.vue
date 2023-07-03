@@ -138,12 +138,12 @@ export default {
     upload(file, name) {
       file.status = 'uploading';
       file.message = '上传中...';
-      uploadFile(file.file).then(url => {
+      uploadFile(file.file).then(res => {
         file.status = 'done'
         if (name == 'video') {
-          this.video = url
+          this.video = res.url
         } else {
-          file.url = url
+          file.url = res.url
         }
       }).catch(() => {
         file.status = 'failed';

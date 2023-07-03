@@ -6,10 +6,11 @@ import (
 	"gin-chat/internal/resource"
 	"gin-chat/internal/service"
 	"gin-chat/pkg/app"
+
 	"github.com/binbinly/pkg/errno"
+	"github.com/binbinly/pkg/util"
 	"github.com/gin-gonic/gin"
 	"github.com/pkg/errors"
-	"github.com/spf13/cast"
 )
 
 // Info 获取好友信息
@@ -23,7 +24,7 @@ import (
 // @success 0 {object} app.Response{data=resource.FriendResponse} "调用成功结构"
 // @Router /friend/info [get]
 func Info(c *gin.Context) {
-	fid := cast.ToInt(c.Query("id"))
+	fid := util.MustInt(c.Query("id"))
 	if fid == 0 {
 		app.Error(c, errno.ErrInvalidParam)
 		return

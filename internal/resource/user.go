@@ -2,6 +2,7 @@ package resource
 
 import (
 	"gin-chat/internal/model"
+	"gin-chat/pkg/app"
 )
 
 // UserResponse 用户响应结构
@@ -25,7 +26,7 @@ func UserResource(user *model.UserModel) *UserResponse {
 		Username: user.Username,
 		Nickname: user.Nickname,
 		Email:    user.Email,
-		Avatar:   user.Avatar,
+		Avatar:   app.BuildResUrl(user.Avatar),
 		Sign:     user.Sign,
 		Area:     user.Area,
 		Gender:   user.Gender,
@@ -68,6 +69,6 @@ func userBasic(user *model.UserModel) *model.User {
 	return &model.User{
 		ID:     user.ID,
 		Name:   name,
-		Avatar: user.Avatar,
+		Avatar: app.BuildResUrl(user.Avatar),
 	}
 }

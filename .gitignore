@@ -20,4 +20,4 @@
 *.log
 .idea
 .scannerwork/
-assets/files/*
+data

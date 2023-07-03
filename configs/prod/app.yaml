@@ -1,5 +1,6 @@
-Url: https://gin-chat-production.up.railway.app
+DfsUrl: https://gin-chat-production.up.railway.app/group1/
 Mode: release
 LogLevel: info
+LogDir: ./data/logs/
 Debug: false
 Proxy: true

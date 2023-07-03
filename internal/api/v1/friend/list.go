@@ -1,13 +1,13 @@
 package friend
 
 import (
-	"github.com/binbinly/pkg/errno"
-	"github.com/gin-gonic/gin"
-	"github.com/spf13/cast"
-
 	"gin-chat/internal/api"
 	"gin-chat/internal/service"
 	"gin-chat/pkg/app"
+
+	"github.com/binbinly/pkg/errno"
+	"github.com/binbinly/pkg/util"
+	"github.com/gin-gonic/gin"
 )
 
 // List 好友列表
@@ -39,7 +39,7 @@ func List(c *gin.Context) {
 // @success 0 {object} app.Response{data=[]model.User} "调用成功结构"
 // @Router /friend/tag_list [get]
 func TagList(c *gin.Context) {
-	id := cast.ToInt(c.Query("id"))
+	id := util.MustInt(c.Query("id"))
 	if id == 0 {
 		app.Error(c, errno.ErrInvalidParam)
 		return
