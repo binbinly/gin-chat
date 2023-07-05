@@ -7,7 +7,7 @@ import (
 	"gorm.io/gorm"
 
 	"gin-chat/internal/model"
-	"gin-chat/pkg/mysql"
+	"gin-chat/pkg/dbs"
 )
 
 func TestRepo_TimelineBatchCreate(t *testing.T) {
@@ -25,7 +25,7 @@ func TestRepo_TimelineBatchCreate(t *testing.T) {
 			name: "TimelineBatchCreate",
 			args: args{
 				ctx: context.Background(),
-				tx:  mysql.DB,
+				tx:  dbs.DB,
 				models: []*model.MomentTimelineModel{
 					{
 						UID:      model.UID{UserID: 1},

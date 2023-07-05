@@ -7,7 +7,7 @@ import (
 	"gorm.io/gorm"
 
 	"gin-chat/internal/model"
-	"gin-chat/pkg/mysql"
+	"gin-chat/pkg/dbs"
 )
 
 func TestRepo_GetGroupUserByID(t *testing.T) {
@@ -87,7 +87,7 @@ func TestRepo_GroupUserBatchCreate(t *testing.T) {
 			name: "GroupUserBatchCreate",
 			args: args{
 				ctx: context.Background(),
-				tx:  mysql.DB,
+				tx:  dbs.DB,
 				users: []*model.GroupUserModel{
 					{
 						UID:      model.UID{UserID: 1},
@@ -187,7 +187,7 @@ func TestRepo_GroupUserDeleteByGroupID(t *testing.T) {
 			name: "GroupUserDeleteByGroupID",
 			args: args{
 				ctx:     context.Background(),
-				tx:      mysql.DB,
+				tx:      dbs.DB,
 				groupID: 2,
 			},
 		},

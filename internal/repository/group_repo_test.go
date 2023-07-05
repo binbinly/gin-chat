@@ -7,7 +7,7 @@ import (
 	"gorm.io/gorm"
 
 	"gin-chat/internal/model"
-	"gin-chat/pkg/mysql"
+	"gin-chat/pkg/dbs"
 )
 
 func TestRepo_GetGroupByID(t *testing.T) {
@@ -85,7 +85,7 @@ func TestRepo_GroupCreate(t *testing.T) {
 			name: "GroupCreate",
 			args: args{
 				ctx: context.Background(),
-				tx:  mysql.DB,
+				tx:  dbs.DB,
 				group: &model.GroupModel{
 					UID:           model.UID{UserID: 1},
 					Name:          "test",
@@ -124,7 +124,7 @@ func TestRepo_GroupDelete(t *testing.T) {
 			name: "GroupDelete",
 			args: args{
 				ctx: context.Background(),
-				tx:  mysql.DB,
+				tx:  dbs.DB,
 				group: &model.GroupModel{
 					PriID: model.PriID{ID: 1},
 				},

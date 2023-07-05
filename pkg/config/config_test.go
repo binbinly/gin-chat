@@ -19,7 +19,7 @@ func TestLoad(t *testing.T) {
 	if err := c.Load("database", &dbConf, nil); err != nil {
 		t.Fatal(err)
 	}
-	assert.Equal(t, dbConf.Name, "mysql")
+	assert.Equal(t, dbConf.Name, "dbs")
 	assert.Equal(t, dbConf.Addr, "localhost:3306")
 	assert.Equal(t, dbConf.Username, "root")
 	assert.Equal(t, dbConf.Password, "123456")

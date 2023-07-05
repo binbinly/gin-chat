@@ -54,6 +54,7 @@ func loadConf() error {
 			"PoolSize":     100,
 			"PoolTimeout":  240 * time.Second,
 		})
+		v.BindEnv("default.url", "CHAT_REDIS_URL")
 		v.BindEnv("default.addr", "CHAT_REDIS_ADDR")
 		v.BindEnv("default.password", "CHAT_REDIS_PASSWORD")
 		v.BindEnv("default.DB", "CHAT_REDIS_DB")

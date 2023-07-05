@@ -24,12 +24,12 @@ const (
 type MomentModel struct {
 	PriID
 	UID
-	Content  string `gorm:"column:content;not null;type:varchar(1000);comment:内容" json:"content"`
-	Image    string `gorm:"column:image;not null;type:varchar(1000);default:'';comment:图片" json:"image"`
-	Video    string `gorm:"column:video;not null;type:varchar(255);default:'';comment:视频地址" json:"video"`
-	Location string `gorm:"column:location;not null;type:varchar(255);default:'';comment:地址" json:"location"`
-	Remind   string `gorm:"column:remind;not null;type:varchar(255);default:'';comment:提醒谁看" json:"remind"`
-	See      string `gorm:"column:see;not null;type:varchar(255);default:'';comment:用户id列表" json:"see"`
+	Content  string `gorm:"column:content;not null;size:1000;comment:内容" json:"content"`
+	Image    string `gorm:"column:image;not null;size:1000;default:'';comment:图片" json:"image"`
+	Video    string `gorm:"column:video;not null;size:255;default:'';comment:视频地址" json:"video"`
+	Location string `gorm:"column:location;not null;size:255;default:'';comment:地址" json:"location"`
+	Remind   string `gorm:"column:remind;not null;size:255;default:'';comment:提醒谁看" json:"remind"`
+	See      string `gorm:"column:see;not null;size:255;default:'';comment:用户id列表" json:"see"`
 	Type     int8   `gorm:"column:type;not null;default:1;comment:动态类型" json:"type"`
 	SeeType  int8   `gorm:"column:see_type;not null;default:1;comment:可见类型" json:"see_type"`
 	CUT

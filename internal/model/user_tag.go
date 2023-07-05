@@ -4,7 +4,7 @@ package model
 type UserTagModel struct {
 	PriID
 	UID
-	Name string `gorm:"column:name;type:varchar(60);not null;uniqueIndex:idx_name;comment:标签名" json:"name"`
+	Name string `gorm:"column:name;size:60;not null;uniqueIndex:idx_name;comment:标签名" json:"name"`
 	CUT
 }
 

@@ -8,7 +8,7 @@ import (
 
 	"gin-chat/internal/model"
 	"gin-chat/pkg/client/http"
-	"gin-chat/pkg/mysql"
+	"gin-chat/pkg/dbs"
 )
 
 var url = "https://raw.githubusercontent.com/zhaoolee/ChineseBQB/master/chinesebqb_github.json"
@@ -64,6 +64,6 @@ func SyncBQB() error {
 		})
 	}
 	//先清空表
-	mysql.DB.Exec("truncate emoticon")
-	return mysql.DB.CreateInBatches(emo, 200).Error
+	dbs.DB.Exec("truncate emoticon")
+	return dbs.DB.CreateInBatches(emo, 200).Error
 }

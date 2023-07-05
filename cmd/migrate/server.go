@@ -14,14 +14,12 @@ import (
 
 	"gin-chat/cmd/migrate/migration"
 	_ "gin-chat/cmd/migrate/migration/version"
-	"gin-chat/pkg/mysql"
+	"gin-chat/pkg/dbs"
 )
 
 var (
-	host     string
-	user     string
-	password string
-	name     string
+	dsn      string
+	driver   string
 	generate bool
 	StartCmd = &cobra.Command{
 		Use:     "migrate",
@@ -34,10 +32,8 @@ var (
 )
 
 func init() {
-	StartCmd.PersistentFlags().StringVarP(&host, "host", "a", "127.0.0.1", "mysql host")
-	StartCmd.PersistentFlags().StringVarP(&user, "user", "u", "root", "mysql user")
-	StartCmd.PersistentFlags().StringVarP(&password, "password", "p", "root", "mysql password")
-	StartCmd.PersistentFlags().StringVarP(&name, "name", "d", "chat", "mysql db name")
+	StartCmd.PersistentFlags().StringVarP(&dsn, "dsn", "d", "root:root@127.0.0.1:3306/chat", "dbs dsn data source name")
+	StartCmd.PersistentFlags().StringVarP(&driver, "driver", "t", "mysql", "db driver")
 	StartCmd.PersistentFlags().BoolVarP(&generate, "generate", "g", false, "generate migration file")
 }
 
@@ -56,7 +52,7 @@ func run() {
 
 func initDB() {
 	//3. 初始化数据库链接
-	mysql.NewBasicDB(host, user, password, name)
+	dbs.NewBasicDB(driver, dsn)
 	//4. 数据库迁移
 	fmt.Println("数据库迁移开始")
 	_ = migrateModel()
@@ -64,9 +60,8 @@ func initDB() {
 }
 
 func migrateModel() error {
-	db := mysql.DB.Set("gorm:table_options", "ENGINE=InnoDB CHARSET=utf8mb4")
-
-	err := db.Debug().AutoMigrate(&orm.Migration{})
+	db := dbs.DB
+	err := db.Debug().AutoMigrate(new(orm.Migration))
 	if err != nil {
 		return err
 	}

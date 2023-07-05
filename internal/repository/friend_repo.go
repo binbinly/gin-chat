@@ -52,7 +52,7 @@ func (r *Repo) FriendBatchCreate(ctx context.Context, tx *gorm.DB, friends []*mo
 func (r *Repo) GetFriendInfo(ctx context.Context, userID, friendID int) (friend *model.FriendModel, err error) {
 	if err = r.QueryCache(ctx, friendCacheKey(userID, friendID), &friend, 0, func(data any) error {
 		// 从数据库中获取
-		if err = r.DB.WithContext(ctx).Where("user_id=? && friend_id=?", userID, friendID).
+		if err = r.DB.WithContext(ctx).Where("user_id=? and friend_id=?", userID, friendID).
 			First(data).Error; err != nil {
 			return err
 		}

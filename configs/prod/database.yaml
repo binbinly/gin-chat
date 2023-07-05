@@ -1,6 +1,2 @@
 default:
-  User: root
-  Addr: containers-us-west-106.railway.app:5791
-  Password: jbg1IQdhxDNKPcaWrj89
-  Database: railway
-  Debug: false
+  Dsn: "csjnlfewa3192r3ql0g0:pscale_pw_gwqtCpsExghsC8MctaQuRFFZ6qXiTUDKYG2a8PN6ybf@tcp(aws.connect.psdb.cloud)/chat?tls=true"

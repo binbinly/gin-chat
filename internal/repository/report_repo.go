@@ -20,7 +20,7 @@ func (r *Repo) ReportCreate(ctx context.Context, report *model.ReportModel) (int
 func (r *Repo) ReportExistPending(ctx context.Context, targetID int) (bool, error) {
 	var c int64
 	if err := r.DB.WithContext(ctx).Model(&model.ReportModel{}).
-		Where("target_id=? && status=?", targetID, model.ReportStatusPending).Count(&c).Error; err != nil {
+		Where("target_id=? and status=?", targetID, model.ReportStatusPending).Count(&c).Error; err != nil {
 		return false, errors.Wrapf(err, "[repo.report] exist")
 	}
 	return c > 0, nil

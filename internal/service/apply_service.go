@@ -9,7 +9,7 @@ import (
 
 	"gin-chat/internal/model"
 	"gin-chat/internal/websocket"
-	"gin-chat/pkg/mysql"
+	"gin-chat/pkg/dbs"
 )
 
 // Apply 申请好友接口
@@ -82,7 +82,7 @@ func (s *Service) ApplyHandle(ctx context.Context, uid, fid int, nickname string
 		return ErrApplyNotFound
 	}
 	// 开启事务
-	tx := mysql.DB.Begin()
+	tx := dbs.DB.Begin()
 	// 我对好友的模型
 	u := &model.FriendModel{
 		UserID:   uid,

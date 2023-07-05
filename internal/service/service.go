@@ -6,7 +6,7 @@ import (
 	"gin-chat/internal/model"
 	"gin-chat/internal/repository"
 	"gin-chat/internal/websocket"
-	"gin-chat/pkg/mysql"
+	"gin-chat/pkg/dbs"
 	redis2 "gin-chat/pkg/redis"
 
 	"github.com/binbinly/pkg/cache"
@@ -56,7 +56,7 @@ func New(ws ws.Server, opts ...Option) (s *Service) {
 	rdb := redis2.New()
 	s = &Service{
 		opts: newOptions(opts...),
-		repo: repository.New(mysql.NewDB(), cache.NewRedisCache(rdb)),
+		repo: repository.New(dbs.NewDB(), cache.NewRedisCache(rdb)),
 		rdb:  rdb,
 		ws:   websocket.New(ws, rdb),
 	}

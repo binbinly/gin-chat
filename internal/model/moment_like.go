@@ -3,8 +3,8 @@ package model
 // MomentLikeModel 朋友圈点赞模型
 type MomentLikeModel struct {
 	PriID
-	UserID   int `gorm:"column:user_id;not null;type:int(11) unsigned;uniqueIndex:idx_uid_mid;comment:用户id" json:"user_id"`
-	MomentID int `gorm:"column:moment_id;not null;type:int(11) unsigned;uniqueIndex:idx_uid_mid;comment:动态id" json:"moment_id"`
+	UserID   int `gorm:"column:user_id;not null;type:int;uniqueIndex:idx_uid_mid;comment:用户id" json:"user_id"`
+	MomentID int `gorm:"column:moment_id;not null;type:int;uniqueIndex:idx_uid_mid;comment:动态id" json:"moment_id"`
 	CUT
 }
 

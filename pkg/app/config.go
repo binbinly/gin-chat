@@ -35,7 +35,7 @@ func SetDefaultConf(v *viper.Viper) {
 		WriteTimeout: 5 * time.Second,
 	})
 	v.BindEnv("name")
-	v.BindEnv("url")
+	v.BindEnv("dfsUrl", "CHAT_DFS_URL")
 	v.BindEnv("debug")
 	v.BindEnv("proxy")
 }

@@ -7,7 +7,7 @@ import (
 	"gorm.io/gorm"
 
 	"gin-chat/internal/model"
-	"gin-chat/pkg/mysql"
+	"gin-chat/pkg/dbs"
 )
 
 func TestRepo_FriendCreate(t *testing.T) {
@@ -25,7 +25,7 @@ func TestRepo_FriendCreate(t *testing.T) {
 			name: "FriendCreate",
 			args: args{
 				ctx: context.Background(),
-				tx:  mysql.DB,
+				tx:  dbs.DB,
 				friend: &model.FriendModel{
 					UserID:   1,
 					FriendID: 2,

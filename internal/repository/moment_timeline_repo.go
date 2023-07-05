@@ -30,7 +30,7 @@ func (r *Repo) TimelineExist(ctx context.Context, userID, momentID int) (is bool
 	var c int64
 	if err = r.DB.WithContext(ctx).Model(&model.MomentTimelineModel{}).
 		Where("user_id=? and moment_id=?", userID, momentID).Count(&c).Error; err != nil {
-		return false, errors.Wrap(err, "[repo.moment_timeline] query db")
+		return false, errors.Wrap(err, "[repo.moment_timeline] query dbs")
 	}
 	return c > 0, nil
 }

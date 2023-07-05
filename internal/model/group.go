@@ -4,9 +4,9 @@ package model
 type GroupModel struct {
 	PriID
 	UID
-	Name          string `gorm:"column:name;type:varchar(255);not null;comment:群组名" json:"name"`
-	Avatar        string `gorm:"column:avatar;not null;type:varchar(128);default:'';comment:头像" json:"avatar"`
-	Remark        string `gorm:"column:remark;not null;default:'';type:varchar(500);comment:备注" json:"remark"`
+	Name          string `gorm:"column:name;size:255;not null;comment:群组名" json:"name"`
+	Avatar        string `gorm:"column:avatar;not null;size:128;default:'';comment:头像" json:"avatar"`
+	Remark        string `gorm:"column:remark;not null;default:'';size:500;comment:备注" json:"remark"`
 	InviteConfirm int8   `gorm:"column:invite_confirm;not null;default:0;comment:邀请确认" json:"invite_confirm"`
 	Status        int8   `gorm:"column:status;not null;default:1;comment:状态" json:"status"`
 	CUT

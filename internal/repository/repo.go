@@ -33,7 +33,7 @@ type IRepo interface {
 	Close() error
 }
 
-// Repo mysql struct
+// Repo dbs struct
 type Repo struct {
 	repo.Repo
 }

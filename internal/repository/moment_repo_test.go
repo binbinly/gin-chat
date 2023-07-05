@@ -7,7 +7,7 @@ import (
 	"gorm.io/gorm"
 
 	"gin-chat/internal/model"
-	"gin-chat/pkg/mysql"
+	"gin-chat/pkg/dbs"
 )
 
 func TestRepo_GetMomentByID(t *testing.T) {
@@ -155,7 +155,7 @@ func TestRepo_MomentCreate(t *testing.T) {
 			name: "MomentCreate",
 			args: args{
 				ctx: context.Background(),
-				tx:  mysql.DB,
+				tx:  dbs.DB,
 				moment: &model.MomentModel{
 					UID:      model.UID{UserID: 1},
 					Content:  "test",

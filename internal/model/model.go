@@ -20,23 +20,23 @@ const (
 
 // CUT 公共时间字段
 type CUT struct {
-	CreatedAt int64 `gorm:"column:created_at;type:int(11) unsigned;not null;autoCreateTime;comment:创建时间" json:"created_at"`
-	UpdatedAt int64 `gorm:"column:updated_at;type:int(11) unsigned;not null;autoUpdateTime;comment:更新时间" json:"updated_at"`
+	CreatedAt int64 `gorm:"column:created_at;not null;autoCreateTime;comment:创建时间" json:"created_at"`
+	UpdatedAt int64 `gorm:"column:updated_at;not null;autoUpdateTime;comment:更新时间" json:"updated_at"`
 }
 
 // PriID 主键
 type PriID struct {
-	ID int `gorm:"primaryKey;autoIncrement;type:int(11) unsigned auto_increment;column:id;comment:ID" json:"id"`
+	ID int `gorm:"primaryKey;autoIncrement;type:int;not null;column:id;comment:ID" json:"id"`
 }
 
 // CT 创建时间
 type CT struct {
-	CreatedAt int64 `gorm:"column:created_at;type:int(11) unsigned;not null;autoCreateTime;comment:创建时间" json:"created_at"`
+	CreatedAt int64 `gorm:"column:created_at;not null;autoCreateTime;comment:创建时间" json:"created_at"`
 }
 
 // UT 更新时间
 type UT struct {
-	UpdatedAt int64 `gorm:"column:updated_at;type:int(11) unsigned;not null;autoUpdateTime;comment:更新时间" json:"updated_at"`
+	UpdatedAt int64 `gorm:"column:updated_at;not null;autoUpdateTime;comment:更新时间" json:"updated_at"`
 }
 
 // DT 删除时间
@@ -46,7 +46,7 @@ type DT struct {
 
 // UID 用户ID
 type UID struct {
-	UserID int `gorm:"column:user_id;not null;type:int(11) unsigned;index;comment:用户id" json:"user_id"`
+	UserID int `gorm:"column:user_id;not null;type:int;index;comment:用户id" json:"user_id"`
 }
 
 // OffsetPage 分页查询

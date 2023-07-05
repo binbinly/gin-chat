@@ -34,7 +34,7 @@ func (r *Repo) GetEmoticonListByCat(ctx context.Context, cat string) (list []*mo
 		// 从数据库中获取
 		if err = r.DB.WithContext(ctx).Model(&model.EmoticonModel{}).
 			Where("category=?", cat).Scan(data).Error; err != nil {
-			return errors.Wrap(err, "[repo.emoticon] query db")
+			return errors.Wrap(err, "[repo.emoticon] query dbs")
 		}
 		return nil
 	}); err != nil {

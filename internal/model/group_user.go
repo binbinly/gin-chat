@@ -4,8 +4,8 @@ package model
 type GroupUserModel struct {
 	PriID
 	UID
-	GroupID  int    `gorm:"column:group_id;type:int(11) unsigned;not null;comment:群组ID" json:"group_id"`
-	Nickname string `gorm:"column:nickname;type:varchar(60);not null;comment:备注昵称" json:"nickname"`
+	GroupID  int    `gorm:"column:group_id;type:int;not null;comment:群组ID" json:"group_id"`
+	Nickname string `gorm:"column:nickname;size:60;not null;comment:备注昵称" json:"nickname"`
 	CUT
 	DT
 }

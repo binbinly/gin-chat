@@ -32,7 +32,7 @@ func (r *Repo) GetCollectsByUserID(ctx context.Context, userID int, offset, limi
 	// 从数据库中获取
 	if err = r.DB.WithContext(ctx).Scopes(model.OffsetPage(offset, limit)).Where("user_id = ? ", userID).
 		Order(model.DefaultOrder).Find(&list).Error; err != nil {
-		return nil, errors.Wrap(err, "[repo.collect] query db")
+		return nil, errors.Wrap(err, "[repo.collect] query dbs")
 	}
 	return
 }

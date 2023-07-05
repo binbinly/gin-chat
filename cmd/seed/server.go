@@ -5,14 +5,12 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"gin-chat/pkg/mysql"
+	"gin-chat/pkg/dbs"
 )
 
 var (
-	host     string
-	user     string
-	password string
-	name     string
+	dsn      string
+	driver   string
 	StartCmd = &cobra.Command{
 		Use:          "seed",
 		Short:        "Seed data",
@@ -28,14 +26,12 @@ var (
 )
 
 func init() {
-	StartCmd.PersistentFlags().StringVarP(&host, "host", "a", "127.0.0.1", "mysql host")
-	StartCmd.PersistentFlags().StringVarP(&user, "user", "u", "root", "mysql user")
-	StartCmd.PersistentFlags().StringVarP(&password, "password", "p", "root", "mysql password")
-	StartCmd.PersistentFlags().StringVarP(&name, "name", "d", "chat", "mysql db name")
+	StartCmd.PersistentFlags().StringVarP(&dsn, "dsn", "d", "root:root@127.0.0.1:3306/chat", "dbs dsn data source name")
+	StartCmd.PersistentFlags().StringVarP(&driver, "driver", "t", "mysql", "db driver")
 }
 
 func setup() {
-	mysql.NewBasicDB(host, user, password, name)
+	dbs.NewBasicDB(driver, dsn)
 }
 
 func run() {

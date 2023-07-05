@@ -15,8 +15,8 @@ const (
 type ApplyModel struct {
 	PriID
 	UID
-	FriendID int    `gorm:"column:friend_id;type:int(11) unsigned;not null;index;comment:好友id" json:"friend_id"`
-	Nickname string `gorm:"column:nickname;type:varchar(60);not null;comment:备注昵称" json:"nickname"`
+	FriendID int    `gorm:"column:friend_id;type:int;not null;index;comment:好友id" json:"friend_id"`
+	Nickname string `gorm:"column:nickname;size:60;not null;comment:备注昵称" json:"nickname"`
 	LookMe   int8   `gorm:"column:look_me;not null;default:1;comment:看我" json:"look_me"`
 	LookHim  int8   `gorm:"column:look_him;not null;default:1;comment:看他" json:"look_him"`
 	Status   int8   `gorm:"column:status;not null;default:1;comment:状态" json:"status"`

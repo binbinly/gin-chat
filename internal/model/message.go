@@ -28,11 +28,11 @@ const (
 type MessageModel struct {
 	PriID
 	UID
-	ToID     int    `gorm:"column:to_id;not null;type:int(11) unsigned;index;comment:发送者" json:"to_id"`
+	ToID     int    `gorm:"column:to_id;not null;type:int;index;comment:发送者" json:"to_id"`
 	ChatType int8   `gorm:"column:chat_type;not null;default:1;comment:目标类型，1=用户，2=群组" json:"chat_type"`
 	Type     int8   `gorm:"column:type;not null;default:1;comment:消息类型" json:"type"`
-	Content  string `gorm:"column:content;not null;type:varchar(5000);comment:内容" json:"content"`
-	Options  string `gorm:"column:options;type:varchar(255);not null;default:'';comment:选项" json:"options"`
+	Content  string `gorm:"column:content;not null;size:5000;comment:内容" json:"content"`
+	Options  string `gorm:"column:options;size:255;not null;default:'';comment:选项" json:"options"`
 	CT
 }
 

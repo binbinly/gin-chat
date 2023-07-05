@@ -33,7 +33,7 @@ func (r *Repo) ApplyCreate(ctx context.Context, apply model.ApplyModel) (id int,
 
 // ApplyUpdateStatus 修改申请状态
 func (r *Repo) ApplyUpdateStatus(ctx context.Context, tx *gorm.DB, id, friendID int) (err error) {
-	if err = tx.WithContext(ctx).Model(&model.ApplyModel{}).Where("id=? && status=?",
+	if err = tx.WithContext(ctx).Model(&model.ApplyModel{}).Where("id=? and status=?",
 		id, model.ApplyStatusPending).Update("status", model.ApplyStatusAgree).Error; err != nil {
 		return errors.Wrapf(err, "[repo.apply] update err")
 	}
@@ -44,7 +44,7 @@ func (r *Repo) ApplyUpdateStatus(ctx context.Context, tx *gorm.DB, id, friendID 
 func (r *Repo) GetApplysByUserID(ctx context.Context, userID int, offset, limit int) (list []*model.ApplyModel, err error) {
 	if err = r.DB.WithContext(ctx).Scopes(model.OffsetPage(offset, limit)).Where("friend_id = ? ", userID).
 		Order(model.DefaultOrder).Find(&list).Error; err != nil {
-		return nil, errors.Wrap(err, "[repo.apply] query db")
+		return nil, errors.Wrap(err, "[repo.apply] query dbs")
 	}
 	return
 }
@@ -52,8 +52,8 @@ func (r *Repo) GetApplysByUserID(ctx context.Context, userID int, offset, limit 
 // ApplyPendingCount 待处理数量
 func (r *Repo) ApplyPendingCount(ctx context.Context, userID int) (c int64, err error) {
 	if err = r.DB.WithContext(ctx).Model(&model.ApplyModel{}).
-		Where("friend_id=? && status=?", userID, model.ApplyStatusPending).Count(&c).Error; err != nil {
-		return 0, errors.Wrapf(err, "[repo.apply] pending count db err, uid: %d", userID)
+		Where("friend_id=? and status=?", userID, model.ApplyStatusPending).Count(&c).Error; err != nil {
+		return 0, errors.Wrapf(err, "[repo.apply] pending count dbs err, uid: %d", userID)
 	}
 	return c, nil
 }
@@ -61,9 +61,9 @@ func (r *Repo) ApplyPendingCount(ctx context.Context, userID int) (c int64, err 
 // GetApplyByFriendID 获取申请详情
 func (r *Repo) GetApplyByFriendID(ctx context.Context, userID, friendID int) (apply *model.ApplyModel, err error) {
 	apply = new(model.ApplyModel)
-	if err = r.DB.WithContext(ctx).Where("user_id=? && friend_id=?", userID, friendID).
+	if err = r.DB.WithContext(ctx).Where("user_id=? and friend_id=?", userID, friendID).
 		Order(model.DefaultOrder).First(apply).Error; err != nil && err != gorm.ErrRecordNotFound {
-		return nil, errors.Wrapf(err, "[repo.apply] query db err")
+		return nil, errors.Wrapf(err, "[repo.apply] query dbs err")
 	}
 	return apply, nil
 }

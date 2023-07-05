@@ -48,7 +48,7 @@ func (r *Repo) GroupUserBatchCreate(ctx context.Context, tx *gorm.DB, users []*m
 // GroupUserUpdateNickname 修改群昵称
 func (r *Repo) GroupUserUpdateNickname(ctx context.Context, userID, groupID int, nickname string) error {
 	if err := r.DB.WithContext(ctx).Model(&model.GroupUserModel{}).
-		Where("user_id=? && group_id=?", userID, groupID).
+		Where("user_id=? and group_id=?", userID, groupID).
 		Update("nickname", nickname).Error; err != nil {
 		return errors.Wrapf(err, "[repo.group_user] update nickname")
 	}
