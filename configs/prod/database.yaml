@@ -1,2 +1,2 @@
 default:
-  Dsn: "bkw6iqcw213rdvcxz8km:pscale_pw_nEk2kVLJzw6dndv6iU38EZHpLWSoM35NN7Y79CfEuxV@tcp(aws.connect.psdb.cloud)/chat?tls=true"
+  Dsn: "tiqjvn3zgju9t0cyoedm:pscale_pw_Ot6kuOs8V0QPlFe88SUXCV2j0WUyL4DI2aS8zY861Ya@tcp(aws.connect.psdb.cloud)/chat?tls=true"
