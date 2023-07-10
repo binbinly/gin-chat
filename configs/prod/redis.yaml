@@ -1,2 +1,4 @@
 default:
-  Url: "redis://default:LBexXkYx47thaliYf5Fr@containers-us-west-59.railway.app:7472"
+  Addr: containers-us-west-59.railway.app:7472
+  Password: LBexXkYx47thaliYf5Fr
+  DB: 0
