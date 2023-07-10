@@ -1,2 +1,5 @@
 default:
-  Url: "rediss://default:215267e88d624c1e9df9999b6ab2ccb0@harmless-wombat-40440.upstash.io:40440"
+#  Url: "rediss://default:215267e88d624c1e9df9999b6ab2ccb0@harmless-wombat-40440.upstash.io:40440"
+  Addr: containers-us-west-59.railway.app:7472
+  Password: LBexXkYx47thaliYf5Fr
+  DB: 0
