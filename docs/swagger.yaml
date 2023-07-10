@@ -439,7 +439,7 @@ definitions:
       image:
         description: 图片
         example: a.jpg
-        maxLength: 500
+        maxLength: 900
         type: string
       location:
         description: 地理位置
@@ -677,7 +677,7 @@ definitions:
       avatar:
         description: 头像
         example: http://example
-        maxLength: 60
+        maxLength: 90
         type: string
       nickname:
         description: 昵称
@@ -737,9 +737,9 @@ externalDocs:
 host: http://127.0.0.1:9050
 info:
   contact:
-    email: test@test.com
-    name: test
-    url: http://www.swagger.io/support
+    email: binbinly@hotmail.com
+    name: binbinly
+    url: https://github.com/binbinly
   license:
     name: MIT
   title: swagger 接口文档

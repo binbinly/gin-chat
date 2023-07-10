@@ -10,10 +10,13 @@ PKG_LIST := $(shell go list ${PKG}/... | grep -v /examples)
 
 all: test build
 dev:
-	$(GORUN) main.go server
+	$(GORUN) main.go server -c configs
 
 build:
-	cp -r configs build/configs
+	mkdir -p build/configs
+	cp -r configs/app.yaml build/configs/
+	cp -r configs/database.yaml build/configs/
+	cp -r configs/redis.yaml build/configs/
 	$(GOBUILD) -o build/gin-chat main.go
 
 test:
@@ -21,6 +24,7 @@ test:
 
 clean:
 	rm -rf build/gin-chat
+	rm -rf build/configs
 	rm -rf nohup.out
 
 # 运行服务
@@ -60,7 +64,7 @@ ca:
 
 #检查代码规范
 lint:
-	@go get -u golang.org/x/lint/golint
+	@go install golang.org/x/lint/golint@latest
 	@golint -set_exit_status ${PKG_LIST}
 
 #查看帮助

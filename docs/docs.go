@@ -11,9 +11,9 @@ const docTemplate = `{
         "description": "{{escape .Description}}",
         "title": "{{.Title}}",
         "contact": {
-            "name": "test",
-            "url": "http://www.swagger.io/support",
-            "email": "test@test.com"
+            "name": "binbinly",
+            "url": "https://github.com/binbinly",
+            "email": "binbinly@hotmail.com"
         },
         "license": {
             "name": "MIT"
@@ -2679,7 +2679,7 @@ const docTemplate = `{
                 "image": {
                     "description": "图片",
                     "type": "string",
-                    "maxLength": 500,
+                    "maxLength": 900,
                     "example": "a.jpg"
                 },
                 "location": {
@@ -3010,7 +3010,7 @@ const docTemplate = `{
                 "avatar": {
                     "description": "头像",
                     "type": "string",
-                    "maxLength": 60,
+                    "maxLength": 90,
                     "example": "http://example"
                 },
                 "nickname": {
