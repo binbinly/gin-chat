@@ -3,6 +3,7 @@ package websocket
 import (
 	"context"
 	"encoding/json"
+	"time"
 
 	"gin-chat/pkg/app"
 
@@ -118,7 +119,13 @@ func (w *Server) send(ctx context.Context, c *UserConnInfo, msg []byte) error {
 }
 
 func (w *Server) saveHistory(ctx context.Context, c *UserConnInfo, msg []byte) {
-	w.rdb.RPush(ctx, app.BuildHistoryKey(c.UserID), msg)
+	pipe := w.rdb.Pipeline()
+	key := app.BuildHistoryKey(c.UserID)
+	pipe.RPush(ctx, key, msg)
+	pipe.Expire(ctx, key, 24*time.Hour)
+	if _, err := pipe.Exec(ctx); err != nil {
+		logger.Warnf("[ws.saveHistory] exec err: %v", err)
+	}
 }
 
 // Pack 数据打包 json 传输
