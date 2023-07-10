@@ -115,7 +115,7 @@ func (c *Config) load(filename string, hook func(v *viper.Viper)) (*viper.Viper,
 	if err := v.ReadInConfig(); err != nil {
 		return nil, err
 	}
-	logger.Debug("Using config file: ", v.ConfigFileUsed(), " settings: ", v.AllSettings())
+	logger.Info("Using config file: ", v.ConfigFileUsed(), " settings: ", v.AllSettings())
 
 	return v, nil
 }
