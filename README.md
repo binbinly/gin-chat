@@ -1,7 +1,7 @@
 ## 友情提示
 
 **快速体验项目**：
-- [在线访问地址](https://binbinly.github.io/chat-frontend)。
+- [在线访问地址](https://binbinly.github.io/gin-chat)。
   
 <img src="assets/img/home.png" width = "200" height = "200"  alt="app"/>
 
@@ -90,7 +90,9 @@ docker run --rm -it -p 9050:9050 -p 9060:9060 chat:latest server
 
 1. [![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/VTEHKI?referralCode=Aha8g3)
 2. Set Deploy Start Command: /app/gin-chat server
-> 前端打包后的代码部署在 [github-pages](https://github.com/binbinly/chat-frontend)
+> 前端通过 github Actions workflows 自动构建部署到 pages
+
+> 注意：workflows自动部署需要设置项目权限，转到存储库Setting >>> Actions >>> General 在"工作流权限(Workflow permissions)"中，选择Read and write permissions
 
 ## 常用命令
 
