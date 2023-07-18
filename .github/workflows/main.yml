@@ -16,7 +16,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [14.x, 16.x, 18.x]
+        node-version: [18.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
@@ -26,7 +26,7 @@ jobs:
       - name: Install and Build   # 安装依赖、打包，如果提前已打包好无需这一步
         working-directory: ./web
         run: |
-          npm install
+          npm install --legacy-peer-deps
           npm run build
 
       - name: Deploy   # 部署
