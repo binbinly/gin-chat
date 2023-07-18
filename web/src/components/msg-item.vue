@@ -8,7 +8,7 @@
       </template>
       <template #title>
         <div class="flex flex-column pl-1">
-          <span class="font">{{item.name}}</span>
+          <span>{{item.name}}</span>
           <span class="text-inline font-small text-light-muted" style="width:220px;">{{item.content}}</span>
         </div>
       </template>

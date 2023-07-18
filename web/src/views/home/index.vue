@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 导航栏 -->
-    <nav-bar title="仿微信" :unread="totalunread"></nav-bar>
+    <nav-bar title="MyChat" :unread="totalunread"></nav-bar>
 
     <!-- 断线状态 -->
     <div class="bg-danger left-0 right-0 flex align-center justify-between" v-if="!chat || !chat.isOnline">

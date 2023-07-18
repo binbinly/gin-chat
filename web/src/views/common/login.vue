@@ -6,7 +6,7 @@
 
     <div v-else>
       <div class="flex align-center justify-center" style="height: 175px;">
-        <span style="font-size: 26px;">YOU-LOGO</span>
+        <span style="font-size: 26px;">MyChat</span>
       </div>
       <div style="margin: 16px;">
         <van-form @submit="onSubmit">

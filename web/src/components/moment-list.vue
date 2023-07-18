@@ -3,7 +3,7 @@
     <free-avater :src="item.user.avatar" :uid="item.user.id" />
     <div class="pl-1 flex-1 flex flex-column">
       <!-- 昵称 -->
-      <span class="text-hover-primary font" style="margin-bottom:5px;">{{item.user.name}}</span>
+      <span class="text-hover-primary font-sm" style="margin-bottom:5px;">{{item.user.name}}</span>
       <!-- 内容 -->
       <span v-if="item.content" class="text-dark font-sm">{{item.content}}</span>
       <!-- 图片 -->

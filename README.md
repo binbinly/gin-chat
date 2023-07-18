@@ -1,6 +1,9 @@
 ## 友情提示
 
-**快速体验项目**：[在线访问地址](https://binbinly.github.io/chat-frontend)。
+**快速体验项目**：
+- [在线访问地址](https://binbinly.github.io/chat-frontend)。
+  
+<img src="assets/img/home.png" width = "200" height = "200"  alt="app"/>
 
 ## 项目介绍
 

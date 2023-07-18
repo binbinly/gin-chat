@@ -181,8 +181,8 @@ func (s *Service) getTagIds(ctx context.Context, uid int, tags []string) (tagIds
 		}
 		if id == 0 { //标签不存在，需要创建
 			newTags = append(newTags, &model.UserTagModel{
-				UID:  model.UID{UserID: uid},
-				Name: tag,
+				UserID: uid,
+				Name:   tag,
 			})
 		} else {
 			tagIds = append(tagIds, id)
