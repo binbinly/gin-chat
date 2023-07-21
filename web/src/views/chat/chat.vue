@@ -332,7 +332,7 @@ export default {
     initChatHeight(){
       const navHeight = this.$refs.navTop.$el.offsetHeight;
       const inputHeight = this.$refs.chatInput.offsetHeight;
-      this.chatHeight = window.innerHeight - navHeight - inputHeight;
+      this.chatHeight = window.innerHeight - navHeight - inputHeight - 10;
     },
     onEmoticon(cat) {
       this.emoCat.push({ name: cat, list: [] })

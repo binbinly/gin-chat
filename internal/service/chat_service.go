@@ -49,10 +49,27 @@ func (s *Service) ChatUserRecall(ctx context.Context, mid, id int, msgID string)
 
 // ChatGroupRecall 群消息撤回
 func (s *Service) ChatGroupRecall(ctx context.Context, mid, id int, msgID string) (err error) {
+	if !s.checkOnline(ctx, mid) {
+		return ErrUserOffline
+	}
 	users, err := s.repo.GroupUserAll(ctx, id)
 	if err != nil {
 		return errors.Wrapf(err, "[service.chat] group user all id:%d", id)
 	}
+	msg := &websocket.Recall{
+		ID:       msgID,
+		FromID:   mid,
+		ToID:     id,
+		ChatType: model.MessageChatTypeGroup,
+	}
+	// 没有群成员，说明是聊天室，直接广播在线用户
+	if users == nil || len(users) == 0 {
+		if err = s.ws.Broadcast(ctx, mid, websocket.EventRecall, msg); err != nil {
+			return errors.Wrapf(err, "[service.chat] ws broadcast group")
+		}
+		return nil
+	}
+
 	ids := make([]int, 0, len(users))
 	for _, u := range users {
 		if u.UserID == mid { // 不需要推送自己
@@ -68,12 +85,7 @@ func (s *Service) ChatGroupRecall(ctx context.Context, mid, id int, msgID string
 		return err
 	}
 	// 发送消息
-	if err = s.ws.BatchSendConn(ctx, cs, websocket.EventRecall, &websocket.Recall{
-		ID:       msgID,
-		FromID:   mid,
-		ToID:     id,
-		ChatType: model.MessageChatTypeGroup,
-	}); err != nil {
+	if err = s.ws.BatchSendConn(ctx, cs, websocket.EventRecall, msg); err != nil {
 		return errors.Wrapf(err, "[service.group] ws send recall to group")
 	}
 	return nil
@@ -116,10 +128,14 @@ func (s *Service) ChatGroupDetail(ctx context.Context, mid, id int) (*websocket.
 	if err != nil {
 		return nil, err
 	}
-	//是否是群成员
-	if err = s.isGroupUser(ctx, mid, id); err != nil {
-		return nil, err
+
+	if group.Type == model.GroupTypeGroup {
+		//是否是群成员
+		if err = s.isGroupUser(ctx, mid, id); err != nil {
+			return nil, err
+		}
 	}
+
 	return &websocket.Sender{
 		ID:     group.ID,
 		Name:   group.Name,
@@ -197,6 +213,14 @@ func (s *Service) ChatSendGroup(ctx context.Context, mid, id int, t int, content
 		Content:  content,
 		Options:  options,
 		T:        time.Now().Unix(),
+	}
+
+	// 没有群成员，说明是聊天室，直接广播在线用户
+	if users == nil {
+		if err = s.ws.Broadcast(ctx, mid, websocket.EventChat, m); err != nil {
+			return nil, errors.Wrapf(err, "[service.chat] ws broadcast group")
+		}
+		return m, nil
 	}
 	userIds := make([]int, 0, len(users))
 	for _, user := range users {

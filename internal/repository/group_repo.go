@@ -22,6 +22,8 @@ type Group interface {
 	GetGroupByID(ctx context.Context, id int) (info *model.GroupModel, err error)
 	// GetGroupsByUserID 获取我的群组列表
 	GetGroupsByUserID(ctx context.Context, userID int) (list []*model.GroupList, err error)
+	// GetAllRooms 获取所有聊天室
+	GetAllRooms(ctx context.Context) (list []*model.GroupModel, err error)
 }
 
 // GroupCreate 创建群组
@@ -59,6 +61,23 @@ func (r *Repo) GetGroupByID(ctx context.Context, id int) (group *model.GroupMode
 		// 从数据库中获取
 		if err = r.DB.WithContext(ctx).First(data, id).Error; err != nil {
 			return err
+		}
+		return nil
+	}); err != nil {
+		return nil, errors.Wrapf(err, "[repo.group] query cache")
+	}
+	return
+}
+
+// GetAllRooms 获取所有聊天室
+func (r *Repo) GetAllRooms(ctx context.Context) (list []*model.GroupModel, err error) {
+	if err = r.QueryCache(ctx, "group:room", &list, 0, func(data any) error {
+		// 从数据库中获取
+		if err = r.DB.WithContext(ctx).Where("`type`=?", model.GroupTypeRoom).Find(&list).Error; err != nil {
+			return err
+		}
+		if len(list) == 0 {
+			return gorm.ErrEmptySlice
 		}
 		return nil
 	}); err != nil {

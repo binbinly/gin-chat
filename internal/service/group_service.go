@@ -424,6 +424,11 @@ func (s *Service) groupUsers(ctx context.Context, uid, gid int) (*model.GroupMod
 	if err != nil {
 		return nil, nil, nil, err
 	}
+	// 判断当前群组是否为聊天室，聊天室成员为所有在线用户
+	if group.Type == model.GroupTypeRoom {
+		return group, nil, nil, nil
+	}
+
 	// 群组成员
 	gUsers, err := s.repo.GroupUserAll(ctx, gid)
 	if err != nil {

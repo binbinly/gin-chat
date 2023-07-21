@@ -17,6 +17,7 @@ type Group struct {
 	ID            int    `json:"id"`
 	UserID        int    `json:"user_id"`
 	InviteConfirm int8   `json:"invite_confirm"`
+	Type          int8   `json:"type"`
 	Name          string `json:"name"`
 	Avatar        string `json:"avatar"`
 	Remark        string `json:"remark"`
@@ -25,15 +26,14 @@ type Group struct {
 // GroupResource 群组信息转换
 func GroupResource(group *model.GroupModel, users []*model.UserModel, gUsers []*model.GroupUserModel,
 	my *model.GroupUserModel) *GroupResponse {
+	if group.Type == model.GroupTypeRoom {
+		return &GroupResponse{
+			Info:  groupInfo(group),
+			Users: make([]*model.User, 0),
+		}
+	}
 	return &GroupResponse{
-		Info: &Group{
-			ID:            group.ID,
-			UserID:        group.UserID,
-			InviteConfirm: group.InviteConfirm,
-			Name:          group.Name,
-			Avatar:        group.Avatar,
-			Remark:        group.Remark,
-		},
+		Info:     groupInfo(group),
 		Nickname: my.Nickname,
 		Users:    GroupUsersResource(users, gUsers, 4),
 	}
@@ -72,4 +72,16 @@ func gUserToMap(gUsers []*model.GroupUserModel) (m map[int]string) {
 		}
 	}
 	return
+}
+
+func groupInfo(group *model.GroupModel) *Group {
+	return &Group{
+		ID:            group.ID,
+		UserID:        group.UserID,
+		InviteConfirm: group.InviteConfirm,
+		Name:          group.Name,
+		Avatar:        group.Avatar,
+		Remark:        group.Remark,
+		Type:          group.Type,
+	}
 }

@@ -15,12 +15,12 @@ func TestLoad(t *testing.T) {
 	}
 	var dbConf config
 
-	c := New(WithConfigDir("../test/config/"))
+	c := New(WithConfigDir("../../test/config/"))
 	if err := c.Load("database", &dbConf, nil); err != nil {
 		t.Fatal(err)
 	}
-	assert.Equal(t, dbConf.Name, "dbs")
-	assert.Equal(t, dbConf.Addr, "localhost:3306")
+	assert.Equal(t, dbConf.Name, "chat")
+	assert.Equal(t, dbConf.Addr, "127.0.0.1:3306")
 	assert.Equal(t, dbConf.Username, "root")
-	assert.Equal(t, dbConf.Password, "123456")
+	assert.Equal(t, dbConf.Password, "root")
 }

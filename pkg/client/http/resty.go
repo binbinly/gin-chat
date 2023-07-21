@@ -24,7 +24,7 @@ func NewRestyClient() Client {
 func (r *restyClient) Get(ctx context.Context, url string, options ...ClientOption) ([]byte, error) {
 	client := resty.New()
 	r.setting(ctx, client, options...)
-	client.SetDebug(true)
+	//client.SetDebug(true)
 	resp, err := client.R().Get(url)
 	if err != nil {
 		return nil, err

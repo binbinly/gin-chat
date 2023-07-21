@@ -11,7 +11,7 @@ import (
 
 // recallParams 撤回消息
 type recallParams struct {
-	ID       string `json:"id" binding:"required,max=10" example:"1111"`        // 消息id
+	ID       string `json:"id" binding:"required,max=20" example:"1111"`        // 消息id
 	ToID     int    `json:"to_id" binding:"required,numeric" example:"1"`       // 用户/群组ID
 	ChatType int    `json:"chat_type" binding:"required,oneof=1 2" example:"1"` // 聊天类型，1=用户，2=群组
 }

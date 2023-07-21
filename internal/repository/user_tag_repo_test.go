@@ -53,12 +53,12 @@ func TestRepo_TagBatchCreate(t *testing.T) {
 				ctx: context.Background(),
 				tags: []*model.UserTagModel{
 					{
-						UID:  model.UID{UserID: 1},
-						Name: "aaa",
+						UserID: 1,
+						Name:   "aaa",
 					},
 					{
-						UID:  model.UID{UserID: 2},
-						Name: "bb",
+						UserID: 2,
+						Name:   "bb",
 					},
 				},
 			},

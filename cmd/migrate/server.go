@@ -32,7 +32,7 @@ var (
 )
 
 func init() {
-	StartCmd.PersistentFlags().StringVarP(&dsn, "dsn", "d", "root:root@127.0.0.1:3306/chat", "dbs dsn data source name")
+	StartCmd.PersistentFlags().StringVarP(&dsn, "dsn", "d", "root:root@tcp(127.0.0.1:3306)/chat", "dbs dsn data source name")
 	StartCmd.PersistentFlags().StringVarP(&driver, "driver", "t", "mysql", "db driver")
 	StartCmd.PersistentFlags().BoolVarP(&generate, "generate", "g", false, "generate migration file")
 }

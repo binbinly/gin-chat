@@ -3,7 +3,7 @@
     <!-- 导航栏 -->
     <van-nav-bar left-text="聊天信息" fixed placeholder left-arrow @click-left="onClickLeft" />
 
-    <div class="flex flex-wrap py-1 bg-white">
+    <div class="flex flex-wrap py-1 bg-white" v-if="is_group_room == 0">
       <div v-if="isUser" class="flex flex-column align-center justify-center mb-1 ml-1">
         <van-image :src="detail.avatar|formatAvatar" round width="50" height="50"></van-image>
         <span class="text-muted" style="margin-top:5px;">{{detail.name}}</span>
@@ -26,7 +26,7 @@
       </div>
 
     </div>
-    <div v-if="isGroup">
+    <div v-if="isGroup && is_group_room == 0">
       <van-divider />
       <van-cell title="群聊名称" is-link @click="show = true;editType='name'">
         <template #default>
@@ -61,7 +61,7 @@
 
     <div v-if="isGroup">
       <van-divider />
-      <van-cell title="我在本群的昵称" is-link :value="nickname" @click="show=true;editType='nickname'" />
+      <van-cell v-if="is_group_room == 0" title="我在本群的昵称" is-link :value="nickname" @click="show=true;editType='nickname'" />
       <van-cell center title="显示群成员昵称">
         <template #right-icon>
           <van-switch v-model="setting.show_name" size="24" active-color="#08c060" @change="updateChatItem(setting.show_name, 'show_name')" />
@@ -73,7 +73,7 @@
     <van-divider />
     <van-cell title="投诉" is-link @click="openReport" />
     <van-divider />
-    <van-button v-if="isGroup" block icon="delete" type="danger" @click="quit">删除并退出</van-button>
+    <van-button v-if="isGroup && is_group_room == 0" block icon="delete" type="danger" @click="quit">删除并退出</van-button>
     <div style="height: 50px;"></div>
 
     <!-- 遮罩 修改昵称-->
@@ -133,6 +133,7 @@ export default {
       nickname: "", // 我在本群的昵称
       id: 0,// 接收人/群 id
       chat_type: 1, // 接收类型 1 单聊 2 群聊
+      is_group_room:0,
       detail: {
         id: 0, // 接收人/群 id
         avatar: '', // 接收人/群 头像
@@ -211,6 +212,7 @@ export default {
           this.list = res.users.slice(0, 4)
           this.detail = res.info
           this.nickname = res.nickname
+          this.is_group_room = res.info.type
         })
       } else {
         this.detail = {id:detail.id,name:detail.name,avatar:detail.avatar}

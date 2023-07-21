@@ -33,13 +33,13 @@ func SyncBQB() error {
 		return err
 	}
 	var rs result
-	err = json.Unmarshal(rsp, &rs)
-	if err != nil {
+	if err = json.Unmarshal(rsp, &rs); err != nil {
 		return err
 	}
 	if rs.Status != 1000 {
 		return errors.New(rs.Info)
 	}
+
 	var emo []model.EmoticonModel
 	for i, datum := range rs.Data {
 		nameStart := strings.LastIndex(datum.Name, "-")

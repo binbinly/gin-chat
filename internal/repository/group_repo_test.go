@@ -174,3 +174,31 @@ func TestRepo_GroupSave(t *testing.T) {
 		})
 	}
 }
+
+func TestRepo_GetAllRooms(t *testing.T) {
+	type args struct {
+		ctx context.Context
+	}
+	tests := []struct {
+		name    string
+		args    args
+		wantErr bool
+	}{
+		{
+			name: "GetAllRooms",
+			args: args{
+				ctx: context.Background(),
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			gotList, err := r.GetAllRooms(tt.args.ctx)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("GetAllRooms() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			t.Logf("gotList: %v", len(gotList))
+		})
+	}
+}

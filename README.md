@@ -17,6 +17,10 @@
 ## 📗 目录结构
 - [project-layout](https://github.com/golang-standards/project-layout)
 
+### 消息投递
+userA -> http api -> logic -> websocket -> userB
+> 消息通过http接口发送，逻辑处理转发，找到目标的websocket连接id,投递消息
+
 ### 后端技术
 
 - http框架使用 [Gin](https://github.com/gin-gonic/gin)

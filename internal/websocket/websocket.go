@@ -89,8 +89,12 @@ func (w *Server) Close(ctx context.Context, c *UserConnInfo, data any) error {
 }
 
 // Broadcast 广播消息
-func (w *Server) Broadcast(ctx context.Context, msg []byte) (err error) {
+func (w *Server) Broadcast(ctx context.Context, omit int, event string, data any) (err error) {
+	msg := Pack(event, data)
 	w.ws.Range(func(cid uint64, conn ws.Connection) error {
+		if conn.GetUID() == omit { // 忽略自己
+			return nil
+		}
 		return w.send(ctx, &UserConnInfo{ConnID: cid}, msg)
 	})
 
@@ -108,7 +112,7 @@ func (w *Server) send(ctx context.Context, c *UserConnInfo, msg []byte) error {
 		w.saveHistory(ctx, c, msg)
 		return nil
 	} else if err != nil {
-		return errors.Wrapf(err, "[ws.Close] get conn by uid: %v", c.ConnID)
+		return errors.Wrapf(err, "[ws.Close] get conn by cid: %v", c.ConnID)
 	}
 
 	if err = conn.AsyncSend(ctx, 0, msg); err != nil {

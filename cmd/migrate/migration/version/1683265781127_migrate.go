@@ -26,7 +26,7 @@ func _1683265781127Up(db *gorm.DB, version string) error {
 			new(model.CollectModel),
 			new(model.UserTagModel),
 			new(model.ReportModel),
-			new(model.MessageModel),
+			//new(model.MessageModel),
 			new(model.MomentModel),
 			new(model.MomentCommentModel),
 			new(model.MomentLikeModel),

@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"encoding/json"
+	"gin-chat/internal/model"
 	"time"
 
 	"gin-chat/internal/websocket"
@@ -49,14 +50,41 @@ func (s *Service) UserOnline(ctx context.Context, token, sid string, cid uint64)
 	if err != nil {
 		return 0, err
 	}
-	//设置用户在线状态数据
-	v, _ := json.Marshal(&websocket.UserConnInfo{
+	// 设置用户在线状态数据
+	conn := &websocket.UserConnInfo{
 		UserID:   uid,
 		ConnID:   cid,
 		ServerID: sid,
-	})
+	}
+	v, _ := json.Marshal(conn)
 	if err = s.rdb.Set(ctx, app.BuildOnlineKey(uid), v, time.Duration(s.opts.jwtTimeout)*time.Second).Err(); err != nil {
 		return 0, errors.Wrapf(err, "[service.online] user online hset err")
+	}
+
+	// 所有聊天室发送欢迎消息
+	rooms, err := s.repo.GetAllRooms(ctx)
+	if err != nil {
+		return 0, errors.Wrapf(err, "[service.online] get all rooms err")
+	}
+	if len(rooms) > 0 {
+		text := app.WelcomeText()
+		for _, room := range rooms {
+			//推送消息
+			if err = s.ws.Send(ctx, conn, websocket.EventChat, websocket.Chat{
+				From: &websocket.Sender{},
+				To: &websocket.Sender{
+					ID:     room.ID,
+					Name:   room.Name,
+					Avatar: room.Avatar,
+				},
+				ChatType: model.MessageChatTypeGroup,
+				Type:     model.MessageTypeSystem,
+				Content:  text,
+				T:        time.Now().Unix(),
+			}); err != nil {
+				logger.Warnf("[service.online] send welcome msg err:%v", err)
+			}
+		}
 	}
 
 	return uid, nil
