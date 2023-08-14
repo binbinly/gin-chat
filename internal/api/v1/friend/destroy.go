@@ -1,7 +1,6 @@
 package friend
 
 import (
-	"github.com/binbinly/pkg/errno"
 	"github.com/gin-gonic/gin"
 
 	"gin-chat/internal/api"
@@ -27,10 +26,11 @@ type destroyParams struct {
 // @Router /friend/destroy [post]
 func Destroy(c *gin.Context) {
 	var req destroyParams
-	if v := api.BindJSON(c, &req); !v {
-		app.Error(c, errno.ErrInvalidParam)
+	if err := api.BindJSON(c, &req); err != nil {
+		app.ErrorParamInvalid(c, err)
 		return
 	}
+
 	uid := api.GetUserID(c)
 	if uid == req.UserID {
 		app.Error(c, ecode.ErrUserNoSelf)

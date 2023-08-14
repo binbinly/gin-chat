@@ -1,4 +1,4 @@
-package dbs
+package app
 
 import (
 	"log"
@@ -14,24 +14,23 @@ import (
 // DB 数据库全局变量
 var DB *gorm.DB
 
-var cfg = &Config{}
-
-type Config struct {
+type DBConfig struct {
 	Default orm.Config
 }
 
-// NewDB new dbs dbs
-func NewDB() *gorm.DB {
-	if err := loadConf(); err != nil {
-		log.Fatalf("load orm conf err: %v", err)
+// InitDB init dbs
+func InitDB() *gorm.DB {
+	var cfg = &DBConfig{}
+	if err := loadDBConf(cfg); err != nil {
+		log.Fatalf("load db conf err: %v", err)
 	}
 
 	DB = orm.NewDB(&cfg.Default)
 	return DB
 }
 
-// NewBasicDB new dbs dbs
-func NewBasicDB(driver, dsn string) *gorm.DB {
+// InitBasicDB init basic db
+func InitBasicDB(driver, dsn string) *gorm.DB {
 	DB = orm.NewDB(&orm.Config{
 		Driver: driver,
 		Dsn:    dsn,
@@ -39,8 +38,8 @@ func NewBasicDB(driver, dsn string) *gorm.DB {
 	return DB
 }
 
-// loadConf load dbs config
-func loadConf() error {
+// loadDBConf load dbs config
+func loadDBConf(cfg *DBConfig) error {
 	if err := config.Load("database", cfg, func(v *viper.Viper) {
 		v.SetDefault("default", map[string]any{
 			"Driver":          "mysql",

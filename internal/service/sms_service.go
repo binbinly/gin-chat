@@ -8,9 +8,8 @@ import (
 	"time"
 
 	"github.com/binbinly/pkg/logger"
+	"github.com/binbinly/pkg/storage/redis"
 	"github.com/pkg/errors"
-
-	"gin-chat/pkg/redis"
 )
 
 const (

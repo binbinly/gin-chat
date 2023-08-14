@@ -3,7 +3,6 @@ package service
 import (
 	"context"
 	"encoding/json"
-	"gin-chat/pkg/app"
 	"time"
 
 	"github.com/pkg/errors"
@@ -11,6 +10,7 @@ import (
 
 	"gin-chat/internal/model"
 	"gin-chat/internal/websocket"
+	"gin-chat/pkg/app"
 )
 
 // Chat 聊天会话接口

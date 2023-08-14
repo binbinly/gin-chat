@@ -1,7 +1,6 @@
 package user
 
 import (
-	"github.com/binbinly/pkg/errno"
 	"github.com/gin-gonic/gin"
 
 	"gin-chat/internal/api"
@@ -40,10 +39,11 @@ type authResponse struct {
 // @Router /login [post]
 func Login(c *gin.Context) {
 	var req loginParams
-	if v := api.BindJSON(c, &req); !v {
-		app.Error(c, errno.ErrInvalidParam)
+	if err := api.BindJSON(c, &req); err != nil {
+		app.ErrorParamInvalid(c, err)
 		return
 	}
+
 	user, token, err := service.Svc.UsernameLogin(c.Request.Context(), req.Username, req.Password)
 	if e := api.Error(err); e != nil {
 		app.Error(c, e)
@@ -66,10 +66,11 @@ func Login(c *gin.Context) {
 // @Router /login_phone [post]
 func PhoneLogin(c *gin.Context) {
 	var req phoneLoginParams
-	if v := api.BindJSON(c, &req); !v {
-		app.Error(c, errno.ErrInvalidParam)
+	if err := api.BindJSON(c, &req); err != nil {
+		app.ErrorParamInvalid(c, err)
 		return
 	}
+
 	err := service.Svc.CheckVCode(c.Request.Context(), req.Phone, req.VerifyCode)
 	if e := api.Error(err); e != nil {
 		app.Error(c, e)

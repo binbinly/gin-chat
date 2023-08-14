@@ -13,6 +13,7 @@ var (
 )
 
 func SetDefaultConf(v *viper.Viper) {
+	v.SetDefault("Env", "local")
 	v.SetDefault("Name", "gin-chat")
 	v.SetDefault("DfsUrl", "http://127.0.0.1:9050/group1/")
 	v.SetDefault("Mode", "debug")
@@ -41,6 +42,7 @@ func SetDefaultConf(v *viper.Viper) {
 }
 
 type Config struct {
+	Env        string
 	Name       string
 	DfsUrl     string
 	Mode       string

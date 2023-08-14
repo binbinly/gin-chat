@@ -15,13 +15,12 @@ import (
 )
 
 // NewRouter Load loads the middlewares, routes, handlers.
-func NewRouter(debug bool) *gin.Engine {
+func NewRouter() *gin.Engine {
 	g := gin.New()
 	// 使用中间件
 	g.Use(middleware.NoCache)
 	g.Use(middleware.Cors)
 	g.Use(middleware.Secure)
-	//g.Use(middleware.HandleErrors)
 
 	g.NoRoute(app.RouteNotFound)
 	g.NoMethod(app.RouteNotFound)
@@ -34,8 +33,7 @@ func NewRouter(debug bool) *gin.Engine {
 	// 静态资源，主要是图片
 	g.StaticFS("/group1", http.Dir("data"))
 
-	// 返回404，仅在debug环境下开启，线上关闭
-	if debug {
+	if app.IsLocal() {
 		g.Use(gin.Logger(), middleware.Logging())
 		// swagger api docs
 		g.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
@@ -52,6 +50,10 @@ func NewRouter(debug bool) *gin.Engine {
 		middleware.RequestID(),
 		middleware.Prom(middleware.WithNamespace("chat")),
 	)
+	if app.IsProd() {
+		v1.Use(middleware.HandleErrors)
+		v1.Use(middleware.VerifySign)
+	}
 	setApiV1(v1)
 
 	return g

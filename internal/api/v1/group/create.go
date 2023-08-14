@@ -1,7 +1,6 @@
 package group
 
 import (
-	"github.com/binbinly/pkg/errno"
 	"github.com/gin-gonic/gin"
 
 	"gin-chat/internal/api"
@@ -26,10 +25,11 @@ type idsParams struct {
 // @Router /group/create [post]
 func Create(c *gin.Context) {
 	var req idsParams
-	if v := api.BindJSON(c, &req); !v {
-		app.Error(c, errno.ErrInvalidParam)
+	if err := api.BindJSON(c, &req); err != nil {
+		app.ErrorParamInvalid(c, err)
 		return
 	}
+
 	err := service.Svc.GroupCreate(c.Request.Context(), api.GetUserID(c), req.Ids)
 	if e := api.Error(err); e != nil {
 		app.Error(c, e)

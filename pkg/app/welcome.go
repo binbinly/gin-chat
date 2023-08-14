@@ -7,6 +7,7 @@ import (
 	"gin-chat/pkg/client/http"
 )
 
+// 在线聊天室进入欢迎语
 const defText = "welcome"
 
 type result struct {

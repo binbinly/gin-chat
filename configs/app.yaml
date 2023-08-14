@@ -1,3 +1,4 @@
+#Env: local
 #Name: gin-chat
 #DfsUrl: http://127.0.0.1:9050/group1/
 #Mode: debug      # debug, release, test

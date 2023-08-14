@@ -1,7 +1,6 @@
 package group
 
 import (
-	"github.com/binbinly/pkg/errno"
 	"github.com/gin-gonic/gin"
 
 	"gin-chat/internal/api"
@@ -21,10 +20,11 @@ import (
 // @Router /group/kickoff [post]
 func KickOff(c *gin.Context) {
 	var req actionParams
-	if v := api.BindJSON(c, &req); !v {
-		app.Error(c, errno.ErrInvalidParam)
+	if err := api.BindJSON(c, &req); err != nil {
+		app.ErrorParamInvalid(c, err)
 		return
 	}
+
 	err := service.Svc.GroupKickOffUser(c.Request.Context(), api.GetUserID(c), req.ID, req.UserID)
 	if e := api.Error(err); e != nil {
 		app.Error(c, e)

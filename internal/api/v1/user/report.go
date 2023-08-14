@@ -1,7 +1,6 @@
 package user
 
 import (
-	"github.com/binbinly/pkg/errno"
 	"github.com/gin-gonic/gin"
 
 	"gin-chat/internal/api"
@@ -30,10 +29,11 @@ type reportParams struct {
 // @Router /report [post]
 func Report(c *gin.Context) {
 	var req reportParams
-	if v := api.BindJSON(c, &req); !v {
-		app.Error(c, errno.ErrInvalidParam)
+	if err := api.BindJSON(c, &req); err != nil {
+		app.ErrorParamInvalid(c, err)
 		return
 	}
+
 	uid := api.GetUserID(c)
 	if uid == req.UserID {
 		app.Error(c, ecode.ErrUserNoSelf)

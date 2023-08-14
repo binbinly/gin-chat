@@ -5,7 +5,7 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"gin-chat/pkg/dbs"
+	"gin-chat/pkg/app"
 )
 
 var (
@@ -31,7 +31,7 @@ func init() {
 }
 
 func setup() {
-	dbs.NewBasicDB(driver, dsn)
+	app.InitBasicDB(driver, dsn)
 }
 
 func run() {

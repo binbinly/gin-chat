@@ -26,12 +26,6 @@ func WithFileTypeToml() Option {
 	}
 }
 
-func WithEnv(name string) Option {
-	return func(c *Config) {
-		c.env = name
-	}
-}
-
 func WithConfigDir(dir string) Option {
 	return func(c *Config) {
 		c.configDir = dir

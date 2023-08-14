@@ -1,7 +1,6 @@
 package chat
 
 import (
-	"github.com/binbinly/pkg/errno"
 	"github.com/gin-gonic/gin"
 
 	"gin-chat/internal/api"
@@ -28,10 +27,11 @@ type recallParams struct {
 // @Router /chat/recall [post]
 func Recall(c *gin.Context) {
 	var req recallParams
-	if v := api.BindJSON(c, &req); !v {
-		app.Error(c, errno.ErrInvalidParam)
+	if err := api.BindJSON(c, &req); err != nil {
+		app.ErrorParamInvalid(c, err)
 		return
 	}
+
 	var err error
 	if req.ChatType == typeUser {
 		err = service.Svc.ChatUserRecall(c.Request.Context(), api.GetUserID(c), req.ToID, req.ID)

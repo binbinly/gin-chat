@@ -2,12 +2,12 @@ package repository
 
 import (
 	"context"
+	"gin-chat/pkg/app"
 	"testing"
 
 	"gorm.io/gorm"
 
 	"gin-chat/internal/model"
-	"gin-chat/pkg/dbs"
 )
 
 func TestRepo_TimelineBatchCreate(t *testing.T) {
@@ -25,7 +25,7 @@ func TestRepo_TimelineBatchCreate(t *testing.T) {
 			name: "TimelineBatchCreate",
 			args: args{
 				ctx: context.Background(),
-				tx:  dbs.DB,
+				tx:  app.DB,
 				models: []*model.MomentTimelineModel{
 					{
 						UID:      model.UID{UserID: 1},

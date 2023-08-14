@@ -3,7 +3,6 @@ package collect
 import (
 	"encoding/json"
 
-	"github.com/binbinly/pkg/errno"
 	"github.com/gin-gonic/gin"
 
 	"gin-chat/internal/api"
@@ -30,10 +29,11 @@ type createParams struct {
 // @Router /collect/create [post]
 func Create(c *gin.Context) {
 	var req createParams
-	if v := api.BindJSON(c, &req); !v {
-		app.Error(c, errno.ErrInvalidParam)
+	if err := api.BindJSON(c, &req); err != nil {
+		app.ErrorParamInvalid(c, err)
 		return
 	}
+
 	err := service.Svc.CollectCreate(c.Request.Context(), req.Content, req.Options, api.GetUserID(c), req.Type)
 	if e := api.Error(err); e != nil {
 		app.Error(c, e)

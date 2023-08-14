@@ -1,7 +1,6 @@
 package moment
 
 import (
-	"github.com/binbinly/pkg/errno"
 	"github.com/gin-gonic/gin"
 
 	"gin-chat/internal/api"
@@ -33,10 +32,11 @@ type createParams struct {
 // @Router /moment/create [post]
 func Create(c *gin.Context) {
 	var req createParams
-	if v := api.BindJSON(c, &req); !v {
-		app.Error(c, errno.ErrInvalidParam)
+	if err := api.BindJSON(c, &req); err != nil {
+		app.ErrorParamInvalid(c, err)
 		return
 	}
+
 	err := service.Svc.MomentCreate(c.Request.Context(), api.GetUserID(c), req.Content, req.Image, req.Video, req.Location, req.Type, req.SeeType, req.Remind, req.See)
 	if e := api.Error(err); e != nil {
 		app.Error(c, e)

@@ -1,7 +1,6 @@
 package moment
 
 import (
-	"github.com/binbinly/pkg/errno"
 	"github.com/gin-gonic/gin"
 
 	"gin-chat/internal/api"
@@ -28,10 +27,11 @@ type commentParams struct {
 // @Router /moment/comment [post]
 func Comment(c *gin.Context) {
 	var req commentParams
-	if v := api.BindJSON(c, &req); !v {
-		app.Error(c, errno.ErrInvalidParam)
+	if err := api.BindJSON(c, &req); err != nil {
+		app.ErrorParamInvalid(c, err)
 		return
 	}
+
 	err := service.Svc.MomentComment(c.Request.Context(), api.GetUserID(c), req.ReplyID, req.ID, req.Content)
 	if e := api.Error(err); e != nil {
 		app.Error(c, e)

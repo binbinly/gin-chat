@@ -34,10 +34,11 @@ type nicknameParams struct {
 // @Router /group/edit [post]
 func Update(c *gin.Context) {
 	var req updateParams
-	if v := api.BindJSON(c, &req); !v {
-		app.Error(c, errno.ErrInvalidParam)
+	if err := api.BindJSON(c, &req); err != nil {
+		app.ErrorParamInvalid(c, err)
 		return
 	}
+
 	var err error
 	if req.Remark != "" {
 		err = service.Svc.GroupEditRemark(c.Request.Context(), api.GetUserID(c), req.ID, req.Remark)
@@ -65,10 +66,11 @@ func Update(c *gin.Context) {
 // @Router /group/nickname [post]
 func UpdateNickname(c *gin.Context) {
 	var req nicknameParams
-	if v := api.BindJSON(c, &req); !v {
-		app.Error(c, errno.ErrInvalidParam)
+	if err := api.BindJSON(c, &req); err != nil {
+		app.ErrorParamInvalid(c, err)
 		return
 	}
+
 	err := service.Svc.GroupEditUserNickname(c.Request.Context(), api.GetUserID(c), req.ID, req.Nickname)
 	if e := api.Error(err); e != nil {
 		app.Error(c, e)

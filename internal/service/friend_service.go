@@ -2,7 +2,6 @@ package service
 
 import (
 	"context"
-	"gin-chat/pkg/app"
 	"strconv"
 	"strings"
 
@@ -10,6 +9,7 @@ import (
 	"github.com/pkg/errors"
 
 	"gin-chat/internal/model"
+	"gin-chat/pkg/app"
 )
 
 // Friend 好友服务接口

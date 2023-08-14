@@ -1,3 +1,4 @@
+Env: prod
 DfsUrl: https://gin-chat-production.up.railway.app/group1/
 Mode: release
 LogLevel: info

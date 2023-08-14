@@ -43,6 +43,15 @@ func Error(c *gin.Context, err *errno.Error) {
 	})
 }
 
+// ErrorParamInvalid 参数错误
+func ErrorParamInvalid(c *gin.Context, err error) {
+	c.AbortWithStatusJSON(http.StatusOK, Response{
+		Code: errno.ErrInvalidParam.Code(),
+		Msg:  err.Error(),
+		Data: gin.H{},
+	})
+}
+
 // RouteNotFound 未找到相关路由
 func RouteNotFound(c *gin.Context) {
 	c.String(http.StatusNotFound, "not found")

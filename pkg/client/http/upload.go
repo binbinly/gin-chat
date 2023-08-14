@@ -2,8 +2,9 @@ package http
 
 import (
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
+	"os"
 	"path/filepath"
 )
 
@@ -57,7 +58,7 @@ func (u *httpUpload) Buffer() ([]byte, error) {
 			return nil, fmt.Errorf("error http code: %d", resp.StatusCode)
 		}
 
-		return ioutil.ReadAll(resp.Body)
+		return io.ReadAll(resp.Body)
 	}
 
 	path, err := filepath.Abs(u.filename)
@@ -66,7 +67,7 @@ func (u *httpUpload) Buffer() ([]byte, error) {
 		return nil, err
 	}
 
-	return ioutil.ReadFile(path)
+	return os.ReadFile(path)
 }
 
 // UploadOption configures how we set up the http upload from.

@@ -5,6 +5,7 @@ import { Toast } from 'vant'
 // 根据环境不同引入不同api地址
 import { baseApi } from '@/config'
 import { getStorage } from '@/utils/index.js'
+import { paramsSignMd5 } from '@/utils/sign.js'
 
 // create an axios instance
 const request = axios.create({
@@ -18,7 +19,6 @@ request.interceptors.request.use(
   config => {
     // 不传递默认开启loading
     if (!config.hideloading) {
-      // loading
       Toast.loading({
         forbidClick: true
       })
@@ -28,7 +28,22 @@ request.interceptors.request.use(
       if (!token) {
         return router.replace({ path: '/login' })
       }
+
       config.headers['Token'] = token || ''
+    }
+    const now = parseInt(new Date().getTime() / 1000)
+    config.headers['Auth-Date'] =  now
+    // sign 
+    if (config.method == 'post') {
+      const data = {"method":"POST","path":"/v1"+config.url, ...config.data}
+      const signStr = paramsSignMd5(data, now)
+      // const signStr = paramsSignMd5(data, now, "sha256")
+      config.headers['Auth'] = "sign " + signStr
+    } else {
+      const data = {"method":"GET","path":"/v1"+config.url, ...config.params}
+      const signStr = paramsSignMd5(data, now)
+      // const signStr = paramsSignMd5(data, now, "sha256")
+      config.headers['Auth'] = "sign " + signStr
     }
     return config
   },

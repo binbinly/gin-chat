@@ -9,7 +9,7 @@
       <span class="text-light-muted font-small">{{ isself ? '你' : '对方' }}撤回了一条信息</span>
     </div>
     <!-- 系统消息 -->
-    <div v-if="isSystem" ref="isremove" class="flex align-center justify-center pb-1 pt-1">
+    <div v-if="isSystem" ref="isremove" class="flex align-center justify-center p-1">
       <span class="text-light-muted font-small">{{item.content}}</span>
     </div>
     <!-- 气泡 -->

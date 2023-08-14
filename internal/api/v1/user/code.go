@@ -1,7 +1,6 @@
 package user
 
 import (
-	"github.com/binbinly/pkg/errno"
 	"github.com/binbinly/pkg/util/validator"
 	"github.com/gin-gonic/gin"
 
@@ -27,10 +26,11 @@ type sendCodeParams struct {
 // @Router /send_code [get]
 func SendCode(c *gin.Context) {
 	var req sendCodeParams
-	if v := api.BindJSON(c, &req); !v {
-		app.Error(c, errno.ErrInvalidParam)
+	if err := api.BindJSON(c, &req); err != nil {
+		app.ErrorParamInvalid(c, err)
 		return
 	}
+
 	if is := validator.RegexMatch(req.Phone, validator.ChineseMobileMatcher); !is {
 		app.Error(c, ecode.ErrPhoneValid)
 		return

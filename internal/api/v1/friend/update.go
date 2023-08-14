@@ -1,7 +1,6 @@
 package friend
 
 import (
-	"github.com/binbinly/pkg/errno"
 	"github.com/gin-gonic/gin"
 
 	"gin-chat/internal/api"
@@ -48,10 +47,11 @@ type remarkParams struct {
 // @Router /friend/black [post]
 func Black(c *gin.Context) {
 	var req blackParams
-	if v := api.BindJSON(c, &req); !v {
-		app.Error(c, errno.ErrInvalidParam)
+	if err := api.BindJSON(c, &req); err != nil {
+		app.ErrorParamInvalid(c, err)
 		return
 	}
+
 	uid := api.GetUserID(c)
 	if uid == req.UserID {
 		app.Error(c, ecode.ErrUserNoSelf)
@@ -77,10 +77,11 @@ func Black(c *gin.Context) {
 // @Router /friend/star [post]
 func Star(c *gin.Context) {
 	var req starParams
-	if v := api.BindJSON(c, &req); !v {
-		app.Error(c, errno.ErrInvalidParam)
+	if err := api.BindJSON(c, &req); err != nil {
+		app.ErrorParamInvalid(c, err)
 		return
 	}
+
 	uid := api.GetUserID(c)
 	if uid == req.UserID {
 		app.Error(c, ecode.ErrUserNoSelf)
@@ -106,10 +107,11 @@ func Star(c *gin.Context) {
 // @Router /friend/remark [post]
 func Remark(c *gin.Context) {
 	var req remarkParams
-	if v := api.BindJSON(c, &req); !v {
-		app.Error(c, errno.ErrInvalidParam)
+	if err := api.BindJSON(c, &req); err != nil {
+		app.ErrorParamInvalid(c, err)
 		return
 	}
+
 	uid := api.GetUserID(c)
 	if uid == req.UserID {
 		app.Error(c, ecode.ErrUserNoSelf)
@@ -135,10 +137,11 @@ func Remark(c *gin.Context) {
 // @Router /friend/auth [post]
 func Auth(c *gin.Context) {
 	var req authParams
-	if v := api.BindJSON(c, &req); !v {
-		app.Error(c, errno.ErrInvalidParam)
+	if err := api.BindJSON(c, &req); err != nil {
+		app.ErrorParamInvalid(c, err)
 		return
 	}
+
 	uid := api.GetUserID(c)
 	if uid == req.UserID {
 		app.Error(c, ecode.ErrUserNoSelf)

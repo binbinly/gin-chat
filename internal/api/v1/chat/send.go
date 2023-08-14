@@ -3,7 +3,6 @@ package chat
 import (
 	"encoding/json"
 
-	"github.com/binbinly/pkg/errno"
 	"github.com/gin-gonic/gin"
 
 	"gin-chat/internal/api"
@@ -33,10 +32,11 @@ type sendParams struct {
 // @Router /chat/send [post]
 func Send(c *gin.Context) {
 	var req sendParams
-	if v := api.BindJSON(c, &req); !v {
-		app.Error(c, errno.ErrInvalidParam)
+	if err := api.BindJSON(c, &req); err != nil {
+		app.ErrorParamInvalid(c, err)
 		return
 	}
+
 	var msg *websocket.Chat
 	var err error
 	if req.ChatType == typeUser {

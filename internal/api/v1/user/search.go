@@ -1,7 +1,6 @@
 package user
 
 import (
-	"github.com/binbinly/pkg/errno"
 	"github.com/gin-gonic/gin"
 
 	"gin-chat/internal/api"
@@ -27,10 +26,11 @@ type searchParams struct {
 // @Router /user/search [get]
 func Search(c *gin.Context) {
 	var req searchParams
-	if v := api.BindJSON(c, &req); !v {
-		app.Error(c, errno.ErrInvalidParam)
+	if err := api.BindJSON(c, &req); err != nil {
+		app.ErrorParamInvalid(c, err)
 		return
 	}
+
 	list, err := service.Svc.UserSearch(c.Request.Context(), req.Keyword)
 	if e := api.Error(err); e != nil {
 		app.Error(c, e)

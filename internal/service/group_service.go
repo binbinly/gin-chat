@@ -3,7 +3,6 @@ package service
 import (
 	"context"
 	"fmt"
-	"gin-chat/pkg/app"
 	"strings"
 	"time"
 
@@ -12,7 +11,7 @@ import (
 
 	"gin-chat/internal/model"
 	"gin-chat/internal/websocket"
-	"gin-chat/pkg/dbs"
+	"gin-chat/pkg/app"
 )
 
 const (
@@ -96,7 +95,7 @@ func (s *Service) GroupCreate(ctx context.Context, mid int, ids []int) error {
 		Name: buildGroupName(uname, users),
 	}
 	// 开启事务
-	tx := dbs.DB.Begin()
+	tx := app.DB.Begin()
 	defer func() {
 		if r := recover(); r != nil {
 			tx.Rollback()
@@ -482,7 +481,7 @@ func (s *Service) deleteGroupUser(ctx context.Context, uid int, group *model.Gro
 // deleteGroup 删除群组
 func (s *Service) deleteGroup(ctx context.Context, uid int, group *model.GroupModel, gUsers []*model.GroupUserModel) (err error) {
 	// 开启事务
-	tx := dbs.DB.Begin()
+	tx := app.DB.Begin()
 	defer func() {
 		if r := recover(); r != nil {
 			tx.Rollback()

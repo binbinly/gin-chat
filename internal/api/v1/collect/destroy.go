@@ -1,7 +1,6 @@
 package collect
 
 import (
-	"github.com/binbinly/pkg/errno"
 	"github.com/gin-gonic/gin"
 
 	"gin-chat/internal/api"
@@ -26,10 +25,11 @@ type destroyParams struct {
 // @Router /collect/destroy [post]
 func Destroy(c *gin.Context) {
 	var req destroyParams
-	if v := api.BindJSON(c, &req); !v {
-		app.Error(c, errno.ErrInvalidParam)
+	if err := api.BindJSON(c, &req); err != nil {
+		app.ErrorParamInvalid(c, err)
 		return
 	}
+
 	err := service.Svc.CollectDestroy(c.Request.Context(), api.GetUserID(c), req.ID)
 	if e := api.Error(err); e != nil {
 		app.Error(c, e)

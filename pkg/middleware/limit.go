@@ -7,7 +7,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"gin-chat/pkg/redis"
+	"gin-chat/pkg/app"
 )
 
 //see: https://github.com/aviddiviner/gin-limit/blob/master/limit.go
@@ -32,13 +32,13 @@ func MaxLimiter(n int) gin.HandlerFunc {
 // IPLimiter ip限制
 func IPLimiter(limit int, expire time.Duration) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		if redis.Client == nil || limit == 0 {
+		if app.Redis == nil || limit == 0 {
 			c.Next()
 			return
 		}
 		key := fmt.Sprint("ip-limit:", c.ClientIP())
 
-		count, _ := redis.Client.Get(c.Request.Context(), key).Int()
+		count, _ := app.Redis.Get(c.Request.Context(), key).Int()
 
 		if count >= limit {
 			c.AbortWithStatusJSON(http.StatusTooManyRequests, gin.H{
@@ -49,7 +49,7 @@ func IPLimiter(limit int, expire time.Duration) gin.HandlerFunc {
 		}
 
 		c.Next()
-		pipe := redis.Client.Pipeline()
+		pipe := app.Redis.Pipeline()
 		pipe.Incr(c.Request.Context(), key)
 		pipe.Expire(c.Request.Context(), key, expire)
 		pipe.Exec(c.Request.Context())

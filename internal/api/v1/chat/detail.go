@@ -1,7 +1,6 @@
 package chat
 
 import (
-	"github.com/binbinly/pkg/errno"
 	"github.com/gin-gonic/gin"
 
 	"gin-chat/internal/api"
@@ -33,10 +32,11 @@ type detailParams struct {
 // @Router /chat/detail [post]
 func Detail(c *gin.Context) {
 	var req detailParams
-	if v := api.BindJSON(c, &req); !v {
-		app.Error(c, errno.ErrInvalidParam)
+	if err := api.BindJSON(c, &req); err != nil {
+		app.ErrorParamInvalid(c, err)
 		return
 	}
+
 	var info *websocket.Sender
 	var err error
 	if req.Type == typeUser {

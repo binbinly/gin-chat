@@ -14,7 +14,7 @@ import (
 
 	"gin-chat/cmd/migrate/migration"
 	_ "gin-chat/cmd/migrate/migration/version"
-	"gin-chat/pkg/dbs"
+	"gin-chat/pkg/app"
 )
 
 var (
@@ -52,7 +52,7 @@ func run() {
 
 func initDB() {
 	//3. 初始化数据库链接
-	dbs.NewBasicDB(driver, dsn)
+	app.InitBasicDB(driver, dsn)
 	//4. 数据库迁移
 	fmt.Println("数据库迁移开始")
 	_ = migrateModel()
@@ -60,7 +60,7 @@ func initDB() {
 }
 
 func migrateModel() error {
-	db := dbs.DB
+	db := app.DB
 	err := db.Debug().AutoMigrate(new(orm.Migration))
 	if err != nil {
 		return err

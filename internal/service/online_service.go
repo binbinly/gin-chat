@@ -3,15 +3,15 @@ package service
 import (
 	"context"
 	"encoding/json"
-	"gin-chat/internal/model"
 	"time"
 
+	"gin-chat/internal/model"
 	"gin-chat/internal/websocket"
 	"gin-chat/pkg/app"
-	"gin-chat/pkg/redis"
 
 	"github.com/binbinly/pkg/auth"
 	"github.com/binbinly/pkg/logger"
+	"github.com/binbinly/pkg/storage/redis"
 	"github.com/pkg/errors"
 )
 

@@ -6,8 +6,7 @@ import (
 	"gin-chat/internal/model"
 	"gin-chat/internal/repository"
 	"gin-chat/internal/websocket"
-	"gin-chat/pkg/dbs"
-	redis2 "gin-chat/pkg/redis"
+	"gin-chat/pkg/app"
 
 	"github.com/binbinly/pkg/cache"
 	"github.com/binbinly/pkg/transport/ws"
@@ -53,10 +52,10 @@ type Service struct {
 
 // New init service
 func New(ws ws.Server, opts ...Option) (s *Service) {
-	rdb := redis2.New()
+	rdb := app.InitRedis()
 	s = &Service{
 		opts: newOptions(opts...),
-		repo: repository.New(dbs.NewDB(), cache.NewRedisCache(rdb)),
+		repo: repository.New(app.InitDB(), cache.NewRedisCache(rdb)),
 		rdb:  rdb,
 		ws:   websocket.New(ws, rdb),
 	}

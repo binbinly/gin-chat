@@ -2,14 +2,13 @@ package service
 
 import (
 	"context"
-	"gin-chat/pkg/app"
 	"time"
 
 	"github.com/pkg/errors"
 
 	"gin-chat/internal/model"
 	"gin-chat/internal/websocket"
-	"gin-chat/pkg/dbs"
+	"gin-chat/pkg/app"
 )
 
 // Apply 申请好友接口
@@ -82,7 +81,7 @@ func (s *Service) ApplyHandle(ctx context.Context, uid, fid int, nickname string
 		return ErrApplyNotFound
 	}
 	// 开启事务
-	tx := dbs.DB.Begin()
+	tx := app.DB.Begin()
 	// 我对好友的模型
 	u := &model.FriendModel{
 		UserID:   uid,

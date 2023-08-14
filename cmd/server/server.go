@@ -15,7 +15,6 @@ import (
 
 var (
 	cfgDir   string
-	env      string
 	StartCmd = &cobra.Command{
 		Use:          "server",
 		Short:        "Start gin-chat server",
@@ -32,12 +31,11 @@ var (
 
 func init() {
 	StartCmd.PersistentFlags().StringVarP(&cfgDir, "config", "c", "configs", "config path")
-	StartCmd.PersistentFlags().StringVarP(&env, "env", "e", "", "Configure Runtime Environment")
 }
 
 func setup() {
 	// init config
-	c := config.New(config.WithConfigDir(cfgDir), config.WithEnv(env), config.WithEnvPrefix("chat"))
+	c := config.New(config.WithConfigDir(cfgDir), config.WithEnvPrefix("chat"))
 	if err := c.Load("app", app.Conf, func(v *viper.Viper) {
 		app.SetDefaultConf(v)
 	}); err != nil {
@@ -57,7 +55,7 @@ func run() {
 	http := server.NewHTTPServer(&app.Conf.HTTP)
 
 	// init router
-	r := router.NewRouter(app.Conf.Debug)
+	r := router.NewRouter()
 
 	// set proxy to http://[host]/ws -> ws://[host]
 	if app.Conf.Proxy {

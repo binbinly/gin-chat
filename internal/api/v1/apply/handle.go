@@ -1,7 +1,6 @@
 package apply
 
 import (
-	"github.com/binbinly/pkg/errno"
 	"github.com/gin-gonic/gin"
 
 	"gin-chat/internal/api"
@@ -30,8 +29,8 @@ type handleParams struct {
 // @Router /apply/handle [post]
 func Handle(c *gin.Context) {
 	var req handleParams
-	if v := api.BindJSON(c, &req); !v {
-		app.Error(c, errno.ErrInvalidParam)
+	if err := api.BindJSON(c, &req); err != nil {
+		app.ErrorParamInvalid(c, err)
 		return
 	}
 

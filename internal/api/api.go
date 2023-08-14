@@ -18,12 +18,13 @@ const (
 )
 
 // BindJSON 绑定请求参数
-func BindJSON(c *gin.Context, form any) bool {
+func BindJSON(c *gin.Context, form any) error {
 	if err := c.ShouldBindJSON(form); err != nil {
-		logger.Debugf("[bind.json] param err: %v", err)
-		return false
+		logger.Debugf("[api.bind.json] param err: %v", err)
+		return err
 	}
-	return true
+
+	return nil
 }
 
 // GetUserID 返回用户id

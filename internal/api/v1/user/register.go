@@ -6,7 +6,6 @@ import (
 	"gin-chat/internal/service"
 	"gin-chat/pkg/app"
 
-	"github.com/binbinly/pkg/errno"
 	"github.com/binbinly/pkg/util"
 	"github.com/binbinly/pkg/util/validator"
 	"github.com/gin-gonic/gin"
@@ -31,10 +30,11 @@ type registerParams struct {
 // @Router /reg [post]
 func Register(c *gin.Context) {
 	var req registerParams
-	if v := api.BindJSON(c, &req); !v {
-		app.Error(c, errno.ErrInvalidParam)
+	if err := api.BindJSON(c, &req); err != nil {
+		app.ErrorParamInvalid(c, err)
 		return
 	}
+
 	is := validator.RegexMatch(req.Phone, validator.ChineseMobileMatcher)
 	phone := util.MustInt(req.Phone)
 	if !is || phone == 0 {

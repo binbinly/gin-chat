@@ -9,9 +9,6 @@ import (
 
 	"gin-chat/internal/model"
 	"gin-chat/pkg/config"
-	"gin-chat/pkg/dbs"
-	"gin-chat/pkg/redis"
-
 	"gorm.io/gorm"
 )
 
@@ -24,7 +21,7 @@ func TestMain(m *testing.M) {
 	}); err != nil {
 		panic(err)
 	}
-	r = New(dbs.NewDB(), cache.NewRedisCache(redis.New()))
+	r = New(app.NewDB(), cache.NewRedisCache(app.New()))
 	if code := m.Run(); code != 0 {
 		panic(code)
 	}
@@ -113,7 +110,7 @@ func TestRepo_ApplyUpdateStatus(t *testing.T) {
 			name: "ApplyUpdateStatus",
 			args: args{
 				ctx:      context.Background(),
-				tx:       dbs.DB,
+				tx:       app.DB,
 				id:       1,
 				friendID: 1,
 			},

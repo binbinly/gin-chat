@@ -2,12 +2,12 @@ package repository
 
 import (
 	"context"
+	"gin-chat/pkg/app"
 	"testing"
 
 	"gorm.io/gorm"
 
 	"gin-chat/internal/model"
-	"gin-chat/pkg/dbs"
 )
 
 func TestRepo_FriendCreate(t *testing.T) {
@@ -25,7 +25,7 @@ func TestRepo_FriendCreate(t *testing.T) {
 			name: "FriendCreate",
 			args: args{
 				ctx: context.Background(),
-				tx:  dbs.DB,
+				tx:  app.DB,
 				friend: &model.FriendModel{
 					UserID:   1,
 					FriendID: 2,

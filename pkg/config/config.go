@@ -3,8 +3,6 @@ package config
 import (
 	"fmt"
 	"log"
-	"os"
-	"path/filepath"
 	"strings"
 	"sync"
 
@@ -16,7 +14,6 @@ var conf *Config
 
 // Config conf struct.
 type Config struct {
-	env       string
 	envPrefix string
 	configDir string
 	fileType  string //yaml, json, toml, default is yaml
@@ -95,14 +92,8 @@ func (c *Config) LoadWithType(filename string, hook func(v *viper.Viper)) (v *vi
 
 // Load file.
 func (c *Config) load(filename string, hook func(v *viper.Viper)) (*viper.Viper, error) {
-	env := GetEnv("APP_ENV", "")
-	if c.env != "" {
-		env = c.env
-	}
-	path := filepath.Join(c.configDir, env)
-
 	v := viper.New()
-	v.AddConfigPath(path)
+	v.AddConfigPath(c.configDir)
 	v.SetConfigName(filename)
 	v.SetConfigType(c.fileType)
 	v.AutomaticEnv()
@@ -117,13 +108,4 @@ func (c *Config) load(filename string, hook func(v *viper.Viper)) (*viper.Viper,
 	log.Println("Using config file: ", v.ConfigFileUsed(), " settings: ", v.AllSettings())
 
 	return v, nil
-}
-
-// GetEnv get value from env.
-func GetEnv(key string, def string) string {
-	val, ok := os.LookupEnv(key)
-	if !ok {
-		return def
-	}
-	return val
 }

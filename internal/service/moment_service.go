@@ -2,14 +2,13 @@ package service
 
 import (
 	"context"
-	"gin-chat/pkg/app"
 
 	"github.com/binbinly/pkg/util"
 	"github.com/pkg/errors"
 
 	"gin-chat/internal/model"
 	"gin-chat/internal/websocket"
-	"gin-chat/pkg/dbs"
+	"gin-chat/pkg/app"
 )
 
 // MomentList 朋友圈列表结构
@@ -59,7 +58,7 @@ func (s *Service) MomentCreate(ctx context.Context, uid int, content, image, vid
 		See:      util.SliceIntJoin(see, ","),
 	}
 	// 开启事务
-	tx := dbs.DB.Begin()
+	tx := app.DB.Begin()
 	id, err := s.repo.MomentCreate(ctx, tx, m)
 	if err != nil {
 		tx.Rollback()

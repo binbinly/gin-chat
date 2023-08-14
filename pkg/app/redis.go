@@ -1,4 +1,4 @@
-package redis
+package app
 
 import (
 	"log"
@@ -11,37 +11,29 @@ import (
 	"github.com/spf13/viper"
 )
 
-const (
-	// Nil redis nil
-	Nil = redis.Nil
-	// Success redis成功标识
-	Success = 1
-)
+var Redis *redis.Client
 
-var Client *redis.Client
-
-var cfg = &Config{}
-
-type Config struct {
+type RedisConfig struct {
 	Default redis2.Config
 }
 
-// New redis
-func New() *redis.Client {
-	if err := loadConf(); err != nil {
-		log.Fatalf("load orm conf err: %v", err)
+// InitRedis redis
+func InitRedis() *redis.Client {
+	var cfg = &RedisConfig{}
+	if err := loadRedisConf(cfg); err != nil {
+		log.Fatalf("load redis conf err: %v", err)
 	}
 
 	c, err := redis2.NewClient(&cfg.Default)
 	if err != nil {
 		log.Fatalf("new redis client err: %v", err)
 	}
-	Client = c
+	Redis = c
 	return c
 }
 
-// loadConf load redis config
-func loadConf() error {
+// loadRedisConf load redis config
+func loadRedisConf(cfg *RedisConfig) error {
 	if err := config.Load("redis", cfg, func(v *viper.Viper) {
 		v.SetDefault("default", map[string]any{
 			"Addr":         "127.0.0.1:6379",

@@ -12,7 +12,7 @@ import (
 // JWT 认证中间件
 func JWT() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		uid, err := service.Svc.UserTokenCheck(c, c.Request.Header.Get("Token"))
+		uid, err := service.Svc.UserTokenCheck(c, c.Request.Header.Get(app.HeaderLoginToken))
 		if err != nil {
 			app.Error(c, api.Error(err))
 			return
