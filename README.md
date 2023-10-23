@@ -90,14 +90,6 @@ docker run --rm -it -p 9050:9050 -p 9060:9060 chat:latest server
 # 启动时设置 --rm 选项，这样在容器退出时就能够自动清理容器内部的文件系统
 ```
 
-### 3. Railway部署 (✅推荐)
-
-1. [![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/VTEHKI?referralCode=Aha8g3)
-2. Set Deploy Start Command: /app/gin-chat server
-> 前端通过 github Actions workflows 自动构建部署到 pages
-
-> 注意：workflows自动部署需要设置项目权限，转到存储库Setting >>> Actions >>> General 在"工作流权限(Workflow permissions)"中，选择Read and write permissions
-
 ## 常用命令
 
 - make help 查看帮助
