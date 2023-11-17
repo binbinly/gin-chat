@@ -21,7 +21,7 @@ func TestMain(m *testing.M) {
 	}); err != nil {
 		panic(err)
 	}
-	r = New(app.NewDB(), cache.NewRedisCache(app.New()))
+	r = New(app.InitDB(), cache.NewRedisCache(app.InitRedis()))
 	if code := m.Run(); code != 0 {
 		panic(code)
 	}
